@@ -1,0 +1,19 @@
+---
+# Note: tag never just means the logic only run when you explicitly call the tag
+- hosts: k3d_test_node
+  connection: ssh
+  gather_facts: false
+  environment:
+    KUBECONFIG: "/shared_mount/harbor_registry_kubectl.config" #allows kubectl commands to work
+  roles: 
+  - role: deploy_k3d_test_cluster
+    tags: ["deploy_k3d_test_cluster", "never"]
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  environment:
+    KUBECONFIG: "/shared_mount/harbor_registry_kubectl.config" #allows kubectl commands to work
+  roles: 
+  - role: deploy_harbor_registry
+    tags: ["deploy_harbor", "never"]

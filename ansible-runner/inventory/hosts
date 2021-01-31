@@ -1,0 +1,6 @@
+# Note: ATM the ssh_key comes from docker-compose
+[local]
+localhost
+
+[k3d_test_node]
+192.168.9.220	ansible_user=vagrant   ansible_ssh_private_key_file=/runner/env/ssh_key

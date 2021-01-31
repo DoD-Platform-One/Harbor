@@ -1,0 +1,12 @@
+- name: "Ensure /shared_mount/harbor_registry_kubectl.config permissions are restricted"
+  file:
+    path: "/shared_mount/harbor_registry_kubectl.config"
+    mode: "g-rwx,o-rwx"
+
+# Note: offline harbor helm chart came from
+# helm repo add harbor https://helm.goharbor.io
+# helm search repo harbor
+# helm fetch harbor/harbor --version 1.5.2
+
+- name: "install harbor"
+  shell: "helm upgrade --install harbor {{role_path}}/files/harbor-1.5.2.tgz -f {{role_path}}/files/harbor.helm-values.yaml -n=harbor --create-namespace=true"
