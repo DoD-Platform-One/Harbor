@@ -23,11 +23,14 @@ cd ~/Desktop/harbor/Get_IBD_Ansible_Runner
 
 # STEP 3: Configuration Prep Work
 # 3.1: Update the ansible hosts inventory file to point to the IP address of your Ubuntu 20.04 Server
-vi ~/Desktop/harbor/ansible-runner/inventory/hosts 
+cd ~/Desktop/harbor/
+vi ansible-runner/inventory/hosts 
 
 # 3.2: Update docker-compose.yml to point to the private ssh key that corresponds to the Server
 vi docker-compose.yml
 
+# 3.3: Update ansible variables with the correct username that corresponds to the ssh key (and optionally update the DNS name of the HTTPS cert)
+vi ansible-runner/project/group_vars/all.yml
 
 # STEP 4: Run Ansible-Runner
 cd ~/Desktop/harbor

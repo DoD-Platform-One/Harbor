@@ -1,2 +1,2 @@
-PUBLIC_SSH_KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF22w6iZGlEhhvKhOaSW+O04UDUB1QVds9kp6w0zy1yr" #Home Lab
 REMOTE_VM_USER: "vagrant"
+HARBOR_DNS_NAME: "registry.ibc" #ibc = Iron Bank Clone
