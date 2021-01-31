@@ -13,13 +13,26 @@ Your Admin Laptop needs:
 # Login to https://registry1.dso.mil to lookup your docker login username and password
 docker login https://registry1.dso.mil
 
+
 # STEP 2: Get Iron Bank Derived Ansible-Runner
 cd ~/Desktop
 git clone https://repo1.dso.mil/platform-one/big-bang/apps/sandbox/harbor.git
 cd ~/Desktop/harbor/Get_IBD_Ansible_Runner
 ./image_helper.sh build # Has a handy help command with more package and load options
 
-# STEP 3: WIP
+
+# STEP 3: Configuration Prep Work
+# 3.1: Update the ansible hosts inventory file to point to the IP address of your Ubuntu 20.04 Server
+vi ~/Desktop/harbor/ansible-runner/inventory/hosts 
+
+# 3.2: Update docker-compose.yml to point to the private ssh key that corresponds to the Server
+vi docker-compose.yml
+
+
+# STEP 4: Run Ansible-Runner
+cd ~/Desktop/harbor
+docker-compose run ansible ansible-runner run /runner --cmdline "--tags deploy_k3d_test_cluster"
+docker-compose run ansible ansible-runner run /runner --cmdline "--tags deploy_harbor"
 ```
 
 # FAQs:
