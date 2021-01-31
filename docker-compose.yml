@@ -1,7 +1,7 @@
 version: '3.3' # config syntax version of docker-compose
 services:
   ansible:
-    image: "ironbank-derived-ansible-runner:1.4.6_bb2"
+    image: "ironbank-derived-ansible-runner:1.4.6-bb.1"
     volumes:
     - $HOME/.ssh/homelab.ssh.privatekey:/runner/env/ssh_key:ro #Edit as needed
 #    - $HOME/.ssh/target-machine.ssh.privatekey:/runner/env/ssh_key:ro #Edit as needed
