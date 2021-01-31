@@ -1,5 +1,18 @@
 # Quick Start: 
+```bash
+[user@Laptop:~]
+# STEP 1: Login to IronBank
+# Login to https://registry1.dso.mil to lookup your docker login username and password
+docker login https://registry1.dso.mil
 
+# STEP 2: Get Iron Bank Derived Ansible-Runner
+cd ~/Desktop
+git clone https://repo1.dso.mil/platform-one/big-bang/apps/sandbox/harbor.git
+cd ~/Desktop/harbor/Get_IBD_Ansible_Runner
+./image_helper.sh build # Has a handy help command with more package and load options
+
+# STEP 3: WIP
+```
 
 # FAQs:
 
@@ -38,4 +51,7 @@ It doesn't look like that issue will be fixed anytime soon, but you can read up 
 
 
 # PreRequisites: 
-* SSH access to an Ubuntu VM with docker preinstalled (Non-HA Harbor Registry)
+Your Admin Laptop needs:
+  * SSH access to an Ubuntu VM with docker preinstalled (Non-HA Harbor Registry)
+  * Docker and Docker Compose Installed
+
