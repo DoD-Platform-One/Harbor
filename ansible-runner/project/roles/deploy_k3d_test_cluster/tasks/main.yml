@@ -54,7 +54,7 @@
     REMOTE_VM_IP: "{{ hostvars.localhost.groups.k3d_test_node[0] }}"
 
 - name: "k3d cluster create (streaming output to log file on REMOTE_VM:~/k3d-cluster-create.log"
-  shell: "k3d cluster create --k3s-server-arg '--tls-san={{REMOTE_VM_IP}}' -p 80:80@loadbalancer -p 443:443@loadbalancer 2>&1 | tee /home/{{REMOTE_VM_USER}}/k3d-cluster-create.log" 
+  shell: "k3d cluster create --k3s-server-arg '--tls-san={{REMOTE_VM_IP}}' --k3s-server-arg '--no-deploy=traefik' -p 80:80@loadbalancer -p 443:443@loadbalancer 2>&1 | tee /home/{{REMOTE_VM_USER}}/k3d-cluster-create.log" 
   environment:
     KUBECONFIG: "/home/{{REMOTE_VM_USER}}/.kube/config" #k3d will create file specified in env var
   args:
