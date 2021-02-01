@@ -36,6 +36,19 @@ vi ansible-runner/project/group_vars/all.yml
 cd ~/Desktop/harbor
 docker-compose run ansible ansible-runner run /runner --cmdline "--tags deploy_k3d_test_cluster"
 docker-compose run ansible ansible-runner run /runner --cmdline "--tags deploy_harbor"
+
+#########################
+# Mac Specific Directions for Trusting HTTPS dev cert: 
+# Part 1: Add to the cert to your system's trusted certs
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ~/Desktop/harbor/shared_mount/tls.crt
+
+# Part 2: Restart Docker (so it recognises newly trusted certs)
+killall Docker && open --background /Applications/Docker.app && killall Docker && open --background /Applications/Docker.app && while ! docker system info > /dev/null 2>&1; do sleep 1; done
+
+# Part 3: Restart your Browser's Process (so it recognises newly trusted certs) or Visit Harbor in an Incognitio Window
+open -na "Google Chrome" --args --incognitio https://registry.ibc -incognito 
+#########################
+
 ```
 
 # FAQs:

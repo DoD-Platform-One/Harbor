@@ -1,0 +1,27 @@
+- name: "Create Dir for Big Bang Umbrella Chart {{BIGBANG_CHART_VERSION}} Container Images .tar.gz artifact"
+  file:
+    path: "/home/{{REMOTE_VM_USER}}/{{BIGBANG_CHART_VERSION}}"
+    state: directory
+
+- name: "Check if .tar.gz already downloaded"
+  stat: 
+    path: "/home/{{REMOTE_VM_USER}}/{{BIGBANG_CHART_VERSION}}/images.tar.gz"
+  register: does_tar_exist
+
+- debug: var=does_tar_exist
+
+- debug: var=does_tar_exist.stat.exists
+
+- name: "If not downloaded"
+  when: does_tar_exist.stat.exists == false
+  block:
+  - name: "Download Big Bang Umbrella Container Images .tar.gz artifact, ~3.5GB, this may take a few minutes"
+    shell: "curl {{item[0]}} > {{item[1]}}"
+    args:
+      chdir: "/home/{{REMOTE_VM_USER}}/{{BIGBANG_CHART_VERSION}}"
+      warn: false  
+    loop:
+    - ["https://umbrella-bigbang-releases.s3-us-gov-west-1.amazonaws.com/umbrella/{{BIGBANG_CHART_VERSION}}/images.txt", images.txt]
+    - ["https://umbrella-bigbang-releases.s3-us-gov-west-1.amazonaws.com/umbrella/{{BIGBANG_CHART_VERSION}}/images.tar.gz", images.tar.gz]
+
+

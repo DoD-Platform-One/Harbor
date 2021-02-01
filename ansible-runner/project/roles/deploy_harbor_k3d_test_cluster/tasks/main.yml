@@ -1,4 +1,3 @@
-
 - name: "Checking if Docker Installed"
   shell: "docker ps"
   register: docker_status
@@ -51,7 +50,7 @@
     - "mv ./k3d-linux-amd64 /usr/local/bin/k3d"
 #########################################################
 - set_fact:
-    REMOTE_VM_IP: "{{ hostvars.localhost.groups.k3d_test_node[0] }}"
+    REMOTE_VM_IP: "{{ hostvars.localhost.groups.harbor_k3d_test_node[0] }}"
 
 - name: "k3d cluster create (streaming output to log file on REMOTE_VM:~/k3d-cluster-create.log"
   shell: "k3d cluster create --k3s-server-arg '--tls-san={{REMOTE_VM_IP}}' --k3s-server-arg '--no-deploy=traefik' -p 80:80@loadbalancer -p 443:443@loadbalancer 2>&1 | tee /home/{{REMOTE_VM_USER}}/k3d-cluster-create.log" 

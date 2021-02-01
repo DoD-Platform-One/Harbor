@@ -1,0 +1,132 @@
+- name: "Checking if Docker Installed"
+  shell: "docker ps"
+  register: docker_status
+  failed_when: false
+
+- set_fact:
+    need_to_install_docker: "{{False if (docker_status.rc == 0) else True}}"
+
+- debug:
+    msg: "need_to_install_docker: {{need_to_install_docker}}"
+
+- name: "Installing Docker"
+  when: need_to_install_docker
+  block: 
+  - name: "Installing docker, not frozen, wait 2-3 minutes (streaming to log file on REMOTE_VM:~/docker-install.log"
+    become: true
+    shell: "{{item}}" 
+    args:
+      warn: false
+    loop:
+    - "curl -fsSL https://get.docker.com | bash 2>&1 | tee /home/{{REMOTE_VM_USER}}/docker-install.log"
+    - "systemctl enable docker"
+    - "systemctl start docker"
+    - "usermod -aG docker {{REMOTE_VM_USER}}"
+- name: "Reset SSH connection, acts as logout login, so user added to docker group is recognised"
+  meta: reset_connection # moved out of when block to avoid warning + doesn't hurt
+#########################################################
+- name: "Checking if k3d Installed"
+  shell: "k3d version"
+  register: k3d_status
+  failed_when: false
+
+- set_fact:
+    need_to_install_k3d: "{{False if (k3d_status.rc == 0) else True}}"
+
+- debug:
+    msg: "need_to_install_k3d: {{need_to_install_k3d}}"
+
+- name: "Installing k3d"
+  when: need_to_install_k3d
+  block: 
+  - name: "Install k3d"
+    become: true
+    shell: "{{item}}" 
+    args:
+      warn: false
+    loop:
+    - "curl -LO https://github.com/rancher/k3d/releases/download/v3.4.0/k3d-linux-amd64"
+    - "chmod +x ./k3d-linux-amd64"
+    - "mv ./k3d-linux-amd64 /usr/local/bin/k3d"
+#########################################################
+- set_fact:
+    REMOTE_VM_IP: "{{ hostvars.localhost.groups.bigbang_k3d_test_node[0] }}"
+
+- set_fact:
+    REGISTRY_VM_IP: "{{ hostvars.localhost.groups.harbor_k3d_test_node[0] }}"
+
+- name: "Create k3d Config Dir"
+  file:
+    path: /home/{{REMOTE_VM_USER}}/.k3d
+    state: directory
+
+- name: "Generating Templatized registry-mirror-config.yaml file"
+  template:
+    src: "registry-mirror-config.yaml.jinja2"
+    dest: "/home/{{REMOTE_VM_USER}}/.k3d/registry-mirror-config.yaml"
+
+- name: "Copying Docker Registry HTTPS Cert"
+  copy:
+    src: "/shared_mount/tls.crt"
+    dest: "/home/{{REMOTE_VM_USER}}/.k3d/{{HARBOR_DNS_NAME}}.crt"
+
+- name: "k3d cluster create (streaming output to log file on REMOTE_VM:~/k3d-cluster-create.log"
+  shell: "k3d cluster create -v /home/{{REMOTE_VM_USER}}/.k3d/{{HARBOR_DNS_NAME}}.crt:/etc/ssl/certs/{{HARBOR_DNS_NAME}}.crt -v /home/{{REMOTE_VM_USER}}/.k3d/registry-mirror-config.yaml:/etc/rancher/k3s/registries.yaml --k3s-server-arg '--tls-san={{REMOTE_VM_IP}}' --k3s-server-arg '--no-deploy=traefik' -p 80:80@loadbalancer -p 443:443@loadbalancer 2>&1 | tee /home/{{REMOTE_VM_USER}}/k3d-cluster-create.log" 
+  args:
+    chdir: "/home/{{REMOTE_VM_USER}}"
+    warn: false
+  register: shell_output
+- debug: 
+    msg: "{{shell_output.stdout_lines}} + {{shell_output.stderr_lines}}"
+
+- name: "Edit hostfile of bigbang_k3d_test_node's instance of k3d to map registry DNS name to IP w/o depending on DNS"
+  shell: "docker exec -it k3d-k3s-default-server-0 sh -c 'echo {{REGISTRY_VM_IP}} {{HARBOR_DNS_NAME}} | tee -a /etc/hosts'"
+
+- name: "Copy kubectl config locally"
+  fetch: 
+    src: "/home/{{REMOTE_VM_USER}}/.kube/config"
+    dest: "/shared_mount/bigbang_k3d_kubectl.config"
+    mode: pull
+    flat: yes
+
+- name: "Use sed stream editor to find and replace the local copy"
+  delegate_to: localhost
+  connection: local
+  shell: "sed -i s@0.0.0.0@{{REMOTE_VM_IP}}@g /shared_mount/bigbang_k3d_kubectl.config"
+  args: 
+    warn: false
+#######################################################
+# Install flux
+- name: "Install kubectl cli (flux cli doesn't work unless kubectl cli is installed)"
+  shell: "curl -LO 'https://dl.k8s.io/release/v1.20.2/bin/linux/amd64/kubectl' && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl"
+  become: true
+  args:
+    warn: false
+
+- name: "kubectl get node verification"
+  shell: "kubectl get node"
+  args: 
+    warn: false
+  register: result
+
+- debug:
+    msg: "{{result.stdout_lines}} + {{result.stderr_lines}}"
+
+- name: "Install flux cli"
+  shell: "curl -s https://toolkit.fluxcd.io/install.sh | sudo bash"
+  args:
+    warn: false
+
+- name: "Install flux to Cluster"
+  shell: "flux install"
+########################################################
+# Install Big Bang
+- name: "Install bigbang ns"
+  shell: "kubectl create ns bigbang -o yaml --dry-run=client | kubectl apply -f -"
+
+- name: "Install the big bang demo sops-gpg secret"
+  shell: "curl https://repo1.dso.mil/platform-one/big-bang/umbrella/-/raw/master/hack/bigbang-dev.asc | kubectl create secret generic sops-gpg -n=bigbang --from-file=bigbangkey=/dev/stdin -o yaml --dry-run=client | kubectl apply -f -"
+
+- name: "Install Big Bang to Cluster"
+  shell: "kubectl apply -f https://repo1.dso.mil/platform-one/big-bang/customers/template/-/raw/main/dev/bigbang.yaml"
+##########################################################

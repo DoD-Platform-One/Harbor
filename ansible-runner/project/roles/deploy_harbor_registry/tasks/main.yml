@@ -3,10 +3,53 @@
     path: "/shared_mount/harbor_registry_kubectl.config"
     mode: "g-rwx,o-rwx"
 
-# Note: offline harbor helm chart came from
-# helm repo add harbor https://helm.goharbor.io
-# helm search repo harbor
-# helm fetch harbor/harbor --version 1.5.2
+- name: "Checking if HTTPS Cert ExistsDocker Installed"
+  shell: "ls /shared_mount | grep tls.crt"
+  register: https_cert_status
+  failed_when: false
 
-- name: "install harbor"
-  shell: "helm upgrade --install harbor {{role_path}}/files/harbor-1.5.2.tgz -f {{role_path}}/files/harbor.helm-values.yaml -n=harbor --create-namespace=true"
+- set_fact:
+    need_to_generate_https_certs: "{{False if (https_cert_status.rc == 0) else True}}"
+
+- debug:
+    msg: "need_to_generate_https_certs: {{need_to_generate_https_certs}}"
+
+- name: "Generate Self Signed HTTPS Cert"
+  when: need_to_generate_https_certs
+  block: 
+  - name: "Generating Self Signed HTTPS Cert's key"
+    shell: "openssl req -x509 -newkey rsa:3072 -sha256 -days 3650 -nodes \
+           -keyout tls.key -out tls.crt -subj '/CN={{HARBOR_DNS_NAME}}' \
+           -extensions san \
+           -config <(echo '[req]'; echo 'distinguished_name=req'; echo '[san]'; echo 'subjectAltName=DNS:{{HARBOR_DNS_NAME}}')"
+    args:
+      chdir: "/shared_mount"
+      executable: /bin/bash
+      warn: false
+# Note: you can run this command to verify the DNS NAME is as expected: 
+# openssl x509 -noout -text -in tls.crt
+
+- name: "Create harbor namespace"
+  shell: "kubectl create namespace harbor -o yaml --dry-run=client | kubectl apply -f -"
+
+- name: "Deploying Kubernetes HTTPS secret from tls.crt and tls.key"
+  shell: "kubectl create secret tls harbor-registry-https --cert=tls.crt --key=tls.key -n=harbor --dry-run=client --output=yaml | kubectl apply -f -"
+  args:
+    chdir: "/shared_mount"
+    warn: false
+
+- name: "Generating Templatized harbor.helm-values.yaml file"
+  template:
+    src: "harbor.helm-values.yaml.jinja2"
+    dest: "/tmp/harbor.helm-values.yaml"
+
+- name: "Deploy Harbor Helm Chart"
+  shell: "helm upgrade --install harbor {{role_path}}/files/harbor-1.5.2.tgz -f /tmp/harbor.helm-values.yaml -n=harbor --create-namespace=true"
+
+- name: "Waiting for all pods in Harbor Namespace to show Ready"
+  shell: "kubectl get pod -n=harbor | grep '0/'"
+  register: shell_results
+  until: "shell_results.rc == 1"
+  retries: 30 # Spend up to 5 minutes checking if ready
+  delay: 10 # 10 seconds between retries
+  failed_when: false

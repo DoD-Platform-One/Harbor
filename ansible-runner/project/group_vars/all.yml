@@ -1,2 +1,3 @@
 REMOTE_VM_USER: "vagrant"
 HARBOR_DNS_NAME: "registry.ibc" #ibc = Iron Bank Clone
+BIGBANG_CHART_VERSION: "1.0.1"
