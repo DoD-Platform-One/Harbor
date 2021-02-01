@@ -7,7 +7,8 @@ Your Admin Laptop needs:
   * Docker and Docker Compose Installed
 
 # Status: 
-## NOT YET WORKING (goals 2 of 5 have been met)
+## NOT YET WORKING
+## Progress: goals 2 of 5 have been met
 
 # Quick Start: 
 ```bash
