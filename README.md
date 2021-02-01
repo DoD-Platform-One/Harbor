@@ -3,8 +3,11 @@ To allow consumers of Big Bang to easily create their own clone of the Iron Bank
 
 # Prerequisites: 
 Your Admin Laptop needs:
-  * SSH access to an Ubuntu VM
+  * SSH access to 2 CentOS 8.3 VMs (that's what it's been tested on anyways)
   * Docker and Docker Compose Installed
+
+# Status: 
+## NOT YET WORKING (goals 2 of 5 have been met)
 
 # Quick Start: 
 ```bash
@@ -22,7 +25,7 @@ cd ~/Desktop/harbor/Get_IBD_Ansible_Runner
 
 
 # STEP 3: Configuration Prep Work
-# 3.1: Update the ansible hosts inventory file to point to the IP address of your Ubuntu 20.04 Server
+# 3.1: Update the ansible hosts inventory file to point to the IP address of your 2 CentOS 8 Servers
 cd ~/Desktop/harbor/
 vi ansible-runner/inventory/hosts 
 
@@ -67,14 +70,14 @@ It doesn't look like that issue will be fixed anytime soon, but you can read up 
 
 
 ## Goals for the Initial Proof of Concept:          
-1. Write some automation + docs that helps the user bring up a k3d cluster on Ubuntu
-2. Deploy a Harbor Registry to the k3d cluster
+1. Write some automation + docs that helps the user bring up a k3d cluster on CentOS (done)
+2. Deploy a Harbor Registry to the k3d cluster (done)
    * Only install Harbor Registry on the k3d cluster w/o BigBang, istio ingress, etc.      
      (This is to minimize depeendencies and avoid a chicken and egg situation)       
    * Harbor will be exposed via Service Type Load Balancer on 443 instead of via Ingress
-3. Write some automation + docs to populate Harbor with images from IronBank
-4. Test against the Big Bang quick start repo
-5. While working on the solution try to: 
+3. Write some automation + docs to populate Harbor with images from IronBank (WIP)
+4. Test against the Big Bang quick start repo (WIP)
+5. While working on the solution try to: (Outcome: Realized needs a future ADR)
    * Design it so it could work in internet disconnected enviornments with minimal dependencies
    * Give a great user experience, in the form of minimial dependencies, minimal configuration      
      and good docs
@@ -86,3 +89,6 @@ It doesn't look like that issue will be fixed anytime soon, but you can read up 
 ## Non-Goals for the Initial Proof of Concept:          
 1. Not going to test Internet Disconnected Deployment
 2. Not going to do a HA Setup
+
+## Next Steps: 
+* Link ADR, Update ADR, discuss with team, starting to realize that docker-compose is probably a better fit for harbor (and it should be able to support both dev (no HA/persisted to disk) and prod (HA and persisted to managed services) deployments with less dependencies/complexity, easier air gap setups, less VMs, and result in a better experience.)
