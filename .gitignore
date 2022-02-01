@@ -1,4 +1,0 @@
-ansible_runner/artifacts/*
-ansible_runner/env/cmdline
-shared_mount/*
-*.tar.gz

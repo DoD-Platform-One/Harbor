@@ -1,3 +1,0 @@
----
-idle_timeout: 36000 #10 hours (Note there's a task that tries to download a ~3.5GB .tar.gz)
-job_timeout: 36000  #10 hours
