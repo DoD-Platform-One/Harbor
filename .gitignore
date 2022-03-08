@@ -1,0 +1,9 @@
+chart/.github/**
+chart/cert/**
+chart/test/e2e/**
+chart/test/integration/**
+chart/test/unittest/**
+chart/test/go.*
+chart/test/test.go
+.helmdocsignore
+README.md.gotmpl
