@@ -2,8 +2,9 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [0.0.0-bb.0] - 2021-02-01
+## [1.8.1-bb.0] - 2022-03-08
 
 ### Added
 
-- Required Documents
+- Initial Helm chart
+- Required Documents (Readme, Changelog, Contributing, License)
