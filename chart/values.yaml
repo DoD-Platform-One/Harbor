@@ -348,6 +348,7 @@ imagePullPolicy: IfNotPresent
 
 # Use this set to assign a list of default pullSecrets
 imagePullSecrets:
+- name: private-registry
 #  - name: docker-registry-secret
 #  - name: internal-registry-secret
 
@@ -399,8 +400,10 @@ enableMigrateHelmHook: false
 # If service exposed via "ingress", the Nginx will not be used
 nginx:
   image:
-    repository: goharbor/nginx-photon
-    tag: v2.5.3
+    repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
+    tag: v1.23.1
+    pullSecrets:
+    - private-registry
   # set the service account to be used, default if left empty
   serviceAccountName: ""
   # mount the service account token
@@ -421,8 +424,10 @@ nginx:
 
 portal:
   image:
-    repository: goharbor/harbor-portal
+    repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
     tag: v2.5.3
+    pullSecrets:
+    - private-registry
   # set the service account to be used, default if left empty
   serviceAccountName: ""
   # mount the service account token
@@ -443,8 +448,10 @@ portal:
 
 core:
   image:
-    repository: goharbor/harbor-core
+    repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
     tag: v2.5.3
+    pullSecrets:
+    - private-registry
   # set the service account to be used, default if left empty
   serviceAccountName: ""
   # mount the service account token
@@ -486,8 +493,10 @@ core:
 
 jobservice:
   image:
-    repository: goharbor/harbor-jobservice
-    tag: v2.5.3
+    repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
+    tag: v2.5.1
+    pullSecrets:
+    - private-registry
   replicas: 1
   revisionHistoryLimit: 10
   # set the service account to be used, default if left empty
@@ -526,17 +535,20 @@ registry:
   automountServiceAccountToken: false
   registry:
     image:
-      repository: goharbor/registry-photon
-      tag: v2.5.3
+      repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
+      tag: v2.5.1
+      pullSecrets:
+      - private-registry
     # resources:
     #  requests:
     #    memory: 256Mi
     #    cpu: 100m
   controller:
     image:
-      repository: goharbor/harbor-registryctl
-      tag: v2.5.3
-
+      repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
+      tag: v2.5.1
+      pullSecrets:
+      - private-registry
     # resources:
     #  requests:
     #    memory: 256Mi
@@ -592,8 +604,10 @@ chartmuseum:
   # Harbor defaults ChartMuseum to returning relative urls, if you want using absolute url you should enable it by change the following value to 'true'
   absoluteUrl: false
   image:
-    repository: goharbor/chartmuseum-photon
+    repository: registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum
     tag: v2.5.3
+    pullSecrets:
+    - private-registry
   replicas: 1
   revisionHistoryLimit: 10
   # resources:
@@ -615,9 +629,11 @@ trivy:
   enabled: true
   image:
     # repository the repository for Trivy adapter image
-    repository: goharbor/trivy-adapter-photon
+    repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
     tag: v2.5.3
+    pullSecrets:
+    - private-registry
   # set the service account to be used, default if left empty
   serviceAccountName: ""
   # mount the service account token
@@ -689,8 +705,10 @@ notary:
     # mount the service account token
     automountServiceAccountToken: false
     image:
-      repository: goharbor/notary-server-photon
+      repository: registry1.dso.mil/ironbank/opensource/goharbor/notary-server
       tag: v2.5.3
+      pullSecrets:
+      - private-registry
     replicas: 1
     # resources:
     #  requests:
@@ -709,8 +727,10 @@ notary:
     # mount the service account token
     automountServiceAccountToken: false
     image:
-      repository: goharbor/notary-signer-photon
+      repository: registry1.dso.mil/ironbank/opensource/goharbor/notary-signer
       tag: v2.5.3
+      pullSecrets:
+      - private-registry
     replicas: 1
     # resources:
     #  requests:
@@ -741,8 +761,10 @@ database:
     # mount the service account token
     automountServiceAccountToken: false
     image:
-      repository: goharbor/harbor-db
+      repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-db
       tag: v2.5.3
+      pullSecrets:
+      - private-registry
     # The initial superuser password for internal database
     password: "changeit"
     # The size limit for Shared memory, pgSQL use it for shared_buffer
@@ -805,8 +827,10 @@ redis:
     # mount the service account token
     automountServiceAccountToken: false
     image:
-      repository: goharbor/redis-photon
+      repository: registry1.dso.mil/ironbank/bitnami/redis
       tag: v2.5.3
+      pullSecrets:
+      - private-registry
     # resources:
     #  requests:
     #    memory: 256Mi
@@ -846,8 +870,10 @@ exporter:
   # mount the service account token
   automountServiceAccountToken: false
   image:
-    repository: goharbor/harbor-exporter
+    repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
     tag: v2.5.3
+    pullSecrets:
+    - private-registry
   nodeSelector: {}
   tolerations: []
   affinity: {}

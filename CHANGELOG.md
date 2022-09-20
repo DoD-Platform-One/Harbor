@@ -1,6 +1,9 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+## [1.9.3-bb.1] - 2022-09-19
+### Added
+- updated values to pull images from IronBank
 
 ## [1.9.3-bb.0] - 2022-09-02
 ### Added
