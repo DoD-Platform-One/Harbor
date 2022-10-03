@@ -1,0 +1,47 @@
+{
+    "baseBranches": ["main"],
+    "configWarningReuseIssue": false,
+    "dependencyDashboard": true,
+    "dependencyDashboardHeader": "- [ ] Sync upstream helm chart version with updated dependencies.",
+    "dependencyDashboardTitle": "Renovate: Upgrade Harbor Package Dependencies",
+    "draftPR": true,
+    "enabledManagers": ["helm-values","regex"],
+    "ignorePaths": ["chart/charts/**"],
+    "labels": ["harbor","renovate"],
+    "packageRules": [
+        {
+            "matchDatasources": ["docker"],
+            "groupName": "Ironbank"
+        }
+    ],
+    "regexManagers": [
+        {
+          "fileMatch": ["^chart/Chart\\.yaml$"],
+          "matchStrings": [
+            "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)"
+          ],
+          "registryUrlTemplate": "https://registry1.dso.mil",
+          "depNameTemplate": "ironbank/opensource/goharbor/harbor-core",
+          "datasourceTemplate": "docker"
+        },
+        {
+            "fileMatch": ["^chart/Chart\\.yaml$"],
+            "matchStrings": [
+                "- Harbor Core:\\s*(?<currentValue>.+)"
+            ],
+            "depNameTemplate": "ironbank/opensource/goharbor/harbor-core",
+            "datasourceTemplate": "docker",
+            "registryUrlTemplate": "https://registry1.dso.mil"
+        },
+        {
+            "fileMatch": ["^chart/Chart\\.yaml$"],
+            "matchStrings": [
+                "- Registry:\\s*(?<currentValue>.+)"
+            ],
+            "depNameTemplate": "ironbank/opensource/goharbor/registry",
+            "datasourceTemplate": "docker",
+            "registryUrlTemplate": "https://registry1.dso.mil"
+        }
+    ],
+    "separateMajorMinor": false
+}
