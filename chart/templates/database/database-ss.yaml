@@ -79,13 +79,17 @@ spec:
         livenessProbe:
           exec:
             command:
-            - /docker-healthcheck.sh
+              - /bin/sh
+              - -c
+              - exec pg_isready -U "postgres" -h 127.0.0.1 -p 5432
           initialDelaySeconds: 300
           periodSeconds: 10
         readinessProbe:
           exec:
             command:
-            - /docker-healthcheck.sh
+              - /bin/sh
+              - -c
+              - exec pg_isready -U "postgres" -h 127.0.0.1 -p 5432
           initialDelaySeconds: 1
           periodSeconds: 10
 {{- if .Values.database.internal.resources }}

@@ -1,5 +1,4 @@
 chart/.github/**
-chart/cert/**
 chart/test/e2e/**
 chart/test/integration/**
 chart/test/unittest/**

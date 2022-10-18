@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.9.3-bb.1](https://img.shields.io/badge/Version-1.9.3--bb.1-informational?style=flat-square) ![AppVersion: 2.5.3](https://img.shields.io/badge/AppVersion-2.5.3-informational?style=flat-square)
+![Version: 1.9.3-bb.2](https://img.shields.io/badge/Version-1.9.3--bb.2-informational?style=flat-square) ![AppVersion: 2.5.3](https://img.shields.io/badge/AppVersion-2.5.3-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -169,7 +169,7 @@ helm install harbor chart/
 | proxy.components[2] | string | `"trivy"` |  |
 | enableMigrateHelmHook | bool | `false` |  |
 | nginx.image.repository | string | `"registry1.dso.mil/ironbank/opensource/nginx/nginx"` |  |
-| nginx.image.tag | string | `"v1.23.1"` |  |
+| nginx.image.tag | string | `"1.23.1"` |  |
 | nginx.image.pullSecrets[0] | string | `"private-registry"` |  |
 | nginx.serviceAccountName | string | `""` |  |
 | nginx.automountServiceAccountToken | bool | `false` |  |
@@ -323,9 +323,8 @@ helm install harbor chart/
 | database.type | string | `"internal"` |  |
 | database.internal.serviceAccountName | string | `""` |  |
 | database.internal.automountServiceAccountToken | bool | `false` |  |
-| database.internal.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-db"` |  |
+| database.internal.image.repository | string | `"goharbor/harbor-db"` |  |
 | database.internal.image.tag | string | `"v2.5.3"` |  |
-| database.internal.image.pullSecrets[0] | string | `"private-registry"` |  |
 | database.internal.password | string | `"changeit"` |  |
 | database.internal.shmSizeLimit | string | `"512Mi"` |  |
 | database.internal.nodeSelector | object | `{}` |  |
@@ -348,9 +347,13 @@ helm install harbor chart/
 | redis.type | string | `"internal"` |  |
 | redis.internal.serviceAccountName | string | `""` |  |
 | redis.internal.automountServiceAccountToken | bool | `false` |  |
-| redis.internal.image.repository | string | `"registry1.dso.mil/ironbank/bitnami/redis"` |  |
+| redis.internal.image.repository | string | `"goharbor/redis-photon"` |  |
 | redis.internal.image.tag | string | `"v2.5.3"` |  |
 | redis.internal.image.pullSecrets[0] | string | `"private-registry"` |  |
+| redis.internal.resources.requests.memory | string | `"256Mi"` |  |
+| redis.internal.resources.requests.cpu | string | `"100m"` |  |
+| redis.internal.resources.limits.memory | string | `"256Mi"` |  |
+| redis.internal.resources.limits.cpu | string | `"100m"` |  |
 | redis.internal.nodeSelector | object | `{}` |  |
 | redis.internal.tolerations | list | `[]` |  |
 | redis.internal.affinity | object | `{}` |  |
@@ -401,6 +404,13 @@ helm install harbor chart/
 | trace.otel.compression | bool | `false` |  |
 | trace.otel.insecure | bool | `true` |  |
 | trace.otel.timeout | string | `"10s"` |  |
+| domain | string | `"bigbang.dev"` |  |
+| istio.enabled | bool | `false` |  |
+| istio.harbor.gateways[0] | string | `"istio-system/main"` |  |
+| istio.harbor.hosts[0] | string | `"harbor.{{ .Values.domain }}"` |  |
+| networkPolicies.enabled | bool | `false` |  |
+| networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
+| networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
 
 ## Contributing
 

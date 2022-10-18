@@ -1,0 +1,5 @@
+expose:
+  type: "clusterIP"
+  tls:
+    auto:
+      commonName: "bigbang.dev"
