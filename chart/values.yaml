@@ -401,7 +401,7 @@ enableMigrateHelmHook: false
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: v1.23.1
+    tag: 1.23.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -761,10 +761,10 @@ database:
     # mount the service account token
     automountServiceAccountToken: false
     image:
-      repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-db
+      repository: goharbor/harbor-db
       tag: v2.5.3
-      pullSecrets:
-      - private-registry
+      #pullSecrets:
+      #- private-registry
     # The initial superuser password for internal database
     password: "changeit"
     # The size limit for Shared memory, pgSQL use it for shared_buffer
@@ -827,14 +827,17 @@ redis:
     # mount the service account token
     automountServiceAccountToken: false
     image:
-      repository: registry1.dso.mil/ironbank/bitnami/redis
+      repository: goharbor/redis-photon
       tag: v2.5.3
       pullSecrets:
       - private-registry
-    # resources:
-    #  requests:
-    #    memory: 256Mi
-    #    cpu: 100m
+    resources:
+     requests:
+       memory: 256Mi
+       cpu: 100m
+     limits:
+       memory: 256Mi
+       cpu: 100m
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -947,3 +950,19 @@ trace:
     compression: false
     insecure: true
     timeout: 10s
+
+# Big Bang Additions
+domain: bigbang.dev
+istio:
+  enabled: false
+  harbor:
+    gateways:
+    - "istio-system/main"
+    hosts:
+    - "harbor.{{ .Values.domain }}"
+
+networkPolicies:
+  enabled: false
+  ingressLabels:
+    app: istio-ingressgateway
+    istio: ingressgateway
