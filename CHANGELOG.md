@@ -1,6 +1,10 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+## [1.9.3-bb.3] - 2022-10-19
+### Changed
+- values for ironbank images to 2.6.1 except for `trivy adapter` which will be at 2.6.0
+
 ## [1.9.3-bb.2] - 2022-10-12
 ### Added
 - bigbang/ folder for BigBang integration stage
