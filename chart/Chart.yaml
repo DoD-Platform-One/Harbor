@@ -1,6 +1,6 @@
 apiVersion: v2
 name: harbor
-version: 1.10.1-bb.0
+version: 1.10.1-bb.1
 appVersion: v2.6.1
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:
@@ -21,6 +21,10 @@ maintainers:
   email: yshengwen@vmware.com
 engine: gotpl
 dependencies:
+  - name: postgresql
+    version: 10.3.13
+    repository: file://./deps/postgresql
+    condition: postgresql.enabled
   - name: gluon
     version: 0.3.1
     repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon

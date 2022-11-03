@@ -778,15 +778,15 @@ notary:
 database:
   # if external database is used, set "type" to "external"
   # and fill the connection informations in "external" section
-  type: internal
+  type: external
   internal:
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
     automountServiceAccountToken: false
-    image:
-      repository: goharbor/harbor-db
-      tag: v2.6.1
+    #image:
+    #  repository: goharbor/harbor-db
+    #  tag: v2.6.1
     # The initial superuser password for internal database
     password: "changeit"
     # The size limit for Shared memory, pgSQL use it for shared_buffer
@@ -814,7 +814,7 @@ database:
       #    memory: 128Mi
       #    cpu: 100m
   external:
-    host: "192.168.0.1"
+    host: "harbor-postgresql"
     port: "5432"
     username: "user"
     password: "password"
@@ -833,13 +833,94 @@ database:
     sslmode: "disable"
   # The maximum number of connections in the idle connection pool per pod (core+exporter).
   # If it <=0, no idle connections are retained.
+
+postgresql:
+  # If `true`, the Postgresql dependency is enabled
+  enabled: true
+  # PostgreSQL User to create
+  postgresqlUsername: "harborUser"
+  # PostgreSQL Password for the new user
+  postgresqlPassword: "harborPW"
+  # Notary server settings
+  notaryServerDatabase: "notary_server"
+  notaryServerUsername: "serveruser"
+  # Notary Signer settings 
+  notarySignerDatabase: "notary_signer"
+  notarySignerUsername: "signeruser"
   maxIdleConns: 100
-  # The maximum number of open connections to the database per pod (core+exporter).
-  # If it <= 0, then there is no limit on the number of open connections.
-  # Note: the default number of connections is 1024 for postgre of harbor.
   maxOpenConns: 900
-  ## Additional deployment annotations
+  # PostgreSQL network policy configuration
+  networkPolicy:
+    enabled: false
+  # Added by BigBang
+  # change bitnami sub-chart upstream image to pull from registry1.dso.mil
+  # this image is only used for dev and CI pipelines
+  global:
+    imagePullSecrets:
+      - private-registry
+  image:
+    registry: registry1.dso.mil
+    repository: ironbank/opensource/postgres/postgresql12
+    tag: 12.11
+    debug: true
+  securityContext:
+    enabled: true
+    fsGroup: 26
+    runAsUser: 26
+    runAsGroup: 26
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 26
+    capabilities:
+      drop:
+        - ALL
+  existingSecret: ""
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "250m"
+      memory: "256Mi"
   podAnnotations: {}
+  initdbUser: harborUser
+  initdbPassword: harborPW
+  initdbScripts:
+    initial-notaryserver.sql: |
+      CREATE USER serveruser with encrypted password 'harborPW';
+      CREATE DATABASE notary_server WITH OWNER serveruser;
+    initial-notarysigner.sql: |
+      CREATE USER signeruser with encrypted password 'harborPW';
+      CREATE DATABASE notary_signer WITH OWNER signeruser;
+      
+  ## External PostgreSQL configuration
+  ## All of these values are only used when postgresql.enabled is set to false
+  ## @param externalDatabase.host Database host
+  ## @param externalDatabase.port Database port number
+  ## @param externalDatabase.user Non-root username for Harbor
+  ## @param externalDatabase.password Password for the non-root username for Harbor
+  ## @param externalDatabase.sslmode External database ssl mode
+  ## @param externalDatabase.coreDatabase External database name for core
+  ## @param externalDatabase.notaryServerDatabase External database name for notary server
+  ## @param externalDatabase.notaryServerUsername External database username for notary server
+  ## @param externalDatabase.notaryServerPassword External database password for notary server
+  ## @param externalDatabase.notarySignerDatabase External database name for notary signer
+  ## @param externalDatabase.notarySignerUsername External database username for notary signer
+  ## @param externalDatabase.notarySignerPassword External database password for notary signer
+  ##
+  externalDatabase:
+    host: localhost
+    port: 5432
+    user: bn_harbor
+    password: ""
+    sslmode: disable
+    coreDatabase: ""
+    notaryServerDatabase: ""
+    notaryServerUsername: ""
+    notaryServerPassword: ""
+    notarySignerDatabase: ""
+    notarySignerUsername: ""
+    notarySignerPassword: ""
 
 redis:
   # if external Redis is used, set "type" to "external"
@@ -985,7 +1066,7 @@ istio:
   enabled: false
   harbor:
     gateways:
-    - "istio-system/main"
+    - "istio-system/public"
     hosts:
     - "harbor.{{ .Values.domain }}"
 
