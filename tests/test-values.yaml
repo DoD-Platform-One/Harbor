@@ -1,5 +1,9 @@
 expose:
-  type: "clusterIP"
+  type: clusterIP
   tls:
+    enabled: false
+    certSource: auto
     auto:
       commonName: "bigbang.dev"
+internalTLS:
+  enabled: false
