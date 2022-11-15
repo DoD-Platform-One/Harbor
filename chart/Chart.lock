@@ -1,0 +1,12 @@
+dependencies:
+- name: postgresql
+  repository: file://./deps/postgresql
+  version: 10.3.13
+- name: redis
+  repository: file://deps/redis
+  version: 16.12.3-bb.3
+- name: gluon
+  repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
+  version: 0.3.1
+digest: sha256:00b1dfe12b674e8b82759735e84c4c698833186e7837d99c900a2f809f2e7fec
+generated: "2022-11-09T11:36:50.564131-07:00"

@@ -1,6 +1,10 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+## [1.10.1-bb.2] - 2022-11-09
+### Changed
+- adding `redis` to chart
+
 ## [1.10.1-bb.1] - 2022-10-25
 ### Changed
 - adding `postgresql` to chart

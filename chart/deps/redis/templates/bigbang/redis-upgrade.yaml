@@ -1,0 +1,133 @@
+{{- if .Values.cleanUpgrade.enabled }}
+{{- if .Values.networkPolicies.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-egress-upgrade-job
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+spec:
+  egress:
+  - to:
+    - ipBlock:
+        cidr: {{ .Values.networkPolicies.controlPlaneCidr }}
+        {{- if eq .Values.networkPolicies.controlPlaneCidr "0.0.0.0/0" }}
+        # ONLY Block requests to cloud metadata IP
+        except:
+        - 169.254.169.254/32
+        {{- end }}
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: bigbang-redis-upgrade-job
+  policyTypes:
+  - Egress
+---
+{{- end }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: redis-upgrade-sa
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: redis-upgrade-role
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+rules:
+- apiGroups: ["apps"]
+  resources: ["statefulsets"]
+  verbs: ["get", "list", "delete"]
+- apiGroups: [""]
+  resources: ["persistentvolumeclaims"]
+  verbs: ["get", "list", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: redis-upgrade-role-binding
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: redis-upgrade-role
+subjects:
+- kind: ServiceAccount
+  name: redis-upgrade-sa
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: redis-clean-upgrade
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    metadata:
+      name: redis-clean-upgrade
+      labels:
+        app.kubernetes.io/name: bigbang-redis-upgrade-job
+    spec:
+      serviceAccountName: redis-upgrade-sa
+      imagePullSecrets:
+      {{- if .Values.global.imagePullSecrets }}
+        {{- range .Values.global.imagePullSecrets }}
+          {{- $credType := typeOf . -}}
+          {{- if eq $credType "map[string]interface {}" }}
+          - name: {{ get . "name" }}
+          {{- else }}
+          - name: {{ . }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+      restartPolicy: OnFailure
+      containers:
+        - name: redis-clean-upgrade
+          image: "{{ .Values.cleanUpgrade.image }}"
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              if [[ $(kubectl get statefulset -l app={{ include "common.names.name" . }} -n {{ .Release.Namespace }} 2> /dev/null | wc -l) -gt 0 ]]; then
+                kubectl delete statefulset -n {{ .Release.Namespace }} -l app={{ include "common.names.name" . }}
+                echo "Statefulsets cleaned up."
+              else
+                echo "No statefulsets to clean up."
+              fi
+
+              if [[ $(kubectl get pvc -l app={{ include "common.names.name" . }} -n {{ .Release.Namespace }} 2> /dev/null | wc -l) -gt 0 ]]; then
+                kubectl delete pvc -n {{ .Release.Namespace }} -l app={{ include "common.names.name" . }}
+                echo "PVCs cleaned up."
+              else
+                echo "No PVCs to clean up."
+              fi
+              echo "Done with upgrade steps."
+
+              {{- if .Values.istio.enabled }}
+              echo "Terminating istio sidecar container..."
+              curl -X POST http://localhost:15020/quitquitquit
+              {{- end }}
+          {{- if .Values.cleanUpgrade.resources }}
+          resources: {{- toYaml .Values.cleanUpgrade.resources | nindent 12 }}
+          {{- end }}
+{{- end }}

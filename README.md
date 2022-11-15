@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.10.1-bb.1](https://img.shields.io/badge/Version-1.10.1--bb.1-informational?style=flat-square) ![AppVersion: v2.6.1](https://img.shields.io/badge/AppVersion-v2.6.1-informational?style=flat-square)
+![Version: 1.10.1-bb.2](https://img.shields.io/badge/Version-1.10.1--bb.2-informational?style=flat-square) ![AppVersion: v2.6.1](https://img.shields.io/badge/AppVersion-v2.6.1-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -332,11 +332,9 @@ helm install harbor chart/
 | notary.signer.podAnnotations | object | `{}` |  |
 | notary.signer.priorityClassName | string | `nil` |  |
 | notary.secretName | string | `""` |  |
-| database.type | string | `"internal"` |  |
+| database.type | string | `"external"` |  |
 | database.internal.serviceAccountName | string | `""` |  |
 | database.internal.automountServiceAccountToken | bool | `false` |  |
-| database.internal.image.repository | string | `"goharbor/harbor-db"` |  |
-| database.internal.image.tag | string | `"v2.6.1"` |  |
 | database.internal.password | string | `"changeit"` |  |
 | database.internal.shmSizeLimit | string | `"512Mi"` |  |
 | database.internal.nodeSelector | object | `{}` |  |
@@ -345,7 +343,7 @@ helm install harbor chart/
 | database.internal.priorityClassName | string | `nil` |  |
 | database.internal.initContainer.migrator | object | `{}` |  |
 | database.internal.initContainer.permissions | object | `{}` |  |
-| database.external.host | string | `"192.168.0.1"` |  |
+| database.external.host | string | `"harbor-postgresql"` |  |
 | database.external.port | string | `"5432"` |  |
 | database.external.username | string | `"user"` |  |
 | database.external.password | string | `"password"` |  |
@@ -354,24 +352,66 @@ helm install harbor chart/
 | database.external.notarySignerDatabase | string | `"notary_signer"` |  |
 | database.external.existingSecret | string | `""` |  |
 | database.external.sslmode | string | `"disable"` |  |
-| database.maxIdleConns | int | `100` |  |
-| database.maxOpenConns | int | `900` |  |
-| database.podAnnotations | object | `{}` |  |
-| redis.type | string | `"internal"` |  |
+| postgresql.enabled | bool | `true` |  |
+| postgresql.postgresqlUsername | string | `"harborUser"` |  |
+| postgresql.postgresqlPassword | string | `"harborPW"` |  |
+| postgresql.notaryServerDatabase | string | `"notary_server"` |  |
+| postgresql.notaryServerUsername | string | `"serveruser"` |  |
+| postgresql.notarySignerDatabase | string | `"notary_signer"` |  |
+| postgresql.notarySignerUsername | string | `"signeruser"` |  |
+| postgresql.maxIdleConns | int | `100` |  |
+| postgresql.maxOpenConns | int | `900` |  |
+| postgresql.networkPolicy.enabled | bool | `false` |  |
+| postgresql.global.imagePullSecrets[0] | string | `"private-registry"` |  |
+| postgresql.image.registry | string | `"registry1.dso.mil"` |  |
+| postgresql.image.repository | string | `"ironbank/opensource/postgres/postgresql12"` |  |
+| postgresql.image.tag | float | `12.11` |  |
+| postgresql.image.debug | bool | `true` |  |
+| postgresql.securityContext.enabled | bool | `true` |  |
+| postgresql.securityContext.fsGroup | int | `26` |  |
+| postgresql.securityContext.runAsUser | int | `26` |  |
+| postgresql.securityContext.runAsGroup | int | `26` |  |
+| postgresql.containerSecurityContext.enabled | bool | `true` |  |
+| postgresql.containerSecurityContext.runAsUser | int | `26` |  |
+| postgresql.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| postgresql.existingSecret | string | `""` |  |
+| postgresql.resources.requests.cpu | string | `"250m"` |  |
+| postgresql.resources.requests.memory | string | `"256Mi"` |  |
+| postgresql.resources.limits.cpu | string | `"250m"` |  |
+| postgresql.resources.limits.memory | string | `"256Mi"` |  |
+| postgresql.podAnnotations | object | `{}` |  |
+| postgresql.initdbUser | string | `"harborUser"` |  |
+| postgresql.initdbPassword | string | `"harborPW"` |  |
+| postgresql.initdbScripts."initial-notaryserver.sql" | string | `"CREATE USER serveruser with encrypted password 'harborPW';\nCREATE DATABASE notary_server WITH OWNER serveruser;\n"` |  |
+| postgresql.initdbScripts."initial-notarysigner.sql" | string | `"CREATE USER signeruser with encrypted password 'harborPW';\nCREATE DATABASE notary_signer WITH OWNER signeruser;\n"` |  |
+| postgresql.externalDatabase.host | string | `"localhost"` |  |
+| postgresql.externalDatabase.port | int | `5432` |  |
+| postgresql.externalDatabase.user | string | `"bn_harbor"` |  |
+| postgresql.externalDatabase.password | string | `""` |  |
+| postgresql.externalDatabase.sslmode | string | `"disable"` |  |
+| postgresql.externalDatabase.coreDatabase | string | `""` |  |
+| postgresql.externalDatabase.notaryServerDatabase | string | `""` |  |
+| postgresql.externalDatabase.notaryServerUsername | string | `""` |  |
+| postgresql.externalDatabase.notaryServerPassword | string | `""` |  |
+| postgresql.externalDatabase.notarySignerDatabase | string | `""` |  |
+| postgresql.externalDatabase.notarySignerUsername | string | `""` |  |
+| postgresql.externalDatabase.notarySignerPassword | string | `""` |  |
+| redis.type | string | `"external"` |  |
 | redis.internal.serviceAccountName | string | `""` |  |
 | redis.internal.automountServiceAccountToken | bool | `false` |  |
 | redis.internal.image.repository | string | `"goharbor/redis-photon"` |  |
 | redis.internal.image.tag | string | `"v2.6.1"` |  |
 | redis.internal.image.pullSecrets[0] | string | `"private-registry"` |  |
-| redis.internal.resources.requests.memory | string | `"256Mi"` |  |
-| redis.internal.resources.requests.cpu | string | `"100m"` |  |
-| redis.internal.resources.limits.memory | string | `"256Mi"` |  |
-| redis.internal.resources.limits.cpu | string | `"100m"` |  |
+| redis.internal.resources | string | `nil` |  |
+| redis.internal.requests.memory | string | `"256Mi"` |  |
+| redis.internal.requests.cpu | string | `"100m"` |  |
+| redis.internal.limits.memory | string | `"256Mi"` |  |
+| redis.internal.limits.cpu | string | `"100m"` |  |
 | redis.internal.nodeSelector | object | `{}` |  |
 | redis.internal.tolerations | list | `[]` |  |
 | redis.internal.affinity | object | `{}` |  |
 | redis.internal.priorityClassName | string | `nil` |  |
-| redis.external.addr | string | `"192.168.0.2:6379"` |  |
+| redis.external.addr | string | `"harbor-redis-bb-headless:6379"` |  |
 | redis.external.sentinelMasterSet | string | `""` |  |
 | redis.external.coreDatabaseIndex | string | `"0"` |  |
 | redis.external.jobserviceDatabaseIndex | string | `"1"` |  |
@@ -381,6 +421,15 @@ helm install harbor chart/
 | redis.external.password | string | `""` |  |
 | redis.external.existingSecret | string | `""` |  |
 | redis.podAnnotations | object | `{}` |  |
+| redis-bb.enabled | bool | `true` | Enable BigBang provided redis sub-chart. Disable if using external cloud elasticache or redis endpoint and fill in `redis.external.addr` in above section |
+| redis-bb.auth.enabled | bool | `false` |  |
+| redis-bb.istio.redis.enabled | bool | `false` |  |
+| redis-bb.image.repository | string | `"ironbank/bitnami/redis"` |  |
+| redis-bb.image.tag | string | `"7.0.0-debian-10-r3"` |  |
+| redis-bb.image.pullSecrets[0] | string | `"private-registry"` |  |
+| redis-bb.networkPolicies.enabled | bool | `true` |  |
+| redis-bb.networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
+| redis-bb.commonConfiguration | string | `"# Enable AOF https://redis.io/topics/persistence#append-only-file\nappendonly no\nmaxmemory 200mb\nmaxmemory-policy allkeys-lru\nsave \"\""` |  |
 | exporter.replicas | int | `1` |  |
 | exporter.revisionHistoryLimit | int | `10` |  |
 | exporter.podAnnotations | object | `{}` |  |
@@ -420,7 +469,7 @@ helm install harbor chart/
 | trace.otel.timeout | string | `"10s"` |  |
 | domain | string | `"bigbang.dev"` |  |
 | istio.enabled | bool | `false` |  |
-| istio.harbor.gateways[0] | string | `"istio-system/main"` |  |
+| istio.harbor.gateways[0] | string | `"istio-system/public"` |  |
 | istio.harbor.hosts[0] | string | `"harbor.{{ .Values.domain }}"` |  |
 | networkPolicies.enabled | bool | `false` |  |
 | networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |

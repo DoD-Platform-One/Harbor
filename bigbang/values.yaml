@@ -20,11 +20,14 @@ harbor:
     # -- OIDC Client ID to use for Harbor
     client_id: ""
 
-    # -- OIDC Client Secret to use for Harbo
+    # -- OIDC Client Secret to use for Harbor
     client_secret: ""
 
   # -- Values to pass through to Habor chart: https://repo1.dso.mil/platform-one/big-bang/apps/sandbox/harbor.git
-  values: {}
+  values: 
+    redis:
+      external: 
+        addr: "harbor-harbor-redis-bb-headless:6379"
 
   # -- Post Renderers.  See docs/postrenders.md
   postRenderers: []

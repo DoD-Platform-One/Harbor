@@ -925,7 +925,7 @@ postgresql:
 redis:
   # if external Redis is used, set "type" to "external"
   # and fill the connection informations in "external" section
-  type: internal
+  type: external
   internal:
     # set the service account to be used, default if left empty
     serviceAccountName: ""
@@ -937,12 +937,12 @@ redis:
       pullSecrets:
       - private-registry
     resources:
-     requests:
-       memory: 256Mi
-       cpu: 100m
-     limits:
-       memory: 256Mi
-       cpu: 100m
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
+      memory: 256Mi
+      cpu: 100m
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -952,7 +952,7 @@ redis:
     # support redis, redis+sentinel
     # addr for redis: <host_redis>:<port_redis>
     # addr for redis+sentinel: <host_sentinel1>:<port_sentinel1>,<host_sentinel2>:<port_sentinel2>,<host_sentinel3>:<port_sentinel3>
-    addr: "192.168.0.2:6379"
+    addr: "harbor-redis-bb-headless:6379"
     # The name of the set of Redis instances to monitor, it must be set to support redis+sentinel
     sentinelMasterSet: ""
     # The "coreDatabaseIndex" must be "0" as the library Harbor
@@ -967,6 +967,29 @@ redis:
     existingSecret: ""
   ## Additional deployment annotations
   podAnnotations: {}
+
+redis-bb:
+  # -- Enable BigBang provided redis sub-chart. Disable if using external cloud elasticache or redis endpoint and fill in `redis.external.addr` in above section
+  enabled: true
+  auth:
+    enabled: false
+  istio:
+    redis:
+      enabled: false
+  image:
+    repository: ironbank/bitnami/redis
+    tag: 7.0.0-debian-10-r3
+    pullSecrets:
+      - private-registry
+  networkPolicies:
+    enabled: true
+    controlPlaneCidr: 0.0.0.0/0
+  commonConfiguration: |-
+    # Enable AOF https://redis.io/topics/persistence#append-only-file
+    appendonly no
+    maxmemory 200mb
+    maxmemory-policy allkeys-lru
+    save ""
 
 exporter:
   replicas: 1
