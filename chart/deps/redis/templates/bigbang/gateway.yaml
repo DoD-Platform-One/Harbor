@@ -1,0 +1,31 @@
+{{- if and .Values.istio.enabled .Values.istio.redis.enabled -}}
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: redis-gateway
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ template "redis.name" . }}
+    helm.sh/chart: {{ template "redis.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/part-of: redis
+    app.kubernetes.io/component: networking
+  {{- if .Values.istio.redis.labels }}
+    {{- toYaml .Values.istio.redis.labels | indent 4 }}
+  {{- end }}
+  {{- if .Values.istio.redis.annotations }}
+  annotations:
+  {{ toYaml .Values.istio.redis.annotations | indent 4 }}
+  {{- end }}
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: {{ .Values.istio.redis.gateway.port  }}
+      name: redis-port
+      protocol: TCP
+    hosts:
+    - "*"
+{{- end }}

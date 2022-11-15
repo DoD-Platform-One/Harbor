@@ -1,6 +1,6 @@
 apiVersion: v2
 name: harbor
-version: 1.10.1-bb.1
+version: 1.10.1-bb.2
 appVersion: v2.6.1
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:
@@ -25,6 +25,11 @@ dependencies:
     version: 10.3.13
     repository: file://./deps/postgresql
     condition: postgresql.enabled
+  - name: redis
+    version: "16.12.3-bb.3"
+    repository: file://deps/redis
+    condition: redis-bb.enabled
+    alias: redis-bb
   - name: gluon
     version: 0.3.1
     repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
