@@ -68,3 +68,29 @@ kiali:
   enabled: false
 twistlock:
   enabled: false
+addons:
+  gitlab:
+    enabled: false
+  keycloak:
+    enabled: false
+  vault:
+    enabled: false
+  nexus:
+    enabled: false
+  mattermost:
+    enabled: false
+  sonarqube:
+    enabled: false
+  gitlabRunner:
+    enabled: false
+  minio:
+    enabled: false
+  anchore:
+    enabled: false
+  mattermostoperator:
+    enabled: false
+  argocd:
+    enabled: false
+  authservice:
+    enabled: false
+
