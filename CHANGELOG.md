@@ -1,6 +1,10 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+## [1.10.1-bb.3] - 2022-11-16
+### Changed
+- Fixing integration pipeline stage
+
 ## [1.10.1-bb.2] - 2022-11-09
 ### Changed
 - adding `redis` to chart
