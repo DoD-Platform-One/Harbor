@@ -421,7 +421,7 @@ enableMigrateHelmHook: false
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: 1.23.1
+    tag: 1.23.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -445,7 +445,7 @@ nginx:
 portal:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-    tag: v2.6.1
+    tag: v2.6.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -469,7 +469,7 @@ portal:
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-    tag: v2.6.1
+    tag: v2.6.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -516,7 +516,7 @@ core:
 jobservice:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-    tag: v2.6.1
+    tag: v2.6.2
     pullSecrets:
     - private-registry
   replicas: 1
@@ -558,7 +558,7 @@ registry:
   registry:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-      tag: v2.6.1
+      tag: v2.6.2
       pullSecrets:
       - private-registry
     # resources:
@@ -568,7 +568,7 @@ registry:
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-      tag: v2.6.1
+      tag: v2.6.2
       pullSecrets:
       - private-registry
     # resources:
@@ -629,7 +629,7 @@ chartmuseum:
   absoluteUrl: false
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum
-    tag: v2.6.1
+    tag: v2.6.2
     pullSecrets:
     - private-registry
   replicas: 1
@@ -655,7 +655,7 @@ trivy:
     # repository the repository for Trivy adapter image
     repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
-    tag: v2.6.0
+    tag: v2.6.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -704,6 +704,8 @@ trivy:
   # It would work if all the dependencies are in local.
   # This option doesn’t affect DB download. You need to specify skipUpdate as well as offlineScan in an air-gapped environment.
   offlineScan: false
+  # Comma-separated list of what security issues to detect. Possible values are `vuln`, `config` and `secret`. Defaults to `vuln`.
+  securityCheck: "vuln"
   # The duration to wait for scan completion
   timeout: 5m0s
   resources:
@@ -730,7 +732,7 @@ notary:
     automountServiceAccountToken: false
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/notary-server
-      tag: v2.6.1
+      tag: v2.6.2
       pullSecrets:
       - private-registry
     replicas: 1
@@ -752,7 +754,7 @@ notary:
     automountServiceAccountToken: false
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/notary-signer
-      tag: v2.6.1
+      tag: v2.6.2
       pullSecrets:
       - private-registry
     replicas: 1
@@ -786,7 +788,7 @@ database:
     automountServiceAccountToken: false
     #image:
     #  repository: goharbor/harbor-db
-    #  tag: v2.6.1
+    #  tag: v2.6.2
     # The initial superuser password for internal database
     password: "changeit"
     # The size limit for Shared memory, pgSQL use it for shared_buffer
@@ -861,7 +863,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql12
-    tag: 12.11
+    tag: 12.12
     debug: true
   securityContext:
     enabled: true
@@ -933,7 +935,7 @@ redis:
     automountServiceAccountToken: false
     image:
       repository: goharbor/redis-photon
-      tag: v2.6.1
+      tag: v2.6.2
       pullSecrets:
       - private-registry
     resources:
@@ -1004,7 +1006,7 @@ exporter:
   automountServiceAccountToken: false
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-    tag: v2.6.1
+    tag: v2.6.2
     pullSecrets:
     - private-registry
   nodeSelector: {}

@@ -1,6 +1,20 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+
+## [1.10.2-bb.0] - 2022-11-21
+### Changed
+- goharbor/redis-photon patch v2.6.1 -> v2.6.2
+- registry1.dso.mil/ironbank/bitnami/postgres-exporter minor 0.10.1 -> 0.11.1
+- registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum patch v2.6.1 -> v2.6.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter patch v2.6.1 -> v2.6.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal patch v2.6.1 -> v2.6.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl patch v2.6.1 -> v2.6.2
+- registry1.dso.mil/ironbank/opensource/goharbor/notary-server patch v2.6.1 -> v2.6.2
+- registry1.dso.mil/ironbank/opensource/goharbor/notary-signer patch v2.6.1 -> v2.6.2
+- registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter patch v2.6.0 -> v2.6.2
+- registry1.dso.mil/ironbank/opensource/nginx/nginx patch 1.23.1 -> 1.23.2
+- registry1.dso.mil/ironbank/opensource/postgres/postgresql12 minor 12.11 -> 12.12
 ## [1.10.1-bb.3] - 2022-11-16
 ### Changed
 - Fixing integration pipeline stage
