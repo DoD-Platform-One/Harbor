@@ -7,3 +7,4 @@ expose:
       commonName: "bigbang.dev"
 internalTLS:
   enabled: false
+externalURL: https://harbor.bigbang.dev
