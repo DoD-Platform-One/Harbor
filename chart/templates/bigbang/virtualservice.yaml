@@ -29,12 +29,12 @@ spec:
         prefix: '/v2'
     route:
     - destination:
-        host: harbor-core.{{ .Release.Namespace }}.svc.cluster.local
+        host: {{ template "harbor.core" . }}.{{ .Release.Namespace }}.svc.cluster.local
         port:
           number: 80
   - route:
     - destination:
-        host: harbor-portal.{{ .Release.Namespace }}.svc.cluster.local
+        host: {{ template "harbor.portal" . }}.{{ .Release.Namespace }}.svc.cluster.local
         port:
           number: 80
 {{- end }}
