@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.10.2-bb.0](https://img.shields.io/badge/Version-1.10.2--bb.0-informational?style=flat-square) ![AppVersion: v2.6.2](https://img.shields.io/badge/AppVersion-v2.6.2-informational?style=flat-square)
+![Version: 1.10.2-bb.1](https://img.shields.io/badge/Version-1.10.2--bb.1-informational?style=flat-square) ![AppVersion: v2.6.2](https://img.shields.io/badge/AppVersion-v2.6.2-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -203,7 +203,7 @@ helm install harbor chart/
 | portal.podAnnotations | object | `{}` |  |
 | portal.priorityClassName | string | `nil` |  |
 | core.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-core"` |  |
-| core.image.tag | string | `"v2.6.1"` |  |
+| core.image.tag | string | `"v2.6.2"` |  |
 | core.image.pullSecrets[0] | string | `"private-registry"` |  |
 | core.serviceAccountName | string | `""` |  |
 | core.automountServiceAccountToken | bool | `false` |  |
@@ -222,7 +222,7 @@ helm install harbor chart/
 | core.artifactPullAsyncFlushDuration | string | `nil` |  |
 | core.gdpr.deleteUser | bool | `false` |  |
 | jobservice.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice"` |  |
-| jobservice.image.tag | string | `"v2.6.1"` |  |
+| jobservice.image.tag | string | `"v2.6.2"` |  |
 | jobservice.image.pullSecrets[0] | string | `"private-registry"` |  |
 | jobservice.replicas | int | `1` |  |
 | jobservice.revisionHistoryLimit | int | `10` |  |
@@ -240,7 +240,7 @@ helm install harbor chart/
 | registry.serviceAccountName | string | `""` |  |
 | registry.automountServiceAccountToken | bool | `false` |  |
 | registry.registry.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/registry"` |  |
-| registry.registry.image.tag | string | `"v2.6.1"` |  |
+| registry.registry.image.tag | string | `"v2.6.2"` |  |
 | registry.registry.image.pullSecrets[0] | string | `"private-registry"` |  |
 | registry.controller.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl"` |  |
 | registry.controller.image.tag | string | `"v2.6.2"` |  |
@@ -298,6 +298,7 @@ helm install harbor chart/
 | trivy.gitHubToken | string | `""` |  |
 | trivy.skipUpdate | bool | `false` |  |
 | trivy.offlineScan | bool | `false` |  |
+| trivy.securityCheck | string | `"vuln"` |  |
 | trivy.timeout | string | `"5m0s"` |  |
 | trivy.resources.requests.cpu | string | `"200m"` |  |
 | trivy.resources.requests.memory | string | `"512Mi"` |  |

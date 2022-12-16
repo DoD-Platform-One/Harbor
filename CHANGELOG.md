@@ -2,6 +2,11 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.10.2-bb.1] - 2022-12-15
+### Changed
+- Updated gluon and redis dependencies to target registry1 bigbang oci registry
+- Fixed templating with big bang virtualservice
+
 ## [1.10.2-bb.0] - 2022-11-21
 ### Changed
 - goharbor/redis-photon patch v2.6.1 -> v2.6.2
