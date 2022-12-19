@@ -1095,6 +1095,10 @@ istio:
     hosts:
     - "harbor.{{ .Values.domain }}"
 
+monitoring:
+  enabled: false
+  namespace: monitoring
+
 networkPolicies:
   enabled: false
   ingressLabels:

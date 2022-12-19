@@ -1,0 +1,12 @@
+{{- if and .Values.monitoring.enabled .Values.metrics.enabled .Values.metrics.serviceMonitor.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harbor-grafana-dashboards
+  namespace: {{ .Values.monitoring.namespace }}
+  labels:
+    grafana_dashboard: "1"
+data:
+  metrics-example.json: |
+    {{ .Files.Get "dashboards/metrics-example.json" | nindent 4 }}
+{{- end }}
