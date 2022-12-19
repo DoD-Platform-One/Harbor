@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.10.2-bb.2] - 2022-12-16
+### Added
+- Grafana Dashboard template from upstream harbor repo.
+
 ## [1.10.2-bb.1] - 2022-12-15
 ### Changed
 - Updated gluon and redis dependencies to target registry1 bigbang oci registry

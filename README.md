@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.10.2-bb.1](https://img.shields.io/badge/Version-1.10.2--bb.1-informational?style=flat-square) ![AppVersion: v2.6.2](https://img.shields.io/badge/AppVersion-v2.6.2-informational?style=flat-square)
+![Version: 1.10.2-bb.2](https://img.shields.io/badge/Version-1.10.2--bb.2-informational?style=flat-square) ![AppVersion: v2.6.2](https://img.shields.io/badge/AppVersion-v2.6.2-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -472,6 +472,8 @@ helm install harbor chart/
 | istio.enabled | bool | `false` |  |
 | istio.harbor.gateways[0] | string | `"istio-system/public"` |  |
 | istio.harbor.hosts[0] | string | `"harbor.{{ .Values.domain }}"` |  |
+| monitoring.enabled | bool | `false` |  |
+| monitoring.namespace | string | `"monitoring"` |  |
 | networkPolicies.enabled | bool | `false` |  |
 | networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
