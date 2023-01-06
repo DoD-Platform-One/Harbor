@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.10.2-bb.3] - 2023-01-05
+### Added
+- Standard network policies added to the `templates/bigbang` directory
+
 ## [1.10.2-bb.2] - 2022-12-16
 ### Added
 - Grafana Dashboard template from upstream harbor repo.
