@@ -430,10 +430,13 @@ nginx:
   automountServiceAccountToken: false
   replicas: 1
   revisionHistoryLimit: 10
-  # resources:
-  #  requests:
-  #    memory: 256Mi
-  #    cpu: 100m
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
+      cpu: 100m
+      memory: 256Mi
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -454,10 +457,13 @@ portal:
   automountServiceAccountToken: false
   replicas: 1
   revisionHistoryLimit: 10
-  # resources:
-  #  requests:
-  #    memory: 256Mi
-  #    cpu: 100m
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
+      cpu: 100m
+      memory: 256Mi
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -482,10 +488,13 @@ core:
   startupProbe:
     enabled: true
     initialDelaySeconds: 10
-  # resources:
-  #  requests:
-  #    memory: 256Mi
-  #    cpu: 100m
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
+      cpu: 100m
+      memory: 256Mi
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -534,10 +543,13 @@ jobservice:
   # The jobLogger sweeper duration (ignored if `jobLogger` is `stdout`)
   loggerSweeperDuration: 14 #days
 
-  # resources:
-  #   requests:
-  #     memory: 256Mi
-  #     cpu: 100m
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
+      cpu: 100m
+      memory: 256Mi
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -561,20 +573,26 @@ registry:
       tag: v2.6.2
       pullSecrets:
       - private-registry
-    # resources:
-    #  requests:
-    #    memory: 256Mi
-    #    cpu: 100m
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        cpu: 100m
+        memory: 256Mi
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
       tag: v2.6.2
       pullSecrets:
       - private-registry
-    # resources:
-    #  requests:
-    #    memory: 256Mi
-    #    cpu: 100m
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        cpu: 100m
+        memory: 256Mi
   replicas: 1
   revisionHistoryLimit: 10
   nodeSelector: {}
@@ -634,10 +652,13 @@ chartmuseum:
     - private-registry
   replicas: 1
   revisionHistoryLimit: 10
-  # resources:
-  #  requests:
-  #    memory: 256Mi
-  #    cpu: 100m
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
+      cpu: 100m
+      memory: 256Mi
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -713,8 +734,8 @@ trivy:
       cpu: 200m
       memory: 512Mi
     limits:
-      cpu: 1
-      memory: 1Gi
+      cpu: 200m
+      memory: 512Mi
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -736,10 +757,13 @@ notary:
       pullSecrets:
       - private-registry
     replicas: 1
-    # resources:
-    #  requests:
-    #    memory: 256Mi
-    #    cpu: 100m
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        cpu: 100m
+        memory: 256Mi
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -758,10 +782,13 @@ notary:
       pullSecrets:
       - private-registry
     replicas: 1
-    # resources:
-    #  requests:
-    #    memory: 256Mi
-    #    cpu: 100m
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        cpu: 100m
+        memory: 256Mi
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -795,10 +822,13 @@ database:
     # More details see:
     # https://github.com/goharbor/harbor/issues/15034
     shmSizeLimit: 512Mi
-    # resources:
-    #  requests:
-    #    memory: 256Mi
-    #    cpu: 100m
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        cpu: 100m
+        memory: 256Mi
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -806,15 +836,21 @@ database:
     priorityClassName:
     initContainer:
       migrator: {}
-      # resources:
-      #  requests:
-      #    memory: 128Mi
-      #    cpu: 100m
+      resources:
+        requests:
+          memory: 128Mi
+          cpu: 100m
+        limits:
+          cpu: 100m
+          memory: 128Mi
       permissions: {}
-      # resources:
-      #  requests:
-      #    memory: 128Mi
-      #    cpu: 100m
+      resources:
+        requests:
+          memory: 128Mi
+          cpu: 100m
+        limits:
+          cpu: 100m
+          memory: 128Mi
   external:
     host: "harbor-postgresql"
     port: "5432"
@@ -846,7 +882,7 @@ postgresql:
   # Notary server settings
   notaryServerDatabase: "notary_server"
   notaryServerUsername: "serveruser"
-  # Notary Signer settings 
+  # Notary Signer settings
   notarySignerDatabase: "notary_signer"
   notarySignerUsername: "signeruser"
   maxIdleConns: 100
@@ -894,7 +930,7 @@ postgresql:
     initial-notarysigner.sql: |
       CREATE USER signeruser with encrypted password 'harborPW';
       CREATE DATABASE notary_signer WITH OWNER signeruser;
-      
+
   ## External PostgreSQL configuration
   ## All of these values are only used when postgresql.enabled is set to false
   ## @param externalDatabase.host Database host
@@ -939,12 +975,12 @@ redis:
       pullSecrets:
       - private-registry
     resources:
-    requests:
-      memory: 256Mi
-      cpu: 100m
-    limits:
-      memory: 256Mi
-      cpu: 100m
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 256Mi
+        cpu: 100m
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -996,10 +1032,13 @@ redis-bb:
 exporter:
   replicas: 1
   revisionHistoryLimit: 10
-  # resources:
-  #  requests:
-  #    memory: 256Mi
-  #    cpu: 100m
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
+      cpu: 100m
+      memory: 256Mi
   podAnnotations: {}
   serviceAccountName: ""
   # mount the service account token
