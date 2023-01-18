@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.10.2-bb.4](https://img.shields.io/badge/Version-1.10.2--bb.4-informational?style=flat-square) ![AppVersion: v2.6.2](https://img.shields.io/badge/AppVersion-v2.6.2-informational?style=flat-square)
+![Version: 1.10.2-bb.5](https://img.shields.io/badge/Version-1.10.2--bb.5-informational?style=flat-square) ![AppVersion: v2.6.2](https://img.shields.io/badge/AppVersion-v2.6.2-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -328,10 +328,10 @@ helm install harbor chart/
 | trivy.offlineScan | bool | `false` |  |
 | trivy.securityCheck | string | `"vuln"` |  |
 | trivy.timeout | string | `"5m0s"` |  |
-| trivy.resources.requests.cpu | string | `"100m"` |  |
-| trivy.resources.requests.memory | string | `"256Mi"` |  |
-| trivy.resources.limits.cpu | string | `"100m"` |  |
-| trivy.resources.limits.memory | string | `"256Mi"` |  |
+| trivy.resources.requests.cpu | string | `"200m"` |  |
+| trivy.resources.requests.memory | string | `"512Mi"` |  |
+| trivy.resources.limits.cpu | string | `"200m"` |  |
+| trivy.resources.limits.memory | string | `"512Mi"` |  |
 | trivy.nodeSelector | object | `{}` |  |
 | trivy.tolerations | list | `[]` |  |
 | trivy.affinity | object | `{}` |  |
@@ -451,11 +451,10 @@ helm install harbor chart/
 | redis.internal.image.repository | string | `"goharbor/redis-photon"` |  |
 | redis.internal.image.tag | string | `"v2.6.2"` |  |
 | redis.internal.image.pullSecrets[0] | string | `"private-registry"` |  |
-| redis.internal.resources | string | `nil` |  |
-| redis.internal.requests.memory | string | `"256Mi"` |  |
-| redis.internal.requests.cpu | string | `"100m"` |  |
-| redis.internal.limits.memory | string | `"256Mi"` |  |
-| redis.internal.limits.cpu | string | `"100m"` |  |
+| redis.internal.resources.requests.memory | string | `"256Mi"` |  |
+| redis.internal.resources.requests.cpu | string | `"100m"` |  |
+| redis.internal.resources.limits.memory | string | `"256Mi"` |  |
+| redis.internal.resources.limits.cpu | string | `"100m"` |  |
 | redis.internal.nodeSelector | object | `{}` |  |
 | redis.internal.tolerations | list | `[]` |  |
 | redis.internal.affinity | object | `{}` |  |

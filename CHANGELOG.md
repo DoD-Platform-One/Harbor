@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.10.2-bb.5] - 2023-01-17
+### Changed
+- External Database helper templates
+
 ## [1.10.2-bb.4] - 2023-01-06
 ### Added
 - Add Resource values for every pod to set Guaranteed QoS
