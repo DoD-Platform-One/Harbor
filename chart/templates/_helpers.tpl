@@ -64,19 +64,35 @@ app: "{{ template "harbor.name" . }}"
 {{- end -}}
 
 {{- define "harbor.database.host" -}}
-  {{- printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" -}}
+  {{- if .Values.postgresql.enabled -}}
+    {{- printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" -}}
+  {{- else -}}
+    {{- .Values.database.external.host -}}
+  {{- end }}
 {{- end -}}
 
 {{- define "harbor.database.port" -}}
-  {{- printf "%s" "5432" -}}
+  {{- if .Values.postgresql.enabled -}}
+    {{- printf "%s" "5432" -}}
+   {{- else -}}
+    {{- .Values.database.external.port -}}
+  {{- end -}}
 {{- end -}}
 
 {{- define "harbor.database.username" -}}
-  {{- .Values.postgresql.postgresqlUsername -}}
+  {{- if .Values.postgresql.enabled -}}
+    {{- .Values.postgresql.postgresqlUsername -}}
+  {{- else -}}
+    {{- .Values.database.external.username -}}
+  {{- end -}}
 {{- end -}}
 
 {{- define "harbor.database.rawPassword" -}}
-  {{- .Values.postgresql.postgresqlPassword -}}
+  {{- if .Values.postgresql.enabled -}}
+    {{- .Values.postgresql.postgresqlPassword -}}
+  {{- else -}}
+    {{- .Values.database.external.password -}}
+  {{- end -}}
 {{- end -}}
 
 {{- define "harbor.database.escapedRawPassword" -}}
@@ -88,43 +104,75 @@ app: "{{ template "harbor.name" . }}"
 {{- end -}}
 
 {{- define "harbor.database.coreDatabase" -}}
-  {{- printf "%s" "postgres" -}}
+  {{- if .Values.postgresql.enabled -}}
+    {{- printf "%s" "postgres" -}}
+  {{- else -}}
+    {{- .Values.database.external.coreDatabase -}}
+  {{- end -}}
 {{- end -}}
 
 {{- define "harbor.database.notaryServerDatabase" -}}
-  {{- .Values.postgresql.notaryServerDatabase -}}
+  {{- if .Values.postgresql.enabled -}}
+    {{- .Values.postgresql.notaryServerDatabase -}}
+  {{- else -}}
+    {{- .Values.database.external.notaryServerDatabase -}}
+  {{- end -}}
 {{- end -}}
 
 {{- define "harbor.database.notaryServerUser" -}}
+  {{- if .Values.postgresql.enabled -}}
   {{- .Values.postgresql.notaryServerUsername -}}
+  {{- end }}
 {{- end -}}
 
 {{- define "harbor.database.notaryServerPassword" -}}
+  {{- if .Values.postgresql.enabled -}}
   {{- .Values.postgresql.notaryServerPassword -}}
+  {{- end }}
 {{- end -}}
 
 {{- define "harbor.database.notarySignerDatabase" -}}
-  {{- .Values.postgresql.notarySignerDatabase -}}
+  {{- if .Values.postgresql.enabled -}}
+    {{- .Values.postgresql.notarySignerDatabase -}}
+  {{- else -}}
+    {{- .Values.database.external.notarySignerDatabase -}}
+  {{- end -}}
 {{- end -}}
 
 {{- define "harbor.database.notarySignerUser" -}}
+  {{- if .Values.postgresql.enabled -}}
   {{- .Values.postgresql.notarySignerUsername -}}
+  {{- end }}
 {{- end -}}
 
 {{- define "harbor.database.notarySignerPassword" -}}
+  {{- if .Values.postgresql.enabled -}}
   {{- .Values.postgresql.notarySignerPassword -}}
+  {{- end }}
 {{- end -}}
 
 {{- define "harbor.database.sslmode" -}}
-  {{- printf "%s" "disable" -}}
+  {{- if .Values.postgresql.enabled -}}
+    {{- printf "%s" "disable" -}}
+  {{- else -}}
+    {{- .Values.database.external.sslmode -}}
+  {{- end -}}
 {{- end -}}
 
 {{- define "harbor.database.notaryServer" -}}
+{{- if .Values.postgresql.enabled -}}
 postgres://{{ template "harbor.database.notaryServerUser" . }}:{{ template "harbor.database.escapedRawPassword" . }}@{{ template "harbor.database.host" . }}:{{ template "harbor.database.port" . }}/{{ template "harbor.database.notaryServerDatabase" . }}?sslmode={{ template "harbor.database.sslmode" . }}
+{{- else }}
+postgres://{{ template "harbor.database.username" . }}:{{ template "harbor.database.escapedRawPassword" . }}@{{ template "harbor.database.host" . }}:{{ template "harbor.database.port" . }}/{{ template "harbor.database.notaryServerDatabase" . }}?sslmode={{ template "harbor.database.sslmode" . }}
+{{- end }}
 {{- end -}}
 
 {{- define "harbor.database.notarySigner" -}}
+{{- if .Values.postgresql.enabled -}} 
 postgres://{{ template "harbor.database.notarySignerUser" . }}:{{ template "harbor.database.escapedRawPassword" . }}@{{ template "harbor.database.host" . }}:{{ template "harbor.database.port" . }}/{{ template "harbor.database.notarySignerDatabase" . }}?sslmode={{ template "harbor.database.sslmode" . }}
+{{- else }}
+postgres://{{ template "harbor.database.username" . }}:{{ template "harbor.database.escapedRawPassword" . }}@{{ template "harbor.database.host" . }}:{{ template "harbor.database.port" . }}/{{ template "harbor.database.notarySignerDatabase" . }}?sslmode={{ template "harbor.database.sslmode" . }}
+{{- end }}
 {{- end -}}
 
 {{- define "harbor.redis.scheme" -}}
