@@ -33,3 +33,37 @@ dependencies:
   - name: gluon
     version: 0.3.1
     repository: oci://registry1.dso.mil/bigbang
+annotations:
+  bigbang.dev/applicationVersions: |
+    - Harbor Core: v2.6.2
+  helm.sh/images: |
+    - name: nginx
+      image: registry1.dso.mil/ironbank/opensource/nginx/nginx:1.23.2
+    - name: harbor-portal
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.6.2
+    - name: harbor-core
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.6.2
+    - name: harbor-jobservice
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.6.2
+    - name: registry
+      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.6.2
+    - name: chartmuseum
+      condition: chartmuseum.enabled
+      image: registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum:v2.6.2
+    - name: trivy
+      condition: trivy.enabled
+      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.6.2
+    - name: notary-server
+      condition: notary.enabled
+      image: registry1.dso.mil/ironbank/opensource/goharbor/notary-server:v2.6.2
+    - name: notary-signer
+      condition: notary.enabled
+      image: registry1.dso.mil/ironbank/opensource/goharbor/notary-signer:v2.6.2
+    - name: postgresql12
+      condition: postgresql.enabled
+      image: registry1.dso.mil/ironbank/opensource/postgres/postgresql12:12.12
+    - name: redis
+      condition: redis-bb.enabled
+      image: registry1.dso.mil/ironbank/bitnami/redis:7.0.0-debian-10-r3
+    - name: harbor-exporter
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.6.2
