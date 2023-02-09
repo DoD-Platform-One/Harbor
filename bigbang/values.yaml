@@ -28,6 +28,19 @@ harbor:
     redis:
       external: 
         addr: "harbor-harbor-redis-bb-headless:6379"
+    core:
+      secretName: "ci-only"
+    bbtests:
+      enabled: true
+    expose:
+      type: clusterIP
+      tls:
+        enabled: false
+        certSource: "secret"
+      secret:
+        secretName: "harbor-tls-is-annoying"
+    internalTLS:
+      enabled: false
 
   # -- Post Renderers.  See docs/postrenders.md
   postRenderers: []

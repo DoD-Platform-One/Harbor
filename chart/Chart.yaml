@@ -1,6 +1,6 @@
 apiVersion: v2
 name: harbor
-version: 1.10.2-bb.5
+version: 1.10.2-bb.6
 appVersion: v2.6.2
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:

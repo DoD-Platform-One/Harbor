@@ -2,6 +2,12 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.10.2-bb.6] - 2023-02-08
+### Changed
+- Core secret templates
+### Added
+- Production.md documentation section for key generation and usage
+
 ## [1.10.2-bb.5] - 2023-01-17
 ### Changed
 - External Database helper templates

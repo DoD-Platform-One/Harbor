@@ -25,6 +25,7 @@ portal:
      cpu: 80m
      memory: 200Mi
 core:
+  secretName: "ci-only"
   resources:
    requests:
      memory: 200Mi
@@ -141,3 +142,5 @@ exporter:
    limits:
      cpu: 80m
      memory: 200Mi
+bbtests:
+  enabled: true

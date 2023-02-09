@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.10.2-bb.5](https://img.shields.io/badge/Version-1.10.2--bb.5-informational?style=flat-square) ![AppVersion: v2.6.2](https://img.shields.io/badge/AppVersion-v2.6.2-informational?style=flat-square)
+![Version: 1.10.2-bb.6](https://img.shields.io/badge/Version-1.10.2--bb.6-informational?style=flat-square) ![AppVersion: v2.6.2](https://img.shields.io/badge/AppVersion-v2.6.2-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -229,6 +229,8 @@ helm install harbor chart/
 | core.podAnnotations | object | `{}` |  |
 | core.secret | string | `""` |  |
 | core.secretName | string | `""` |  |
+| core.tokenKey | string | `""` |  |
+| core.tokenCertificate | string | `""` |  |
 | core.xsrfKey | string | `""` |  |
 | core.priorityClassName | string | `nil` |  |
 | core.artifactPullAsyncFlushDuration | string | `nil` |  |
@@ -530,6 +532,7 @@ helm install harbor chart/
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
 | cache.enabled | bool | `false` |  |
 | cache.expireHours | int | `24` |  |
+| bb.core | string | `nil` |  |
 
 ## Contributing
 
