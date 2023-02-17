@@ -847,13 +847,6 @@ database:
           cpu: 100m
           memory: 128Mi
       permissions: {}
-      resources:
-        requests:
-          memory: 128Mi
-          cpu: 100m
-        limits:
-          cpu: 100m
-          memory: 128Mi
   external:
     host: "harbor-postgresql"
     port: "5432"
