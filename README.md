@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.10.2-bb.6](https://img.shields.io/badge/Version-1.10.2--bb.6-informational?style=flat-square) ![AppVersion: v2.6.2](https://img.shields.io/badge/AppVersion-v2.6.2-informational?style=flat-square)
+![Version: 1.10.2-bb.7](https://img.shields.io/badge/Version-1.10.2--bb.7-informational?style=flat-square) ![AppVersion: v2.6.2](https://img.shields.io/badge/AppVersion-v2.6.2-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -390,10 +390,6 @@ helm install harbor chart/
 | database.internal.initContainer.resources.limits.cpu | string | `"100m"` |  |
 | database.internal.initContainer.resources.limits.memory | string | `"128Mi"` |  |
 | database.internal.initContainer.permissions | object | `{}` |  |
-| database.internal.initContainer.resources.requests.memory | string | `"128Mi"` |  |
-| database.internal.initContainer.resources.requests.cpu | string | `"100m"` |  |
-| database.internal.initContainer.resources.limits.cpu | string | `"100m"` |  |
-| database.internal.initContainer.resources.limits.memory | string | `"128Mi"` |  |
 | database.external.host | string | `"harbor-postgresql"` |  |
 | database.external.port | string | `"5432"` |  |
 | database.external.username | string | `"user"` |  |
@@ -532,7 +528,6 @@ helm install harbor chart/
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
 | cache.enabled | bool | `false` |  |
 | cache.expireHours | int | `24` |  |
-| bb.core | string | `nil` |  |
 
 ## Contributing
 
