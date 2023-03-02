@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.10.2-bb.8] - 2023-03-01
+### Added
+- Added harbor architecture overview documentation
+
 ## [1.10.2-bb.7] - 2023-02-17
 ### Changed
 - removed duplicate database.internal.initContainer.resources within values.yaml
