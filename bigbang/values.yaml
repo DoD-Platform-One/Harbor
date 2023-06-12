@@ -28,19 +28,40 @@ harbor:
     redis:
       external: 
         addr: "harbor-harbor-redis-bb-headless:6379"
+    networkPolicies:
+      enabled: true
     core:
       secretName: "ci-only"
+    notary:
+      enabled: false
     bbtests:
       enabled: true
     expose:
-      type: clusterIP
+      type: "clusterIP"
       tls:
         enabled: false
-        certSource: "secret"
-      secret:
-        secretName: "harbor-tls-is-annoying"
+        certSource: secret
+      #secret:
+      #  secretName: "harbor-tls-is-annoying"
+    externalURL: http://harbor
     internalTLS:
       enabled: false
+    postgresql:
+      resources:
+        requests:
+          cpu: "200m"
+          memory: "200Mi"
+        limits:
+          cpu: "200m"
+          memory: "200Mi"
+    redis-bb:
+      master:
+        persistence:
+          size: 256Mi
+      replicas:
+        replicaCount: 0
+        autoscaling:
+          enabled: false
 
   # -- Post Renderers.  See docs/postrenders.md
   postRenderers: []
@@ -63,9 +84,9 @@ clusterAuditor:
   enabled: false
 
 # Logging
-eckoperator:
+eckOperator:
   enabled: false
-logging:
+elasticsearchKibana:
   enabled: false
 fluentbit:
   enabled: false
@@ -81,6 +102,10 @@ kiali:
   enabled: false
 twistlock:
   enabled: false
+kyverno:
+  enabled: false
+kyvernoPolicies:
+  enabled: false
 addons:
   gitlab:
     enabled: false
@@ -88,7 +113,7 @@ addons:
     enabled: false
   vault:
     enabled: false
-  nexus:
+  nexusRepositoryManager:
     enabled: false
   mattermost:
     enabled: false
@@ -100,10 +125,9 @@ addons:
     enabled: false
   anchore:
     enabled: false
-  mattermostoperator:
+  mattermostOperator:
     enabled: false
   argocd:
     enabled: false
   authservice:
     enabled: false
-

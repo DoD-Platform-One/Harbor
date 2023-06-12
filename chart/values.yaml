@@ -40,6 +40,7 @@ expose:
     # set to `gce` if using the GCE ingress controller
     # set to `ncp` if using the NCP (NSX-T Container Plugin) ingress controller
     # set to `alb` if using the ALB ingress controller
+    # set to `f5-bigip` if using the F5 BIG-IP ingress controller
     controller: default
     ## Allow .Capabilities.KubeVersion.Version to be overridden while creating ingress
     kubeVersionOverride: ""
@@ -268,7 +269,7 @@ persistence:
       accessMode: ReadWriteOnce
       size: 5Gi
       annotations: {}
-  # Define which storage backend is used for registry and chartmuseum to store
+  # Define which storage backend is used for registry to store
   # images and charts. Refer to
   # https://github.com/docker/distribution/blob/master/docs/configuration.md#storage
   # for the detail.
@@ -282,7 +283,7 @@ persistence:
     disableredirect: false
     # Specify the "caBundleSecretName" if the storage service uses a self-signed certificate.
     # The secret must contain keys named "ca.crt" which will be injected into the trust store
-    # of registry's and chartmuseum's containers.
+    # of registry's containers.
     # caBundleSecretName:
 
     # Specify the type of storage: "filesystem", "azure", "gcs", "s3", "swift",
@@ -311,8 +312,7 @@ persistence:
       useWorkloadIdentity: false
     s3:
       # Set an existing secret for S3 accesskey and secretkey
-      # keys in the secret should be AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY for chartmuseum
-      # keys in the secret should be REGISTRY_STORAGE_S3_ACCESSKEY and REGISTRY_STORAGE_S3_SECRETKEY for registry
+      # keys in the secret should be REGISTRY_STORAGE_S3_ACCESSKEY and REGISTRY_STORAGE_S3_SECRETKEY for chartmuseum
       #existingSecret: ""
       region: us-west-1
       bucket: bucketname
@@ -370,8 +370,7 @@ imagePullSecrets:
 #  - name: docker-registry-secret
 #  - name: internal-registry-secret
 
-# The update strategy for deployments with persistent volumes(jobservice, registry
-# and chartmuseum): "RollingUpdate" or "Recreate"
+# The update strategy for deployments with persistent volumes(jobservice, registry): "RollingUpdate" or "Recreate"
 # Set it as "Recreate" when "RWM" for volumes isn't supported
 updateStrategy:
   type: RollingUpdate
@@ -380,6 +379,10 @@ updateStrategy:
 logLevel: info
 
 # The initial password of Harbor admin. Change it from portal after launching Harbor
+# or give an existing secret for it
+# key in secret is given via (default to HARBOR_ADMIN_PASSWORD)
+# existingSecretAdminPassword:
+existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
 harborAdminPassword: "Harbor12345"
 
 # The name of the secret which contains key named "ca.crt". Setting this enables the
@@ -389,7 +392,7 @@ caSecretName: ""
 
 # The secret key used for encryption. Must be a string of 16 chars.
 secretKey: "not-a-secure-key"
-# If using existingSecretSecretKey, the key must be sercretKey
+# If using existingSecretSecretKey, the key must be secretKey
 existingSecretSecretKey: ""
 
 # The proxy settings for updating trivy vulnerabilities from the Internet and replicating
@@ -407,7 +410,7 @@ proxy:
 enableMigrateHelmHook: false
 
 # The custom ca bundle secret, the secret must contain key named "ca.crt"
-# which will be injected into the trust store for chartmuseum, core, jobservice, registry, trivy components
+# which will be injected into the trust store for core, jobservice, registry, trivy components
 # caBundleSecretName: ""
 
 ## UAA Authentication Options
@@ -421,7 +424,7 @@ enableMigrateHelmHook: false
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: 1.23.2
+    tag: 1.23.3
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -448,7 +451,7 @@ nginx:
 portal:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-    tag: v2.6.2
+    tag: v2.8.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -475,7 +478,7 @@ portal:
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-    tag: v2.6.2
+    tag: v2.8.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -500,6 +503,8 @@ core:
   affinity: {}
   ## Additional deployment annotations
   podAnnotations: {}
+  ## Additional service annotations
+  serviceAnnotations: {}
   # Secret is used when core server communicates with other components.
   # If a secret key is not specified, Helm will generate one.
   # Must be a string of 16 chars.
@@ -507,13 +512,16 @@ core:
   # Fill the name of a kubernetes secret if you want to use your own
   # TLS certificate and private key for token encryption/decryption.
   # The secret must contain keys named:
-  # "tls.crt" - the certificate
   # "tls.key" - the private key
-  # The values in tokenKey and tokenCertificate will be used if this is not set.  One of secretName or tokenKey and tokenCertificate MUST be set.
+  # "tls.crt" - the certificate
   secretName: ""
-  # If not specifying a preexisting secret, a secret will be created from tokenKey and tokenCertificate and used instead.  One of secretName or tokenKey MUST be specified.  See https://repo1.dso.mil/big-bang/apps/sandbox/harbor/-/blob/main/docs/production.md#rsa-certificate-for-token-signatures for details on how to generate an RSA keypair.
+  # If not specifying a preexisting secret, a secret can be created from tokenKey and tokenCert and used instead.
+  # If none of secretName, tokenKey, and tokenCert are specified, an ephemeral key and certificate will be autogenerated.
+  # tokenKey and tokenCert must BOTH be set or BOTH unset.
+  # The tokenKey value is formatted as a multiline string containing a PEM-encoded RSA key, indented one more than tokenKey on the following line.
   tokenKey: |
-  tokenCertificate: |
+  # If tokenKey is set, the value of tokenCert must be set as a PEM-encoded certificate signed by tokenKey, and supplied as a multiline string, indented one more than tokenCert on the following line.
+  tokenCert: |
   # The XSRF key. Will be generated automatically if it isn't specified
   xsrfKey: ""
   ## The priority class to run the pod as
@@ -528,7 +536,7 @@ core:
 jobservice:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-    tag: v2.6.2
+    tag: v2.8.2
     pullSecrets:
     - private-registry
   replicas: 1
@@ -545,6 +553,14 @@ jobservice:
     # - stdout
   # The jobLogger sweeper duration (ignored if `jobLogger` is `stdout`)
   loggerSweeperDuration: 14 #days
+  notification:
+    webhook_job_max_retry: 3
+    webhook_job_http_client_timeout: 3 # in seconds
+  reaper:
+    # the max time to wait for a task to finish, if unfinished after max_update_hours, the task will be mark as error, but the task will continue to run, default value is 24
+    max_update_hours: 24
+    # the max time for execution in running state without new task created
+    max_dangling_hours: 168
 
   resources:
     requests:
@@ -573,7 +589,7 @@ registry:
   registry:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-      tag: v2.6.2
+      tag: v2.8.2
       pullSecrets:
       - private-registry
     resources:
@@ -586,7 +602,7 @@ registry:
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-      tag: v2.6.2
+      tag: v2.8.2
       pullSecrets:
       - private-registry
     resources:
@@ -650,7 +666,7 @@ chartmuseum:
   absoluteUrl: false
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum
-    tag: v2.6.2
+    tag: v2.7.2
     pullSecrets:
     - private-registry
   replicas: 1
@@ -679,7 +695,7 @@ trivy:
     # repository the repository for Trivy adapter image
     repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
-    tag: v2.6.2
+    tag: v2.8.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -756,7 +772,7 @@ notary:
     automountServiceAccountToken: false
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/notary-server
-      tag: v2.6.2
+      tag: v2.8.2
       pullSecrets:
       - private-registry
     replicas: 1
@@ -774,6 +790,8 @@ notary:
     podAnnotations: {}
     ## The priority class to run the pod as
     priorityClassName:
+  ## Additional service annotations
+  serviceAnnotations: {}
   signer:
     # set the service account to be used, default if left empty
     serviceAccountName: ""
@@ -781,7 +799,7 @@ notary:
     automountServiceAccountToken: false
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/notary-signer
-      tag: v2.6.2
+      tag: v2.8.2
       pullSecrets:
       - private-registry
     replicas: 1
@@ -818,7 +836,7 @@ database:
     automountServiceAccountToken: false
     #image:
     #  repository: goharbor/harbor-db
-    #  tag: v2.6.2
+    #  tag: v2.8.2
     # The initial superuser password for internal database
     password: "changeit"
     # The size limit for Shared memory, pgSQL use it for shared_buffer
@@ -850,9 +868,9 @@ database:
   external:
     host: "harbor-postgresql"
     port: "5432"
-    username: "user"
-    password: "password"
-    coreDatabase: "registry"
+    username: "harborUser"
+    password: "harborPW"
+    coreDatabase: "harborUser"
     notaryServerDatabase: "notary_server"
     notarySignerDatabase: "notary_signer"
     # if using existing secret, the key must be "password"
@@ -881,6 +899,7 @@ postgresql:
   # Notary Signer settings
   notarySignerDatabase: "notary_signer"
   notarySignerUsername: "signeruser"
+  coreDatabase: "harborUser"
   maxIdleConns: 100
   maxOpenConns: 900
   # PostgreSQL network policy configuration
@@ -895,7 +914,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql12
-    tag: 12.12
+    tag: 12.14
     debug: true
   securityContext:
     enabled: true
@@ -967,7 +986,7 @@ redis:
     automountServiceAccountToken: false
     image:
       repository: goharbor/redis-photon
-      tag: v2.6.2
+      tag: v2.8.2
       pullSecrets:
       - private-registry
     resources:
@@ -996,6 +1015,8 @@ redis:
     registryDatabaseIndex: "2"
     chartmuseumDatabaseIndex: "3"
     trivyAdapterIndex: "5"
+    # username field can be an empty string and it will be authenticated against the default user
+    username: ""
     password: ""
     # If using existingSecret, the key must be REDIS_PASSWORD
     existingSecret: ""
@@ -1041,7 +1062,7 @@ exporter:
   automountServiceAccountToken: false
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-    tag: v2.6.2
+    tag: v2.8.2
     pullSecrets:
     - private-registry
   nodeSelector: {}
@@ -1118,7 +1139,8 @@ trace:
     url_path: /v1/traces
     compression: false
     insecure: true
-    timeout: 10s
+    # timeout is in seconds
+    timeout: 10
 
 # Big Bang Additions
 domain: bigbang.dev
@@ -1148,3 +1170,5 @@ cache:
   enabled: false
   # default keep cache for one day.
   expireHours: 24
+bbtests:
+  enabled: false

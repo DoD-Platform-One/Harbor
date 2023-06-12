@@ -10,29 +10,29 @@ internalTLS:
 externalURL: https://harbor.bigbang.dev
 nginx:
   resources:
-   requests:
-     memory: 200Mi
-     cpu: 80m
-   limits:
-     cpu: 80m
-     memory: 200Mi
+    requests:
+      memory: 200Mi
+      cpu: 80m
+    limits:
+      cpu: 80m
+      memory: 200Mi
 portal:
   resources:
-   requests:
-     memory: 200Mi
-     cpu: 80m
-   limits:
-     cpu: 80m
-     memory: 200Mi
+    requests:
+      memory: 200Mi
+      cpu: 80m
+    limits:
+      cpu: 80m
+      memory: 200Mi
 core:
   secretName: "ci-only"
   resources:
-   requests:
-     memory: 200Mi
-     cpu: 80m
-   limits:
-     cpu: 80m
-     memory: 200Mi
+    requests:
+      memory: 200Mi
+      cpu: 80m
+    limits:
+      cpu: 80m
+      memory: 200Mi
 jobservice:
   resources:
     requests:
