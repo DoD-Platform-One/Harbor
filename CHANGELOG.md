@@ -2,6 +2,24 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.12.2-bb.0] - 2023-05-03
+### Added
+- goharbor/redis-photon minor v2.6.2 -> v2.8.2
+- ironbank/opensource/goharbor/harbor-core minor v2.6.2 -> v2.8.2
+- registry1.dso.mil/ironbank/bitnami/postgres-exporter minor 0.11.1 -> 0.12.0
+- registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum minor v2.6.2 -> v2.7.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-core minor v2.6.2 -> v2.8.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter minor v2.6.2 -> v2.8.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice minor v2.6.2 -> v2.8.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal minor v2.6.2 -> v2.8.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl minor v2.6.2 -> v2.8.2
+- registry1.dso.mil/ironbank/opensource/goharbor/notary-server minor v2.6.2 -> v2.8.2
+- registry1.dso.mil/ironbank/opensource/goharbor/notary-signer minor v2.6.2 -> v2.8.2
+- registry1.dso.mil/ironbank/opensource/goharbor/registry minor v2.6.2 -> v2.8.2
+- registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter minor v2.6.2 -> v2.8.2
+- registry1.dso.mil/ironbank/opensource/nginx/nginx patch 1.23.2 -> 1.23.3
+- registry1.dso.mil/ironbank/opensource/postgres/postgresql12 minor 12.12 -> 12.14
+
 ## [1.10.2-bb.8] - 2023-03-01
 ### Added
 - Added harbor architecture overview documentation
@@ -49,6 +67,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter patch v2.6.0 -> v2.6.2
 - registry1.dso.mil/ironbank/opensource/nginx/nginx patch 1.23.1 -> 1.23.2
 - registry1.dso.mil/ironbank/opensource/postgres/postgresql12 minor 12.11 -> 12.12
+
 ## [1.10.1-bb.3] - 2022-11-16
 ### Changed
 - Fixing integration pipeline stage
