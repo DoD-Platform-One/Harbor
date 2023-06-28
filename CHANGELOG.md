@@ -2,6 +2,12 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.12.2-bb.1] - 2023-05-03
+### Added
+- Added cypress and script automated tests to validate installation
+- increased gluon test package v0.3.1 -> v0.3.2
+
+
 ## [1.12.2-bb.0] - 2023-05-03
 ### Added
 - goharbor/redis-photon minor v2.6.2 -> v2.8.2

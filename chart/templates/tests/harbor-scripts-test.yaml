@@ -1,0 +1,13 @@
+{{- include "gluon.tests.script-configmap.overrides" (list . "harbor.script-configmap") }}
+{{- define "harbor.script-configmap" }}
+metadata:
+  labels:
+    app: harbor
+{{- end }}
+---
+{{- include "gluon.tests.script-runner.overrides" (list . "harbor.script-runner") -}}
+{{- define "harbor.script-runner" -}}
+metadata:
+  labels:
+    app: harbor
+{{- end }}
