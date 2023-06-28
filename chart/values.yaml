@@ -1170,5 +1170,20 @@ cache:
   enabled: false
   # default keep cache for one day.
   expireHours: 24
+
 bbtests:
   enabled: false
+  cypress:
+    artifacts: true
+    envs:
+      cypress_url: "http://harbor:80"
+      cypress_user: "admin"
+      cypress_harbor_password: "Harbor12345"
+      cypress_project: "bbcypress-test"
+  scripts:
+    image: "registry1.dso.mil/bigbang-ci/gitlab-tester:0.0.4"
+    envs:
+      HARBOR_USER: "admin"
+      HARBOR_PASS: "Harbor12345"
+      HARBOR_REGISTRY: "harbor:80"
+      HARBOR_PROJECT: "library"

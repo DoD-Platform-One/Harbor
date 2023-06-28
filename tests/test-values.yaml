@@ -2,12 +2,9 @@ expose:
   type: clusterIP
   tls:
     enabled: false
-    certSource: auto
-    auto:
-      commonName: "bigbang.dev"
 internalTLS:
   enabled: false
-externalURL: https://harbor.bigbang.dev
+externalURL: http://harbor:80
 nginx:
   resources:
     requests:

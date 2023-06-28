@@ -1,0 +1,19 @@
+{{- include "gluon.tests.cypress-configmap.overrides" (list . "harbor-test.cypress-configmap") }}
+{{- define "harbor-test.cypress-configmap" }}
+metadata:
+  labels:
+    helm.sh/chart: {{ include "harbor.fullname" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/part-of: harbor
+{{- end }}
+---
+{{- include "gluon.tests.cypress-runner.overrides" (list . "harbor-test.cypress-runner") -}}
+{{- define "harbor-test.cypress-runner" -}}
+metadata:
+  labels:
+    helm.sh/chart: {{ include "harbor.fullname" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/part-of: harbor
+{{- end }}
