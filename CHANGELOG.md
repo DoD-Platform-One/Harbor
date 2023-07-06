@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.12.2-bb.2] - 2023-06-30
+### Added
+- Enabling Istio mTLS
+
 ## [1.12.2-bb.1] - 2023-05-03
 ### Added
 - Added cypress and script automated tests to validate installation
