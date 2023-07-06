@@ -490,7 +490,7 @@ core:
   ## Startup probe values
   startupProbe:
     enabled: true
-    initialDelaySeconds: 10
+    initialDelaySeconds: 30
   resources:
     requests:
       memory: 256Mi
@@ -1111,6 +1111,8 @@ metrics:
       #   targetLabel: nodename
       #   replacement: $1
       #   action: replace
+    scheme: ""
+    tlsConfig: {}
 
 trace:
   enabled: false
@@ -1146,11 +1148,16 @@ trace:
 domain: bigbang.dev
 istio:
   enabled: false
+  mtls:
+    # -- STRICT = Allow only mutual TLS traffic,
+    # PERMISSIVE = Allow both plain text and mutual TLS traffic
+    mode: STRICT
   harbor:
     gateways:
     - "istio-system/public"
     hosts:
     - "harbor.{{ .Values.domain }}"
+  injection: disabled
 
 monitoring:
   enabled: false
