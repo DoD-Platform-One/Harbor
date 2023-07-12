@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.12.2-bb.3] - 2023-07-10
+### Added
+- Updating dependencies for postgres, nginx.
+
 ## [1.12.2-bb.2] - 2023-06-30
 ### Added
 - Enabling Istio mTLS
