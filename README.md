@@ -1,36 +1,31 @@
 # harbor
 
-![Version: 1.12.2-bb.2](https://img.shields.io/badge/Version-1.12.1--bb.2-informational?style=flat-square) ![AppVersion: 2.8.2](https://img.shields.io/badge/AppVersion-2.8.2-informational?style=flat-square)
+![Version: 1.12.2-bb.3](https://img.shields.io/badge/Version-1.12.2--bb.3-informational?style=flat-square) ![AppVersion: 2.8.2](https://img.shields.io/badge/AppVersion-2.8.2-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
-## Upstream References
-* <https://goharbor.io>
+**Homepage:** <https://goharbor.io>
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| Wenkai Yin | <yinw@vmware.com> |  |
+| Weiwei He | <hweiwei@vmware.com> |  |
+| Shengwen Yu | <yshengwen@vmware.com> |  |
+
+## Source Code
 
 * <https://github.com/goharbor/harbor>
 * <https://github.com/goharbor/harbor-helm>
 
-## Learn More
-* [Application Overview](docs/overview.md)
-* [Other Documentation](docs/)
+## Requirements
 
-## Pre-Requisites
-
-* Kubernetes Cluster deployed
-* Kubernetes config installed in `~/.kube/config`
-* Helm installed
-
-Install Helm
-
-https://helm.sh/docs/intro/install/
-
-## Deployment
-
-* Clone down the repository
-* cd into directory
-```bash
-helm install harbor chart/
-```
+| Repository | Name | Version |
+|------------|------|---------|
+| file://./deps/postgresql | postgresql | 10.3.13 |
+| oci://registry1.dso.mil/bigbang | gluon | 0.3.2 |
+| oci://registry1.dso.mil/bigbang | redis-bb(redis) | 16.12.3-bb.3 |
 
 ## Values
 
@@ -180,7 +175,7 @@ helm install harbor chart/
 | proxy.components[2] | string | `"trivy"` |  |
 | enableMigrateHelmHook | bool | `false` |  |
 | nginx.image.repository | string | `"registry1.dso.mil/ironbank/opensource/nginx/nginx"` |  |
-| nginx.image.tag | string | `"1.23.3"` |  |
+| nginx.image.tag | string | `"1.25.1"` |  |
 | nginx.image.pullSecrets[0] | string | `"private-registry"` |  |
 | nginx.serviceAccountName | string | `""` |  |
 | nginx.automountServiceAccountToken | bool | `false` |  |
@@ -219,7 +214,7 @@ helm install harbor chart/
 | core.replicas | int | `1` |  |
 | core.revisionHistoryLimit | int | `10` |  |
 | core.startupProbe.enabled | bool | `true` |  |
-| core.startupProbe.initialDelaySeconds | int | `10` |  |
+| core.startupProbe.initialDelaySeconds | int | `30` |  |
 | core.resources.requests.memory | string | `"256Mi"` |  |
 | core.resources.requests.cpu | string | `"100m"` |  |
 | core.resources.limits.cpu | string | `"100m"` |  |
@@ -401,7 +396,7 @@ helm install harbor chart/
 | database.external.port | string | `"5432"` |  |
 | database.external.username | string | `"harborUser"` |  |
 | database.external.password | string | `"harborPW"` |  |
-| database.external.coreDatabase | string | `"registry"` |  |
+| database.external.coreDatabase | string | `"harborUser"` |  |
 | database.external.notaryServerDatabase | string | `"notary_server"` |  |
 | database.external.notarySignerDatabase | string | `"notary_signer"` |  |
 | database.external.existingSecret | string | `""` |  |
@@ -413,14 +408,14 @@ helm install harbor chart/
 | postgresql.notaryServerUsername | string | `"serveruser"` |  |
 | postgresql.notarySignerDatabase | string | `"notary_signer"` |  |
 | postgresql.notarySignerUsername | string | `"signeruser"` |  |
-| postgresql.coreDatabase | string | `"registry"` |  |
+| postgresql.coreDatabase | string | `"harborUser"` |  |
 | postgresql.maxIdleConns | int | `100` |  |
 | postgresql.maxOpenConns | int | `900` |  |
 | postgresql.networkPolicy.enabled | bool | `false` |  |
 | postgresql.global.imagePullSecrets[0] | string | `"private-registry"` |  |
 | postgresql.image.registry | string | `"registry1.dso.mil"` |  |
 | postgresql.image.repository | string | `"ironbank/opensource/postgres/postgresql12"` |  |
-| postgresql.image.tag | float | `12.14` |  |
+| postgresql.image.tag | float | `12.15` |  |
 | postgresql.image.debug | bool | `true` |  |
 | postgresql.securityContext.enabled | bool | `true` |  |
 | postgresql.securityContext.fsGroup | int | `26` |  |
@@ -439,7 +434,6 @@ helm install harbor chart/
 | postgresql.initdbPassword | string | `"harborPW"` |  |
 | postgresql.initdbScripts."initial-notaryserver.sql" | string | `"CREATE USER serveruser with encrypted password 'harborPW';\nCREATE DATABASE notary_server WITH OWNER serveruser;\n"` |  |
 | postgresql.initdbScripts."initial-notarysigner.sql" | string | `"CREATE USER signeruser with encrypted password 'harborPW';\nCREATE DATABASE notary_signer WITH OWNER signeruser;\n"` |  |
-| postgresql.initdbScripts."initial-core.sql" | string | `"CREATE USER harborUser with encrypted password 'harborPW';\nCREATE DATABASE registry WITH OWNER harborUser;\n"` |  |
 | postgresql.externalDatabase.host | string | `"localhost"` |  |
 | postgresql.externalDatabase.port | int | `5432` |  |
 | postgresql.externalDatabase.user | string | `"bn_harbor"` |  |
@@ -518,6 +512,8 @@ helm install harbor chart/
 | metrics.serviceMonitor.interval | string | `""` |  |
 | metrics.serviceMonitor.metricRelabelings | list | `[]` |  |
 | metrics.serviceMonitor.relabelings | list | `[]` |  |
+| metrics.serviceMonitor.scheme | string | `""` |  |
+| metrics.serviceMonitor.tlsConfig | object | `{}` |  |
 | trace.enabled | bool | `false` |  |
 | trace.provider | string | `"jaeger"` |  |
 | trace.sample_rate | int | `1` |  |
@@ -529,8 +525,10 @@ helm install harbor chart/
 | trace.otel.timeout | int | `10` |  |
 | domain | string | `"bigbang.dev"` |  |
 | istio.enabled | bool | `false` |  |
+| istio.mtls.mode | string | `"STRICT"` | STRICT = Allow only mutual TLS traffic, PERMISSIVE = Allow both plain text and mutual TLS traffic |
 | istio.harbor.gateways[0] | string | `"istio-system/public"` |  |
 | istio.harbor.hosts[0] | string | `"harbor.{{ .Values.domain }}"` |  |
+| istio.injection | string | `"disabled"` |  |
 | monitoring.enabled | bool | `false` |  |
 | monitoring.namespace | string | `"monitoring"` |  |
 | networkPolicies.enabled | bool | `false` |  |
@@ -539,7 +537,16 @@ helm install harbor chart/
 | cache.enabled | bool | `false` |  |
 | cache.expireHours | int | `24` |  |
 | bbtests.enabled | bool | `false` |  |
+| bbtests.cypress.artifacts | bool | `true` |  |
+| bbtests.cypress.envs.cypress_url | string | `"http://harbor:80"` |  |
+| bbtests.cypress.envs.cypress_user | string | `"admin"` |  |
+| bbtests.cypress.envs.cypress_harbor_password | string | `"Harbor12345"` |  |
+| bbtests.cypress.envs.cypress_project | string | `"bbcypress-test"` |  |
+| bbtests.scripts.image | string | `"registry1.dso.mil/bigbang-ci/gitlab-tester:0.0.4"` |  |
+| bbtests.scripts.envs.HARBOR_USER | string | `"admin"` |  |
+| bbtests.scripts.envs.HARBOR_PASS | string | `"Harbor12345"` |  |
+| bbtests.scripts.envs.HARBOR_REGISTRY | string | `"harbor:80"` |  |
+| bbtests.scripts.envs.HARBOR_PROJECT | string | `"library"` |  |
 
-## Contributing
-
-Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+----------------------------------------------
+Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

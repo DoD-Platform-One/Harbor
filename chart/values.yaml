@@ -424,7 +424,7 @@ enableMigrateHelmHook: false
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: 1.23.3
+    tag: 1.25.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -914,7 +914,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql12
-    tag: 12.14
+    tag: 12.15
     debug: true
   securityContext:
     enabled: true
