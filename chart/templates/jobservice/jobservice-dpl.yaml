@@ -51,7 +51,8 @@ spec:
       containers:
       - name: jobservice
         image: {{ .Values.jobservice.image.repository }}:{{ .Values.jobservice.image.tag }}
-        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        imagePullPolicy: {{ .Values.imagePullPoliPcy }}
+        {{- toYaml $.Values.jobservice.containerSecurityContext | nindent 8 }}
         livenessProbe:
           httpGet:
             path: /api/v1/stats

@@ -47,6 +47,7 @@ spec:
         resources:
 {{ toYaml .Values.portal.resources | indent 10 }}
 {{- end }}
+        {{- toYaml $.Values.portal.containerSecurityContext | nindent 8 }}
         livenessProbe:
           httpGet:
             path: /

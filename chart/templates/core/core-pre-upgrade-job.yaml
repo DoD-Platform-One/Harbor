@@ -35,6 +35,7 @@ spec:
         image: {{ .Values.core.image.repository }}:{{ .Values.core.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         command: ["/harbor/harbor_core", "-mode=migrate"]
+        {{- toYaml $.Values.core.jobservice.containerSecurityContext | nindent 4 }}
         envFrom:
         - configMapRef:
             name: "{{ template "harbor.core" . }}"

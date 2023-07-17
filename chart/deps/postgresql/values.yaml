@@ -98,7 +98,9 @@ securityContext:
 containerSecurityContext:
   enabled: true
   runAsUser: 26
-
+  capabilities:
+    drop:
+    - ALL
 ## Pod Service Account
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 ##
