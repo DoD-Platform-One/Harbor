@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.12.2-bb.4] - 2023-07-13
+### Added
+- Adding Security context to drop all capabilities to reduce syscall attack surface.  Capabilities permit certain named root actions without giving full root access.git 
+
 ## [1.12.2-bb.3] - 2023-07-10
 ### Added
 - Updating dependencies for postgres, nginx.

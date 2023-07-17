@@ -40,6 +40,7 @@ spec:
       - name: redis
         image: {{ .Values.redis.internal.image.repository }}:{{ .Values.redis.internal.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
+        {{- toYaml $.Values.redis.containerSecurityContext | nindent 8 }}
         livenessProbe:
           tcpSocket:
             port: 6379

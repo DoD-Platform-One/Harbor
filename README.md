@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.12.2-bb.3](https://img.shields.io/badge/Version-1.12.2--bb.3-informational?style=flat-square) ![AppVersion: 2.8.2](https://img.shields.io/badge/AppVersion-2.8.2-informational?style=flat-square)
+![Version: 1.12.2-bb.4](https://img.shields.io/badge/Version-1.12.2--bb.4-informational?style=flat-square) ![AppVersion: 2.8.2](https://img.shields.io/badge/AppVersion-2.8.2-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -190,6 +190,7 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | nginx.affinity | object | `{}` |  |
 | nginx.podAnnotations | object | `{}` |  |
 | nginx.priorityClassName | string | `nil` |  |
+| nginx.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | portal.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal"` |  |
 | portal.image.tag | string | `"v2.8.2"` |  |
 | portal.image.pullSecrets[0] | string | `"private-registry"` |  |
@@ -206,6 +207,7 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | portal.affinity | object | `{}` |  |
 | portal.podAnnotations | object | `{}` |  |
 | portal.priorityClassName | string | `nil` |  |
+| portal.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | core.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-core"` |  |
 | core.image.tag | string | `"v2.8.2"` |  |
 | core.image.pullSecrets[0] | string | `"private-registry"` |  |
@@ -213,6 +215,7 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | core.automountServiceAccountToken | bool | `false` |  |
 | core.replicas | int | `1` |  |
 | core.revisionHistoryLimit | int | `10` |  |
+| core.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | core.startupProbe.enabled | bool | `true` |  |
 | core.startupProbe.initialDelaySeconds | int | `30` |  |
 | core.resources.requests.memory | string | `"256Mi"` |  |
@@ -226,12 +229,13 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | core.serviceAnnotations | object | `{}` |  |
 | core.secret | string | `""` |  |
 | core.secretName | string | `""` |  |
-| core.tokenKey | string | `""` |  |
-| core.tokenCert | string | `""` |  |
+| core.tokenKey | string | `nil` |  |
+| core.tokenCert | string | `nil` |  |
 | core.xsrfKey | string | `""` |  |
 | core.priorityClassName | string | `nil` |  |
 | core.artifactPullAsyncFlushDuration | string | `nil` |  |
 | core.gdpr.deleteUser | bool | `false` |  |
+| core.jobservice.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | jobservice.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice"` |  |
 | jobservice.image.tag | string | `"v2.8.2"` |  |
 | jobservice.image.pullSecrets[0] | string | `"private-registry"` |  |
@@ -246,6 +250,7 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | jobservice.notification.webhook_job_http_client_timeout | int | `3` |  |
 | jobservice.reaper.max_update_hours | int | `24` |  |
 | jobservice.reaper.max_dangling_hours | int | `168` |  |
+| jobservice.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | jobservice.resources.requests.memory | string | `"256Mi"` |  |
 | jobservice.resources.requests.cpu | string | `"100m"` |  |
 | jobservice.resources.limits.cpu | string | `"100m"` |  |
@@ -265,6 +270,7 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | registry.registry.resources.requests.cpu | string | `"100m"` |  |
 | registry.registry.resources.limits.cpu | string | `"100m"` |  |
 | registry.registry.resources.limits.memory | string | `"256Mi"` |  |
+| registry.registry.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | registry.controller.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl"` |  |
 | registry.controller.image.tag | string | `"v2.8.2"` |  |
 | registry.controller.image.pullSecrets[0] | string | `"private-registry"` |  |
@@ -272,6 +278,7 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | registry.controller.resources.requests.cpu | string | `"100m"` |  |
 | registry.controller.resources.limits.cpu | string | `"100m"` |  |
 | registry.controller.resources.limits.memory | string | `"256Mi"` |  |
+| registry.controller.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | registry.replicas | int | `1` |  |
 | registry.revisionHistoryLimit | int | `10` |  |
 | registry.nodeSelector | object | `{}` |  |
@@ -340,6 +347,9 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | trivy.affinity | object | `{}` |  |
 | trivy.podAnnotations | object | `{}` |  |
 | trivy.priorityClassName | string | `nil` |  |
+| trivy.containerSecurityContext.securityContext.privileged | bool | `false` |  |
+| trivy.containerSecurityContext.securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| trivy.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | notary.enabled | bool | `true` |  |
 | notary.server.serviceAccountName | string | `""` |  |
 | notary.server.automountServiceAccountToken | bool | `false` |  |
@@ -357,6 +367,7 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | notary.server.podAnnotations | object | `{}` |  |
 | notary.server.priorityClassName | string | `nil` |  |
 | notary.serviceAnnotations | object | `{}` |  |
+| notary.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | notary.signer.serviceAccountName | string | `""` |  |
 | notary.signer.automountServiceAccountToken | bool | `false` |  |
 | notary.signer.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/notary-signer"` |  |
@@ -372,6 +383,7 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | notary.signer.affinity | object | `{}` |  |
 | notary.signer.podAnnotations | object | `{}` |  |
 | notary.signer.priorityClassName | string | `nil` |  |
+| notary.signer.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | notary.secretName | string | `""` |  |
 | database.type | string | `"external"` |  |
 | database.internal.serviceAccountName | string | `""` |  |
@@ -471,6 +483,7 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | redis.external.password | string | `""` |  |
 | redis.external.existingSecret | string | `""` |  |
 | redis.podAnnotations | object | `{}` |  |
+| redis.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | redis-bb.enabled | bool | `true` | Enable BigBang provided redis sub-chart. Disable if using external cloud elasticache or redis endpoint and fill in `redis.external.addr` in above section |
 | redis-bb.auth.enabled | bool | `false` |  |
 | redis-bb.istio.redis.enabled | bool | `false` |  |
@@ -497,6 +510,7 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | exporter.affinity | object | `{}` |  |
 | exporter.cacheDuration | int | `23` |  |
 | exporter.cacheCleanInterval | int | `14400` |  |
+| exporter.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | exporter.priorityClassName | string | `nil` |  |
 | metrics.enabled | bool | `false` |  |
 | metrics.core.path | string | `"/metrics"` |  |

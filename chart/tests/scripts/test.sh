@@ -5,6 +5,7 @@ export HOME=/test
 
 /go/bin/crane auth login ${HARBOR_REGISTRY} -u ${HARBOR_USER} -p ${HARBOR_PASS} --insecure
 
+
 echo "pulling image..."
 /go/bin/crane pull alpine:latest alpine-latest.tar
 
