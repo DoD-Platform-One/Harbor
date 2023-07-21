@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.12.2-bb.5] - 2023-07-13
+### Added
+- Adding Helm Cypress Egress policy to allow the cypress tests to resolve *.bigbang.dev.
+
 ## [1.12.2-bb.4] - 2023-07-13
 ### Added
 - Adding Security context to drop all capabilities to reduce syscall attack surface.  Capabilities permit certain named root actions without giving full root access.git 
