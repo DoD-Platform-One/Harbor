@@ -2,8 +2,12 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.12.2-bb.7] - 2023-07-31
+### Removed
+- `bigbang/` integration CI only folder and templates.
+
 ## [1.12.2-bb.6] - 2023-07-30
-### Fixed
+### Changed
 - Fix readme.md
 
 ## [1.12.2-bb.5] - 2023-07-13
