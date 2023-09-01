@@ -1,7 +1,7 @@
 apiVersion: v2
 name: harbor
-version: 1.12.2-bb.7
-appVersion: 2.8.2
+version: 1.12.4-bb.0
+appVersion: 2.8.4
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:
 - docker
@@ -35,32 +35,32 @@ dependencies:
     repository: oci://registry1.dso.mil/bigbang
 annotations:
   bigbang.dev/applicationVersions: |
-    - Harbor Core: v2.8.2
+    - Harbor Core: v2.8.4
   helm.sh/images: |
     - name: nginx
       image: registry1.dso.mil/ironbank/opensource/nginx/nginx:1.25.1
     - name: harbor-portal
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.8.2
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.8.4
     - name: harbor-core
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.8.2
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.8.4
     - name: harbor-jobservice
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.8.2
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.8.4
     - name: registry
-      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.8.2
+      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.8.4
     - name: harbor-registryctl
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.8.2
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.8.4
     - name: chartmuseum
       condition: chartmuseum.enabled
       image: registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum:v2.7.2
     - name: trivy
       condition: trivy.enabled
-      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.8.2
+      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.8.4
     - name: notary-server
       condition: notary.enabled
-      image: registry1.dso.mil/ironbank/opensource/goharbor/notary-server:v2.8.2
+      image: registry1.dso.mil/ironbank/opensource/goharbor/notary-server:v2.8.4
     - name: notary-signer
       condition: notary.enabled
-      image: registry1.dso.mil/ironbank/opensource/goharbor/notary-signer:v2.8.2
+      image: registry1.dso.mil/ironbank/opensource/goharbor/notary-signer:v2.8.4
     - name: postgresql12
       condition: postgresql.enabled
       image: registry1.dso.mil/ironbank/opensource/postgres/postgresql12:12.15
@@ -68,4 +68,4 @@ annotations:
       condition: redis-bb.enabled
       image: registry1.dso.mil/ironbank/bitnami/redis:7.0.0-debian-10-r3
     - name: harbor-exporter
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.8.2
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.8.4
