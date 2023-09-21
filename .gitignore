@@ -6,3 +6,4 @@ chart/test/go.*
 chart/test/test.go
 .helmdocsignore
 README.md.gotmpl
+node_modules
