@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.12.4-bb.1] - 2023-09-20
+### Changed
+- Updated gluon to 0.4.1 and Cypress to 13.x
+
 ## [1.12.4-bb.0] - 2023-08-17
 ### Changed
 - Updated app to v2.8.4 and helm chart to v1.12.4

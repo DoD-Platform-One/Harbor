@@ -1,5 +1,5 @@
 context('Assertions', () => {
-  beforeEach(() => {
+  before(() => {
     cy.visit(Cypress.env('url') + '/account/sign-in')
   })
 
@@ -34,15 +34,8 @@ context('Assertions', () => {
 
         return false
       })
-      // https://on.cypress.io/and
-      // wait to load page
+      cy.visit(Cypress.env('url'))
       cy.wait(2000)
-      // validate signin page
-      cy.title().should('include', 'Harbor')
-      // enter credentials from values.yaml
-      cy.get('input[placeholder="Username"]').type(Cypress.env('user'))
-      cy.get('input[placeholder="Password"]').type(Cypress.env('harbor_password'))
-      cy.get('button[id="log_in"]').click()
       // Click "Create Project" button to open modal
       cy.get('button[class="btn btn-secondary ng-star-inserted"]').click()
       // enter test project name
