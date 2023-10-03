@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.12.4-bb.2] - 2023-10-03
+### Changed
+- redis.external to use master service endpoint
+
 ## [1.12.4-bb.1] - 2023-09-20
 ### Changed
 - Updated gluon to 0.4.1 and Cypress to 13.x
