@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.12.4-bb.3] - 2023-10-06
+### Changed
+- image order in the Chart.yaml to fix bug with exporter image not showing in images package
+
 ## [1.12.4-bb.2] - 2023-10-03
 ### Changed
 - redis.external to use master service endpoint
