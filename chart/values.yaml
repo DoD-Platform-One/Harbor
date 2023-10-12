@@ -449,6 +449,8 @@ nginx:
   priorityClassName:
   containerSecurityContext:
     securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
       capabilities:
         drop:
         - ALL
@@ -481,6 +483,8 @@ portal:
   priorityClassName:
   containerSecurityContext:
     securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
       capabilities:
         drop:
         - ALL
@@ -499,6 +503,8 @@ core:
   revisionHistoryLimit: 10
   containerSecurityContext:
     securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
       capabilities:
         drop:
         - ALL
@@ -552,6 +558,8 @@ core:
   jobservice:
     containerSecurityContext:
       securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
         capabilities:
           drop:
           - ALL
@@ -586,6 +594,8 @@ jobservice:
     max_dangling_hours: 168
   containerSecurityContext:
     securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
       capabilities:
         drop:
         - ALL
@@ -629,6 +639,7 @@ registry:
         memory: 256Mi
     containerSecurityContext:
       securityContext:
+        runAsGroup: 1000
         capabilities:
           drop:
           - ALL
@@ -647,6 +658,7 @@ registry:
         memory: 256Mi
     containerSecurityContext:
       securityContext:
+        runAsGroup: 1000
         capabilities:
           drop:
           - ALL
@@ -804,6 +816,7 @@ trivy:
     securityContext:
       privileged: false
       allowPrivilegeEscalation: false
+      runAsGroup: 1000
       capabilities:
         drop:
         - ALL
@@ -839,6 +852,8 @@ notary:
   serviceAnnotations: {}
   containerSecurityContext:
     securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
       capabilities:
         drop:
         - ALL
@@ -869,6 +884,8 @@ notary:
     priorityClassName:
     containerSecurityContext:
       securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
         capabilities:
           drop:
           - ALL
@@ -879,7 +896,6 @@ notary:
   # contain the CA, certificate and private key.
   # They will be generated if not set.
   secretName: ""
-  
 
 database:
   # if external database is used, set "type" to "external"
@@ -1116,6 +1132,18 @@ redis-bb:
   networkPolicies:
     enabled: true
     controlPlaneCidr: 0.0.0.0/0
+  master:
+    containerSecurityContext:
+      enabled: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+  replica:
+    containerSecurityContext:
+      enabled: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
   commonConfiguration: |-
     # Enable AOF https://redis.io/topics/persistence#append-only-file
     appendonly no
@@ -1148,6 +1176,8 @@ exporter:
   cacheDuration: 23
   cacheCleanInterval: 14400
   securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
     capabilities:
       drop:
       - ALL
