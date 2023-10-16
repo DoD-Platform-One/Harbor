@@ -56,7 +56,10 @@ spec:
           initialDelaySeconds: {{ .Values.core.startupProbe.initialDelaySeconds }}
           periodSeconds: 10
         {{- end }}
-        {{- toYaml $.Values.core.containerSecurityContext | nindent 8 }}
+        {{- with .Values.core.containerSecurityContext }}
+        securityContext:
+          {{- toYaml $.Values.core.containerSecurityContext | nindent 10 }}
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /api/v2.0/ping

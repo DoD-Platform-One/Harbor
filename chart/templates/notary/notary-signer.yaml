@@ -38,7 +38,10 @@ spec:
       - name: notary-signer
         image: {{ .Values.notary.signer.image.repository }}:{{ .Values.notary.signer.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
-        {{- toYaml $.Values.notary.signer.containerSecurityContext | nindent 8 }}
+        {{- with .Values.notary.signer.containerSecurityContext }}
+        securityContext:
+          {{- toYaml $.Values.notary.signer.containerSecurityContext | nindent 10 }}
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /

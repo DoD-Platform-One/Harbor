@@ -52,7 +52,10 @@ spec:
           {{- $_ := set . "scheme" "HTTPS" -}}
           {{- $_ := set . "port" "8443" -}}
         {{- end }}
-        {{- toYaml $.Values.nginx.containerSecurityContext | nindent 8 }}
+        {{- with .Values.nginx.containerSecurityContext }}
+        securityContext:
+          {{- toYaml $.Values.nginx.containerSecurityContext | nindent 10 }}
+        {{- end }}
         livenessProbe:
           httpGet:
             scheme: {{ .scheme }}
