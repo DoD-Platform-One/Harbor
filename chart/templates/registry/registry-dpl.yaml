@@ -55,7 +55,10 @@ spec:
       - name: registry
         image: {{ .Values.registry.registry.image.repository }}:{{ .Values.registry.registry.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
-        {{- toYaml $.Values.registry.registry.containerSecurityContext | nindent 8 }}
+        {{- with .Values.registry.registry.containerSecurityContext }}
+        securityContext:
+          {{- toYaml $.Values.registry.registry.containerSecurityContext | nindent 10 }}
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /
@@ -148,7 +151,10 @@ spec:
       - name: registryctl
         image: {{ .Values.registry.controller.image.repository }}:{{ .Values.registry.controller.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
-        {{- toYaml $.Values.registry.controller.containerSecurityContext | nindent 8 }}
+        {{- with .Values.registry.controller.containerSecurityContext }}
+        securityContext:
+          {{- toYaml $.Values.registry.controller.containerSecurityContext | nindent 10 }}
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /api/health

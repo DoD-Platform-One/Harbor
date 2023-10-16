@@ -39,7 +39,10 @@ spec:
       - name: notary-server
         image: {{ .Values.notary.server.image.repository }}:{{ .Values.notary.server.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
-        {{- toYaml $.Values.notary.containerSecurityContext | nindent 8 }}
+        {{- with .Values.notary.containerSecurityContext }}
+        securityContext:
+          {{- toYaml $.Values.notary.containerSecurityContext | nindent 10 }}
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /_notary_server/health

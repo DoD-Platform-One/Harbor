@@ -52,7 +52,10 @@ spec:
       - name: jobservice
         image: {{ .Values.jobservice.image.repository }}:{{ .Values.jobservice.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPoliPcy }}
-        {{- toYaml $.Values.jobservice.containerSecurityContext | nindent 8 }}
+        {{- with .Values.jobservice.containerSecurityContext }}
+        securityContext:
+          {{- toYaml $.Values.jobservice.containerSecurityContext | nindent 10 }}
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /api/v1/stats

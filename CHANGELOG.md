@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.12.4-bb.5] - 2023-10-16
+### Changed
+- Fixed Security Context 
+
 ## [1.12.4-bb.4] - 2023-10-11
 ### Added
 - Added non-root group user

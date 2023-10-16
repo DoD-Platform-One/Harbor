@@ -1175,12 +1175,13 @@ exporter:
   affinity: {}
   cacheDuration: 23
   cacheCleanInterval: 14400
-  securityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
-    capabilities:
-      drop:
-      - ALL
+  containerSecurityContext:
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      capabilities:
+        drop:
+        - ALL
   ## The priority class to run the pod as
   priorityClassName:
 

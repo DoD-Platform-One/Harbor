@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.12.4-bb.4](https://img.shields.io/badge/Version-1.12.4--bb.4-informational?style=flat-square) ![AppVersion: 2.8.4](https://img.shields.io/badge/AppVersion-2.8.4-informational?style=flat-square)
+![Version: 1.12.4-bb.5](https://img.shields.io/badge/Version-1.12.4--bb.5-informational?style=flat-square) ![AppVersion: 2.8.4](https://img.shields.io/badge/AppVersion-2.8.4-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -543,9 +543,9 @@ helm install harbor chart/
 | exporter.affinity | object | `{}` |  |
 | exporter.cacheDuration | int | `23` |  |
 | exporter.cacheCleanInterval | int | `14400` |  |
-| exporter.securityContext.runAsUser | int | `1000` |  |
-| exporter.securityContext.runAsGroup | int | `1000` |  |
-| exporter.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| exporter.containerSecurityContext.securityContext.runAsUser | int | `1000` |  |
+| exporter.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
+| exporter.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | exporter.priorityClassName | string | `nil` |  |
 | metrics.enabled | bool | `false` |  |
 | metrics.core.path | string | `"/metrics"` |  |
