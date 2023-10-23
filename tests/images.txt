@@ -1,1 +1,1 @@
-registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.8.4
+registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.9.0

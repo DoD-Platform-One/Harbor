@@ -2,6 +2,22 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.13.0-bb.0] - 2023-10-23
+### Changed
+- Updated app to v2.9.0 and helm chart to v1.13.0 
+- goharbor/redis-photon minor v2.8.4 -> v2.9.0
+- ironbank/opensource/goharbor/harbor-core minor v2.8.4 -> v2.9.0
+- registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum minor v2.7.2 -> v2.7.3
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-core minor v2.8.4 -> v2.9.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter minor v2.8.4 -> v2.9.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice minor v2.8.4 -> v2.9.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal minor v2.8.4 -> v2.9.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl minor v2.8.4 -> v2.9.0
+- registry1.dso.mil/ironbank/opensource/goharbor/registry minor v2.8.4 -> v2.9.0
+- registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter minor v2.8.4 -> v2.9.0
+- registry1.dso.mil/ironbank/opensource/nginx/nginx patch 1.25.1 -> 1.25.2
+- registry1.dso.mil/ironbank/opensource/postgres/postgresql12 minor 12.15 -> 12.16
+
 ## [1.12.4-bb.5] - 2023-10-16
 ### Changed
 - Fixed Security Context 
