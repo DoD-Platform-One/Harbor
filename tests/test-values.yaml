@@ -71,23 +71,23 @@ trivy:
     limits:
       cpu: 80m
       memory: 200Mi
-notary:
-  server:
-    resources:
-     requests:
-       memory: 200Mi
-       cpu: 80m
-     limits:
-       cpu: 80m
-       memory: 200Mi
-  signer:
-    resources:
-     requests:
-       memory: 200Mi
-       cpu: 80m
-     limits:
-       cpu: 80m
-       memory: 200Mi
+# notary:
+#   server:
+#     resources:
+#      requests:
+#        memory: 200Mi
+#        cpu: 80m
+#      limits:
+#        cpu: 80m
+#        memory: 200Mi
+  # signer:
+  #   resources:
+  #    requests:
+  #      memory: 200Mi
+  #      cpu: 80m
+  #    limits:
+  #      cpu: 80m
+  #      memory: 200Mi
 database:
   type: external
   internal:
