@@ -2,6 +2,11 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.13.0-bb.1] - 2023-10-24
+### Changed
+- updated bigbang virtual service to address registry authentication issue
+-
+
 ## [1.13.0-bb.0] - 2023-10-23
 ### Changed
 - Updated app to v2.9.0 and helm chart to v1.13.0 

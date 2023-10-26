@@ -1,0 +1,18 @@
+{{- if .Values.istio.enabled -}}
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: "{{ template "harbor.fullname" . }}-registry"
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "harbor.labels" . | nindent 4 }}
+spec:
+  hosts:
+  {{- range .Values.istio.harbor.hosts }}
+  - {{ tpl . $ }}
+  {{- end }}
+  location: MESH_INTERNAL
+  ports:
+  - name: {{ ternary "https-registry" "http-registry" .Values.internalTLS.enabled }}
+    number: {{ template "harbor.registry.containerPort" . }}
+  resolution: NONE
+{{- end }}

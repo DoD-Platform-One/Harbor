@@ -41,28 +41,28 @@ jobservice:
 registry:
   registry:
     resources:
-     requests:
-       memory: 200Mi
-       cpu: 80m
-     limits:
-       cpu: 80m
-       memory: 200Mi
+      requests:
+        memory: 200Mi
+        cpu: 80m
+      limits:
+        cpu: 80m
+        memory: 200Mi
   controller:
     resources:
-     requests:
-       memory: 200Mi
-       cpu: 80m
-     limits:
-       cpu: 80m
-       memory: 200Mi
+      requests:
+        memory: 200Mi
+        cpu: 80m
+      limits:
+        cpu: 80m
+        memory: 200Mi
 chartmuseum:
   resources:
-   requests:
-     memory: 200Mi
-     cpu: 80m
-   limits:
-     cpu: 80m
-     memory: 200Mi
+    requests:
+      memory: 200Mi
+      cpu: 80m
+    limits:
+      cpu: 80m
+      memory: 200Mi
 trivy:
   resources:
     requests:
@@ -71,50 +71,26 @@ trivy:
     limits:
       cpu: 80m
       memory: 200Mi
-# notary:
-#   server:
-#     resources:
-#      requests:
-#        memory: 200Mi
-#        cpu: 80m
-#      limits:
-#        cpu: 80m
-#        memory: 200Mi
-  # signer:
-  #   resources:
-  #    requests:
-  #      memory: 200Mi
-  #      cpu: 80m
-  #    limits:
-  #      cpu: 80m
-  #      memory: 200Mi
 database:
   type: external
   internal:
     resources:
-     requests:
-       memory: 200Mi
-       cpu: 80m
-     limits:
-       cpu: 80m
-       memory: 200Mi
+      requests:
+        memory: 200Mi
+        cpu: 80m
+      limits:
+        cpu: 80m
+        memory: 200Mi
     initContainer:
       migrator: {}
       resources:
-       requests:
-         memory: 100Mi
-         cpu: 80m
-       limits:
-         cpu: 80m
-         memory: 100Mi
+        requests:
+          memory: 100Mi
+          cpu: 80m
+        limits:
+          cpu: 80m
+          memory: 100Mi
       permissions: {}
-      resources:
-       requests:
-         memory: 100Mi
-         cpu: 80m
-       limits:
-         cpu: 80m
-         memory: 100Mi
 postgresql:
   resources:
     requests:
@@ -132,12 +108,12 @@ redis:
       memory: 200Mi
       cpu: 80m
 exporter:
-  resources:
-   requests:
-     memory: 200Mi
-     cpu: 80m
-   limits:
-     cpu: 80m
-     memory: 200Mi
+    resources:
+    requests:
+      memory: 200Mi
+      cpu: 80m
+    limits:
+      cpu: 80m
+      memory: 200Mi
 bbtests:
   enabled: true
