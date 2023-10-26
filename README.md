@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.13.0-bb.0](https://img.shields.io/badge/Version-1.13.0--bb.0-informational?style=flat-square) ![AppVersion: 2.9.0](https://img.shields.io/badge/AppVersion-2.9.0-informational?style=flat-square)
+![Version: 1.13.0-bb.1](https://img.shields.io/badge/Version-1.13.0--bb.1-informational?style=flat-square) ![AppVersion: 2.9.0](https://img.shields.io/badge/AppVersion-2.9.0-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -484,6 +484,7 @@ helm install harbor chart/
 | redis-bb.master.containerSecurityContext.runAsUser | int | `1000` |  |
 | redis-bb.master.containerSecurityContext.runAsGroup | int | `1000` |  |
 | redis-bb.master.containerSecurityContext.runAsNonRoot | bool | `true` |  |
+| redis-bb.replica.replicaCount | int | `0` |  |
 | redis-bb.replica.containerSecurityContext.enabled | bool | `true` |  |
 | redis-bb.replica.containerSecurityContext.runAsUser | int | `1000` |  |
 | redis-bb.replica.containerSecurityContext.runAsGroup | int | `1000` |  |
@@ -541,7 +542,7 @@ helm install harbor chart/
 | trace.otel.timeout | int | `10` |  |
 | domain | string | `"bigbang.dev"` |  |
 | istio.enabled | bool | `false` |  |
-| istio.mtls.mode | string | `"STRICT"` | STRICT = Allow only mutual TLS traffic, PERMISSIVE = Allow both plain text and mutual TLS traffic |
+| istio.mtls.mode | string | `"PERMISSIVE"` | STRICT = Allow only mutual TLS traffic, PERMISSIVE = Allow both plain text and mutual TLS traffic |
 | istio.harbor.gateways[0] | string | `"istio-system/public"` |  |
 | istio.harbor.hosts[0] | string | `"harbor.{{ .Values.domain }}"` |  |
 | istio.injection | string | `"disabled"` |  |

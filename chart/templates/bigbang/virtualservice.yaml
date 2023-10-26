@@ -15,6 +15,14 @@ spec:
   - {{ tpl . $}}
   {{- end }}
   http:
+  - name: registry-internal-redirect
+    match:
+    - port: 5000
+    route:
+    - destination:
+        host: {{ template "harbor.registry" . }}.{{ .Release.Namespace }}.svc.cluster.local
+        port:
+          number: 5000
   - name: core
     match:
     - uri:
@@ -26,7 +34,7 @@ spec:
     - uri:
         prefix: '/service/'
     - uri:
-        prefix: '/v2'
+        prefix: '/v2/'
     route:
     - destination:
         host: {{ template "harbor.core" . }}.{{ .Release.Namespace }}.svc.cluster.local
