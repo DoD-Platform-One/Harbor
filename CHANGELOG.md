@@ -2,10 +2,14 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.13.0-bb.2] - 2023-10-26
+### Changed
+- add maintenance documentation 
+
 ## [1.13.0-bb.1] - 2023-10-24
 ### Changed
 - updated bigbang virtual service to address registry authentication issue
--
+- add ServiceEntry config
 
 ## [1.13.0-bb.0] - 2023-10-23
 ### Changed
