@@ -1096,6 +1096,7 @@ redis-bb:
     redis:
       enabled: false
   image:
+    registry: registry1.dso.mil
     repository: ironbank/bitnami/redis
     tag: 7.0.0-debian-10-r3
     pullSecrets:
