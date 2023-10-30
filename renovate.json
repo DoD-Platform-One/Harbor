@@ -16,20 +16,11 @@
     ],
     "regexManagers": [
         {
-          "fileMatch": ["^chart/Chart\\.yaml$"],
-          "matchStrings": [
-            "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)"
-          ],
-          "registryUrlTemplate": "https://registry1.dso.mil",
-          "depNameTemplate": "ironbank/opensource/goharbor/harbor-core",
-          "datasourceTemplate": "docker"
-        },
-        {
             "fileMatch": ["^chart/Chart\\.yaml$"],
             "matchStrings": [
-                "- Harbor Core:\\s*(?<currentValue>.+)"
+                "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)"
             ],
-            "depNameTemplate": "ironbank/opensource/goharbor/harbor-core",
+            "depNameTemplate": "registry1.dso.mil/ironbank/opensource/goharbor/harbor-core",
             "datasourceTemplate": "docker",
             "registryUrlTemplate": "https://registry1.dso.mil"
         },
@@ -38,14 +29,14 @@
             "matchStrings": [
                 "image:[^\\S\\r\\n]+(?<depName>.+):(?<currentValue>.+)"
             ],
-            "datasourceTemplate": "docker"
+            "datasourceTemplate": "docker",
+            "registryUrlTemplate": "https://registry1.dso.mil"
         },
         {
-            "fileMatch": ["^chart/Chart\\.yaml$"],
+            "fileMatch": ["^chart/values\\.yaml$"],
             "matchStrings": [
-                "- Registry:\\s*(?<currentValue>.+)"
+                "image:[^\\S\\r\\n]+(?<depName>.+)\\s+tag:[^\\S\\r\\n]+(?<currentValue>[\\d\\.]+)"
             ],
-            "depNameTemplate": "ironbank/opensource/goharbor/registry",
             "datasourceTemplate": "docker",
             "registryUrlTemplate": "https://registry1.dso.mil"
         }
