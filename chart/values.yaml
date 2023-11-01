@@ -403,7 +403,7 @@ enableMigrateHelmHook: false
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: 1.25.2
+    tag: 1.25.3
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty

@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.13.0-bb.3](https://img.shields.io/badge/Version-1.13.0--bb.3-informational?style=flat-square) ![AppVersion: 2.9.0](https://img.shields.io/badge/AppVersion-2.9.0-informational?style=flat-square)
+![Version: 1.13.0-bb.4](https://img.shields.io/badge/Version-1.13.0--bb.4-informational?style=flat-square) ![AppVersion: 2.9.0](https://img.shields.io/badge/AppVersion-2.9.0-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -173,7 +173,7 @@ helm install harbor chart/
 | proxy.components[2] | string | `"trivy"` |  |
 | enableMigrateHelmHook | bool | `false` |  |
 | nginx.image.repository | string | `"registry1.dso.mil/ironbank/opensource/nginx/nginx"` |  |
-| nginx.image.tag | string | `"1.25.2"` |  |
+| nginx.image.tag | string | `"1.25.3"` |  |
 | nginx.image.pullSecrets[0] | string | `"private-registry"` |  |
 | nginx.serviceAccountName | string | `""` |  |
 | nginx.automountServiceAccountToken | bool | `false` |  |
@@ -475,6 +475,7 @@ helm install harbor chart/
 | redis-bb.enabled | bool | `true` | Enable BigBang provided redis sub-chart. Disable if using external cloud elasticache or redis endpoint and fill in `redis.external.addr` in above section |
 | redis-bb.auth.enabled | bool | `false` |  |
 | redis-bb.istio.redis.enabled | bool | `false` |  |
+| redis-bb.image.registry | string | `"registry1.dso.mil"` |  |
 | redis-bb.image.repository | string | `"ironbank/bitnami/redis"` |  |
 | redis-bb.image.tag | string | `"7.0.0-debian-10-r3"` |  |
 | redis-bb.image.pullSecrets[0] | string | `"private-registry"` |  |

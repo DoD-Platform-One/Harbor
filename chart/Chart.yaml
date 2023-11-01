@@ -1,6 +1,6 @@
 apiVersion: v2
 name: harbor
-version: 1.13.0-bb.3
+version: 1.13.0-bb.4
 appVersion: 2.9.0
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:
@@ -38,7 +38,7 @@ annotations:
     - Harbor Core: v2.9.0
   helm.sh/images: |
     - name: nginx
-      image: registry1.dso.mil/ironbank/opensource/nginx/nginx:1.25.2
+      image: registry1.dso.mil/ironbank/opensource/nginx/nginx:1.25.3
     - name: harbor-portal
       image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.9.0
     - name: harbor-core
