@@ -2,6 +2,12 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.13.0-bb.4] - 2023-10-31
+### Changed
+- Updated registry1.dso.mil/ironbank/bitnami/postgres-exporter 0.12.1 -> 0.15.0
+- Updated registry1.dso.mil/ironbank/opensource/nginx/nginx 1.25.2 -> 1.25.3
+- Updated registry1.dso.mil/ironbank/opensource/postgres/postgresql12 12.15 -> 12.16
+
 ## [1.13.0-bb.3] - 2023-10-30
 ### Changed
 - update renovate.json
