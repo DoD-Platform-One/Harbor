@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.13.0-bb.4](https://img.shields.io/badge/Version-1.13.0--bb.4-informational?style=flat-square) ![AppVersion: 2.9.0](https://img.shields.io/badge/AppVersion-2.9.0-informational?style=flat-square)
+![Version: 1.13.1-bb.0](https://img.shields.io/badge/Version-1.13.1--bb.0-informational?style=flat-square) ![AppVersion: v2.9.1](https://img.shields.io/badge/AppVersion-v2.9.1-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -195,7 +195,7 @@ helm install harbor chart/
 | nginx.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
 | nginx.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | portal.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal"` |  |
-| portal.image.tag | string | `"v2.9.0"` |  |
+| portal.image.tag | string | `"v2.9.1"` |  |
 | portal.image.pullSecrets[0] | string | `"private-registry"` |  |
 | portal.serviceAccountName | string | `""` |  |
 | portal.automountServiceAccountToken | bool | `false` |  |
@@ -217,7 +217,7 @@ helm install harbor chart/
 | portal.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
 | portal.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | core.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-core"` |  |
-| core.image.tag | string | `"v2.9.0"` |  |
+| core.image.tag | string | `"v2.9.1"` |  |
 | core.image.pullSecrets[0] | string | `"private-registry"` |  |
 | core.serviceAccountName | string | `""` |  |
 | core.automountServiceAccountToken | bool | `false` |  |
@@ -254,7 +254,7 @@ helm install harbor chart/
 | core.jobservice.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
 | core.jobservice.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | jobservice.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice"` |  |
-| jobservice.image.tag | string | `"v2.9.0"` |  |
+| jobservice.image.tag | string | `"v2.9.1"` |  |
 | jobservice.image.pullSecrets[0] | string | `"private-registry"` |  |
 | jobservice.replicas | int | `1` |  |
 | jobservice.revisionHistoryLimit | int | `10` |  |
@@ -286,7 +286,7 @@ helm install harbor chart/
 | registry.serviceAccountName | string | `""` |  |
 | registry.automountServiceAccountToken | bool | `false` |  |
 | registry.registry.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/registry"` |  |
-| registry.registry.image.tag | string | `"v2.9.0"` |  |
+| registry.registry.image.tag | string | `"v2.9.1"` |  |
 | registry.registry.image.pullSecrets[0] | string | `"private-registry"` |  |
 | registry.registry.resources.requests.memory | string | `"256Mi"` |  |
 | registry.registry.resources.requests.cpu | string | `"100m"` |  |
@@ -296,7 +296,7 @@ helm install harbor chart/
 | registry.registry.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | registry.registry.extraEnvVars | list | `[]` |  |
 | registry.controller.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl"` |  |
-| registry.controller.image.tag | string | `"v2.9.0"` |  |
+| registry.controller.image.tag | string | `"v2.9.1"` |  |
 | registry.controller.image.pullSecrets[0] | string | `"private-registry"` |  |
 | registry.controller.resources.requests.memory | string | `"256Mi"` |  |
 | registry.controller.resources.requests.cpu | string | `"100m"` |  |
@@ -351,7 +351,7 @@ helm install harbor chart/
 | chartmuseum.indexLimit | int | `0` |  |
 | trivy.enabled | bool | `true` |  |
 | trivy.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter"` |  |
-| trivy.image.tag | string | `"v2.9.0"` |  |
+| trivy.image.tag | string | `"v2.9.1"` |  |
 | trivy.image.pullSecrets[0] | string | `"private-registry"` |  |
 | trivy.serviceAccountName | string | `""` |  |
 | trivy.automountServiceAccountToken | bool | `false` |  |
@@ -447,7 +447,7 @@ helm install harbor chart/
 | redis.internal.serviceAccountName | string | `""` |  |
 | redis.internal.automountServiceAccountToken | bool | `false` |  |
 | redis.internal.image.repository | string | `"goharbor/redis-photon"` |  |
-| redis.internal.image.tag | string | `"v2.9.0"` |  |
+| redis.internal.image.tag | string | `"v2.9.1"` |  |
 | redis.internal.image.pullSecrets[0] | string | `"private-registry"` |  |
 | redis.internal.resources.requests.memory | string | `"256Mi"` |  |
 | redis.internal.resources.requests.cpu | string | `"100m"` |  |
@@ -504,7 +504,7 @@ helm install harbor chart/
 | exporter.serviceAccountName | string | `""` |  |
 | exporter.automountServiceAccountToken | bool | `false` |  |
 | exporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter"` |  |
-| exporter.image.tag | string | `"v2.9.0"` |  |
+| exporter.image.tag | string | `"v2.9.1"` |  |
 | exporter.image.pullSecrets[0] | string | `"private-registry"` |  |
 | exporter.nodeSelector | object | `{}` |  |
 | exporter.tolerations | list | `[]` |  |

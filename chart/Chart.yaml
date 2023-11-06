@@ -1,7 +1,7 @@
 apiVersion: v2
 name: harbor
-version: 1.13.0-bb.4
-appVersion: 2.9.0
+version: 1.13.1-bb.0
+appVersion: v2.9.1
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:
 - docker
@@ -35,28 +35,28 @@ dependencies:
     repository: oci://registry1.dso.mil/bigbang
 annotations:
   bigbang.dev/applicationVersions: |
-    - Harbor Core: v2.9.0
+    - Harbor Core: v2.9.1
   helm.sh/images: |
     - name: nginx
       image: registry1.dso.mil/ironbank/opensource/nginx/nginx:1.25.3
     - name: harbor-portal
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.9.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.9.1
     - name: harbor-core
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.9.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.9.1
     - name: harbor-jobservice
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.9.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.9.1
     - name: registry
-      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.9.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.9.1
     - name: harbor-registryctl
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.9.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.9.1
     - name: harbor-exporter
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.9.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.9.1
     - name: chartmuseum
       condition: chartmuseum.enabled
       image: registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum:v2.7.3
     - name: trivy
       condition: trivy.enabled
-      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.9.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.9.1
     - name: postgresql12
       condition: postgresql.enabled
       image: registry1.dso.mil/ironbank/opensource/postgres/postgresql12:12.16
