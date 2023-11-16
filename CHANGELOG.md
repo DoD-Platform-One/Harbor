@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.13.1-bb.1] - 2023-11-16
+### Changed
+- Updated registry1.dso.mil/ironbank/big-bang/base 2.0.0 -> 2.1.0
+
 ## [1.13.1-bb.0] - 2023-11-03
 ### Changed
 - Updated app to v2.9.1 and helm chart to v1.13.1 
