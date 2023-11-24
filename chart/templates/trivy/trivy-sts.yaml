@@ -58,10 +58,8 @@ spec:
         - name: trivy
           image: {{ .Values.trivy.image.repository }}:{{ .Values.trivy.image.tag }}
           imagePullPolicy: {{ .Values.imagePullPolicy }}
-          {{- with .Values.trivy.containerSecurityContext }}
           securityContext:
-          {{- toYaml $.Values.trivy.containerSecurityContext | nindent 12 }}
-          {{- end }}
+          {{- toYaml .Values.trivy.securityContext | nindent 12 }}
           env:
           {{- if has "trivy" .Values.proxy.components }}
             - name: HTTP_PROXY

@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.13.1-bb.2] - 2023-11-21
+### Changed
+- update securityContext to enforce non-root-group
+
 ## [1.13.1-bb.1] - 2023-11-16
 ### Changed
 - Updated registry1.dso.mil/ironbank/big-bang/base 2.0.0 -> 2.1.0

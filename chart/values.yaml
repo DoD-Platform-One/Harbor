@@ -435,13 +435,12 @@ nginx:
   podLabels: {}
   ## The priority class to run the pod as
   priorityClassName:
-  containerSecurityContext:
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      capabilities:
-        drop:
-        - ALL
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    capabilities:
+      drop:
+      - ALL
 
 portal:
   image:
@@ -478,13 +477,12 @@ portal:
   podLabels: {}
   ## The priority class to run the pod as
   priorityClassName:
-  containerSecurityContext:
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      capabilities:
-        drop:
-        - ALL
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    capabilities:
+      drop:
+      - ALL
 
 core:
   image:
@@ -498,13 +496,12 @@ core:
   automountServiceAccountToken: false
   replicas: 1
   revisionHistoryLimit: 10
-  containerSecurityContext:
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      capabilities:
-        drop:
-        - ALL
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    capabilities:
+      drop:
+      - ALL
   ## Startup probe values
   startupProbe:
     enabled: true
@@ -608,13 +605,12 @@ jobservice:
     max_update_hours: 24
     # the max time for execution in running state without new task created
     max_dangling_hours: 168
-  containerSecurityContext:
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      capabilities:
-        drop:
-        - ALL
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    capabilities:
+      drop:
+      - ALL
 
   resources:
     requests:
@@ -662,12 +658,11 @@ registry:
       limits:
         cpu: 100m
         memory: 256Mi
-    containerSecurityContext:
-      securityContext:
-        runAsGroup: 1000
-        capabilities:
-          drop:
-          - ALL
+    securityContext:
+      runAsGroup: 1000
+      capabilities:
+        drop:
+        - ALL
     extraEnvVars: []
   controller:
     image:
@@ -682,12 +677,11 @@ registry:
       limits:
         cpu: 100m
         memory: 256Mi
-    containerSecurityContext:
-      securityContext:
-        runAsGroup: 1000
-        capabilities:
-          drop:
-          - ALL
+    securityContext:
+      runAsGroup: 1000
+      capabilities:
+        drop:
+        - ALL
     extraEnvVars: []
   replicas: 1
   revisionHistoryLimit: 10
@@ -856,14 +850,13 @@ trivy:
   podLabels: {}
   ## The priority class to run the pod as
   priorityClassName:
-  containerSecurityContext:
-    securityContext:
-      privileged: false
-      allowPrivilegeEscalation: false
-      runAsGroup: 1000
-      capabilities:
-        drop:
-        - ALL
+  securityContext:
+    privileged: false
+    allowPrivilegeEscalation: false
+    runAsGroup: 1000
+    capabilities:
+      drop:
+      - ALL
 
 database:
   # if external database is used, set "type" to "external"
