@@ -34,6 +34,7 @@ spec:
       securityContext:
         runAsUser: 10000
         fsGroup: 10000
+        runAsNonRoot: true
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -64,10 +65,8 @@ spec:
         env:
 {{- toYaml . | nindent 10 }}
 {{- end }}
-        {{- with .Values.portal.containerSecurityContext }}
         securityContext:
-          {{- toYaml $.Values.portal.containerSecurityContext | nindent 10 }}
-        {{- end }}
+          {{- toYaml .Values.portal.securityContext | nindent 12 }}
         livenessProbe:
           httpGet:
             path: /
