@@ -1,32 +1,36 @@
-
 # harbor
 
-![Version: 1.13.1-bb.2](https://img.shields.io/badge/Version-1.13.1--bb.2-informational?style=flat-square) ![AppVersion: v2.9.1](https://img.shields.io/badge/AppVersion-v2.9.1-informational?style=flat-square)
+![Version: 1.13.1-bb.3](https://img.shields.io/badge/Version-1.13.1--bb.3-informational?style=flat-square) ![AppVersion: v2.9.1](https://img.shields.io/badge/AppVersion-v2.9.1-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
-**Homepage:** <https://goharbor.io>
-
-## Maintainers
-
-| Name | Email | Url |
-| ---- | ------ | --- |
-| Wenkai Yin | <yinw@vmware.com> |  |
-| Weiwei He | <hweiwei@vmware.com> |  |
-| Shengwen Yu | <yshengwen@vmware.com> |  |
-
-## Source Code
+## Upstream References
+* <https://goharbor.io>
 
 * <https://github.com/goharbor/harbor>
 * <https://github.com/goharbor/harbor-helm>
 
-## Requirements
+## Learn More
+* [Application Overview](docs/overview.md)
+* [Other Documentation](docs/)
 
-| Repository | Name | Version |
-|------------|------|---------|
-| file://./deps/postgresql | postgresql | 10.3.13 |
-| oci://registry1.dso.mil/bigbang | gluon | 0.4.1 |
-| oci://registry1.dso.mil/bigbang | redis-bb(redis) | 16.12.3-bb.3 |
+## Pre-Requisites
+
+* Kubernetes Cluster deployed
+* Kubernetes config installed in `~/.kube/config`
+* Helm installed
+
+Install Helm
+
+https://helm.sh/docs/intro/install/
+
+## Deployment
+
+* Clone down the repository
+* cd into directory
+```bash
+helm install harbor chart/
+```
 
 ## Values
 
@@ -187,9 +191,9 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | nginx.podAnnotations | object | `{}` |  |
 | nginx.podLabels | object | `{}` |  |
 | nginx.priorityClassName | string | `nil` |  |
-| nginx.containerSecurityContext.securityContext.runAsUser | int | `1000` |  |
-| nginx.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
-| nginx.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| nginx.securityContext.runAsUser | int | `1000` |  |
+| nginx.securityContext.runAsGroup | int | `1000` |  |
+| nginx.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | portal.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal"` |  |
 | portal.image.tag | string | `"v2.9.1"` |  |
 | portal.image.pullSecrets[0] | string | `"private-registry"` |  |
@@ -209,9 +213,9 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | portal.podAnnotations | object | `{}` |  |
 | portal.podLabels | object | `{}` |  |
 | portal.priorityClassName | string | `nil` |  |
-| portal.containerSecurityContext.securityContext.runAsUser | int | `1000` |  |
-| portal.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
-| portal.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| portal.securityContext.runAsUser | int | `1000` |  |
+| portal.securityContext.runAsGroup | int | `1000` |  |
+| portal.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | core.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-core"` |  |
 | core.image.tag | string | `"v2.9.1"` |  |
 | core.image.pullSecrets[0] | string | `"private-registry"` |  |
@@ -219,9 +223,9 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | core.automountServiceAccountToken | bool | `false` |  |
 | core.replicas | int | `1` |  |
 | core.revisionHistoryLimit | int | `10` |  |
-| core.containerSecurityContext.securityContext.runAsUser | int | `1000` |  |
-| core.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
-| core.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| core.securityContext.runAsUser | int | `1000` |  |
+| core.securityContext.runAsGroup | int | `1000` |  |
+| core.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | core.startupProbe.enabled | bool | `true` |  |
 | core.startupProbe.initialDelaySeconds | int | `30` |  |
 | core.resources.requests.memory | string | `"256Mi"` |  |
@@ -263,9 +267,9 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | jobservice.notification.webhook_job_http_client_timeout | int | `3` |  |
 | jobservice.reaper.max_update_hours | int | `24` |  |
 | jobservice.reaper.max_dangling_hours | int | `168` |  |
-| jobservice.containerSecurityContext.securityContext.runAsUser | int | `1000` |  |
-| jobservice.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
-| jobservice.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| jobservice.securityContext.runAsUser | int | `1000` |  |
+| jobservice.securityContext.runAsGroup | int | `1000` |  |
+| jobservice.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | jobservice.resources.requests.memory | string | `"256Mi"` |  |
 | jobservice.resources.requests.cpu | string | `"100m"` |  |
 | jobservice.resources.limits.cpu | string | `"100m"` |  |
@@ -288,8 +292,8 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | registry.registry.resources.requests.cpu | string | `"100m"` |  |
 | registry.registry.resources.limits.cpu | string | `"100m"` |  |
 | registry.registry.resources.limits.memory | string | `"256Mi"` |  |
-| registry.registry.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
-| registry.registry.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| registry.registry.securityContext.runAsGroup | int | `1000` |  |
+| registry.registry.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | registry.registry.extraEnvVars | list | `[]` |  |
 | registry.controller.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl"` |  |
 | registry.controller.image.tag | string | `"v2.9.1"` |  |
@@ -298,8 +302,8 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | registry.controller.resources.requests.cpu | string | `"100m"` |  |
 | registry.controller.resources.limits.cpu | string | `"100m"` |  |
 | registry.controller.resources.limits.memory | string | `"256Mi"` |  |
-| registry.controller.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
-| registry.controller.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| registry.controller.securityContext.runAsGroup | int | `1000` |  |
+| registry.controller.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | registry.controller.extraEnvVars | list | `[]` |  |
 | registry.replicas | int | `1` |  |
 | registry.revisionHistoryLimit | int | `10` |  |
@@ -374,10 +378,10 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | trivy.podAnnotations | object | `{}` |  |
 | trivy.podLabels | object | `{}` |  |
 | trivy.priorityClassName | string | `nil` |  |
-| trivy.containerSecurityContext.securityContext.privileged | bool | `false` |  |
-| trivy.containerSecurityContext.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| trivy.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
-| trivy.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| trivy.securityContext.privileged | bool | `false` |  |
+| trivy.securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| trivy.securityContext.runAsGroup | int | `1000` |  |
+| trivy.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | database.type | string | `"external"` |  |
 | database.internal.serviceAccountName | string | `""` |  |
 | database.internal.automountServiceAccountToken | bool | `false` |  |
@@ -562,5 +566,6 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 | bbtests.scripts.envs.HARBOR_REGISTRY | string | `"harbor:80"` |  |
 | bbtests.scripts.envs.HARBOR_PROJECT | string | `"library"` |  |
 
-----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.10.0](https://github.com/norwoodj/helm-docs/releases/v1.10.0)
+## Contributing
+
+Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.

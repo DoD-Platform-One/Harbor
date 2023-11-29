@@ -2,6 +2,11 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.13.1-bb.3] - 2023-11-29
+### Changed
+- Fix README
+- Update gluon to 0.4.4
+
 ## [1.13.1-bb.2] - 2023-11-21
 ### Changed
 - update securityContext to enforce non-root-group
