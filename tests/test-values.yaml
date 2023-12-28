@@ -55,14 +55,6 @@ registry:
       limits:
         cpu: 80m
         memory: 200Mi
-chartmuseum:
-  resources:
-    requests:
-      memory: 200Mi
-      cpu: 80m
-    limits:
-      cpu: 80m
-      memory: 200Mi
 trivy:
   resources:
     requests:

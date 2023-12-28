@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.13.1-bb.3](https://img.shields.io/badge/Version-1.13.1--bb.3-informational?style=flat-square) ![AppVersion: v2.9.1](https://img.shields.io/badge/AppVersion-v2.9.1-informational?style=flat-square)
+![Version: 1.13.1-bb.4](https://img.shields.io/badge/Version-1.13.1--bb.4-informational?style=flat-square) ![AppVersion: v2.9.1](https://img.shields.io/badge/AppVersion-v2.9.1-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -83,9 +83,6 @@ helm install harbor chart/
 | internalTLS.portal.secretName | string | `""` |  |
 | internalTLS.portal.crt | string | `""` |  |
 | internalTLS.portal.key | string | `""` |  |
-| internalTLS.chartmuseum.secretName | string | `""` |  |
-| internalTLS.chartmuseum.crt | string | `""` |  |
-| internalTLS.chartmuseum.key | string | `""` |  |
 | internalTLS.trivy.secretName | string | `""` |  |
 | internalTLS.trivy.crt | string | `""` |  |
 | internalTLS.trivy.key | string | `""` |  |
@@ -99,12 +96,6 @@ helm install harbor chart/
 | persistence.persistentVolumeClaim.registry.accessMode | string | `"ReadWriteOnce"` |  |
 | persistence.persistentVolumeClaim.registry.size | string | `"5Gi"` |  |
 | persistence.persistentVolumeClaim.registry.annotations | object | `{}` |  |
-| persistence.persistentVolumeClaim.chartmuseum.existingClaim | string | `""` |  |
-| persistence.persistentVolumeClaim.chartmuseum.storageClass | string | `""` |  |
-| persistence.persistentVolumeClaim.chartmuseum.subPath | string | `""` |  |
-| persistence.persistentVolumeClaim.chartmuseum.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.persistentVolumeClaim.chartmuseum.size | string | `"5Gi"` |  |
-| persistence.persistentVolumeClaim.chartmuseum.annotations | object | `{}` |  |
 | persistence.persistentVolumeClaim.jobservice.jobLog.existingClaim | string | `""` |  |
 | persistence.persistentVolumeClaim.jobservice.jobLog.storageClass | string | `""` |  |
 | persistence.persistentVolumeClaim.jobservice.jobLog.subPath | string | `""` |  |
@@ -330,25 +321,6 @@ helm install harbor chart/
 | registry.upload_purging.age | string | `"168h"` |  |
 | registry.upload_purging.interval | string | `"24h"` |  |
 | registry.upload_purging.dryrun | bool | `false` |  |
-| chartmuseum.enabled | bool | `true` |  |
-| chartmuseum.serviceAccountName | string | `""` |  |
-| chartmuseum.automountServiceAccountToken | bool | `false` |  |
-| chartmuseum.absoluteUrl | bool | `false` |  |
-| chartmuseum.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum"` |  |
-| chartmuseum.image.tag | string | `"v2.7.3"` |  |
-| chartmuseum.image.pullSecrets[0] | string | `"private-registry"` |  |
-| chartmuseum.replicas | int | `1` |  |
-| chartmuseum.revisionHistoryLimit | int | `10` |  |
-| chartmuseum.resources.requests.memory | string | `"256Mi"` |  |
-| chartmuseum.resources.requests.cpu | string | `"100m"` |  |
-| chartmuseum.resources.limits.cpu | string | `"100m"` |  |
-| chartmuseum.resources.limits.memory | string | `"256Mi"` |  |
-| chartmuseum.nodeSelector | object | `{}` |  |
-| chartmuseum.tolerations | list | `[]` |  |
-| chartmuseum.affinity | object | `{}` |  |
-| chartmuseum.podAnnotations | object | `{}` |  |
-| chartmuseum.priorityClassName | string | `nil` |  |
-| chartmuseum.indexLimit | int | `0` |  |
 | trivy.enabled | bool | `true` |  |
 | trivy.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter"` |  |
 | trivy.image.tag | string | `"v2.9.1"` |  |
@@ -465,7 +437,6 @@ helm install harbor chart/
 | redis.external.coreDatabaseIndex | string | `"0"` |  |
 | redis.external.jobserviceDatabaseIndex | string | `"1"` |  |
 | redis.external.registryDatabaseIndex | string | `"2"` |  |
-| redis.external.chartmuseumDatabaseIndex | string | `"3"` |  |
 | redis.external.trivyAdapterIndex | string | `"5"` |  |
 | redis.external.username | string | `""` |  |
 | redis.external.password | string | `""` |  |

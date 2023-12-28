@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.13.1-bb.4] - 2023-12-22
+### Changed
+- Removed chartmuseum as it was deprecated upstream
+
 ## [1.13.1-bb.3] - 2023-11-29
 ### Changed
 - Fix README
