@@ -149,14 +149,6 @@ internalTLS:
     crt: ""
     # Content of portal's TLS key file, only available when `certSource` is "manual"
     key: ""
-  # chartmuseum related cert configuration
-  chartmuseum:
-    # secret name for chartmuseum's tls certs
-    secretName: ""
-    # Content of chartmuseum's TLS key file, only available when `certSource` is "manual"
-    crt: ""
-    # Content of chartmuseum's TLS key file, only available when `certSource` is "manual"
-    key: ""
   # trivy related cert configuration
   trivy:
     # secret name for trivy's tls certs
@@ -196,13 +188,6 @@ persistence:
       # Specify the "storageClass" used to provision the volume. Or the default
       # StorageClass will be used (the default).
       # Set it to "-" to disable dynamic provisioning
-      storageClass: ""
-      subPath: ""
-      accessMode: ReadWriteOnce
-      size: 5Gi
-      annotations: {}
-    chartmuseum:
-      existingClaim: ""
       storageClass: ""
       subPath: ""
       accessMode: ReadWriteOnce
@@ -268,7 +253,6 @@ persistence:
     # Specify the type of storage: "filesystem", "azure", "gcs", "s3", "swift",
     # "oss" and fill the information needed in the corresponding section. The type
     # must be "filesystem" if you want to use persistent volumes for registry
-    # and chartmuseum
     type: filesystem
     filesystem:
       rootdirectory: /storage
@@ -291,7 +275,7 @@ persistence:
       useWorkloadIdentity: false
     s3:
       # Set an existing secret for S3 accesskey and secretkey
-      # keys in the secret should be REGISTRY_STORAGE_S3_ACCESSKEY and REGISTRY_STORAGE_S3_SECRETKEY for chartmuseum
+      # keys in the secret should be REGISTRY_STORAGE_S3_ACCESSKEY and REGISTRY_STORAGE_S3_SECRETKEY
       #existingSecret: ""
       region: us-west-1
       bucket: bucketname
@@ -735,38 +719,6 @@ registry:
     interval: 24h
     dryrun: false
 
-chartmuseum:
-  enabled: true
-  # set the service account to be used, default if left empty
-  serviceAccountName: ""
-  # mount the service account token
-  automountServiceAccountToken: false
-  # Harbor defaults ChartMuseum to returning relative urls, if you want using absolute url you should enable it by change the following value to 'true'
-  absoluteUrl: false
-  image:
-    repository: registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum
-    tag: v2.7.3
-    pullSecrets:
-    - private-registry
-  replicas: 1
-  revisionHistoryLimit: 10
-  resources:
-    requests:
-      memory: 256Mi
-      cpu: 100m
-    limits:
-      cpu: 100m
-      memory: 256Mi
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
-  ## Additional deployment annotations
-  podAnnotations: {}
-  ## The priority class to run the pod as
-  priorityClassName:
-  ## limit the number of parallel indexers
-  indexLimit: 0
-
 trivy:
   # enabled the flag to enable Trivy scanner
   enabled: true
@@ -1063,7 +1015,6 @@ redis:
     coreDatabaseIndex: "0"
     jobserviceDatabaseIndex: "1"
     registryDatabaseIndex: "2"
-    chartmuseumDatabaseIndex: "3"
     trivyAdapterIndex: "5"
     # harborDatabaseIndex: "6"
     # cacheLayerDatabaseIndex: "7"

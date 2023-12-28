@@ -56,11 +56,9 @@ persistence:
     # Specify the type of storage: "filesystem", "azure", "gcs", "s3", "swift",
     # "oss" and fill the information needed in the corresponding section. The type
     # must be "filesystem" if you want to use persistent volumes for registry
-    # and chartmuseum
     type: s3
     s3:
       # Set an existing secret for S3 accesskey and secretkey
-      # keys in the secret should be AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY for chartmuseum
       # keys in the secret should be REGISTRY_STORAGE_S3_ACCESSKEY and REGISTRY_STORAGE_S3_SECRETKEY for registry
       #existingSecret: ""
       region: us-west-1
@@ -87,17 +85,7 @@ core:
 jobservice:
   replicas: 2
 registry:
-  replicas: 2  
-chartmuseum:
-  replicas: 2
-clair:
-  replicas: 2
-notary:
-  server:
-    replicas: 2  
-notary:
-  server:
-    replicas: 2    
+  replicas: 2     
 ```
 
 ### UI
