@@ -12,7 +12,7 @@ Run a KPT update against the main chart folder:
 # - Browse to the [upstream](https://github.com/goharbor/harbor-helm).
 # - Click on the drop-down menu on the upper left, then on Tags.
 # - Scroll through the tags until you get to the Helm chart version tags (e.g. v1.13.0, v1.12.4, etc.).
-# - Starting with the most recent Helm chart version tag, open the Chart.yaml for the tag. If the appVersion value corresponds to the version of Loki that Renovate detected for an upgrade, this is the correct version. So, for example, if you will be updating to chart 
+# - Starting with the most recent Helm chart version tag, open the Chart.yaml for the tag. If the appVersion value corresponds to the version of Loki that Renovate detected for an upgrade, this is the correct version. So, for example, if you will be updating to chart
 # version v1.13.0, your kpt command would be:
 
 kpt pkg update chart@v1.13.0 --strategy alpha-git-patch
@@ -78,7 +78,6 @@ helm upgrade \
   --create-namespace \
   --namespace bigbang \
   --values ./bigbang/chart/values.yaml \
-  --values ./overrides/registry-values.yaml \
   --values ./bigbang/chart/ingress-certs.yaml \
   --set gatekeeper.enabled=false \
   --set addons.harbor.enabled=true
@@ -88,7 +87,7 @@ Visit `https://harbor.bigbang.dev` and login
 default credentials
 ```
   username: admin
-  
+
   password: Harbor12345
 ```
 
@@ -108,6 +107,6 @@ docker push alpine-latest.tar harbor.bigbang.dev/alpine:latest
 # Chart Additions
 
 ### automountServiceAccountToken
-The mutating Kyverno policy named `update-automountserviceaccounttokens` is leveraged to harden all ServiceAccounts in this package with `automountServiceAccountToken: false`. This policy is configured by namespace in the Big Bang umbrella chart repository at [chart/templates/kyverno-policies/values.yaml](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/chart/templates/kyverno-policies/values.yaml?ref_type=heads). 
+The mutating Kyverno policy named `update-automountserviceaccounttokens` is leveraged to harden all ServiceAccounts in this package with `automountServiceAccountToken: false`. This policy is configured by namespace in the Big Bang umbrella chart repository at [chart/templates/kyverno-policies/values.yaml](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/chart/templates/kyverno-policies/values.yaml?ref_type=heads).
 
 This policy revokes access to the K8s API for Pods utilizing said ServiceAccounts. If a Pod truly requires access to the K8s API (for app functionality), the Pod is added to the `pods:` array of the same mutating policy. This grants the Pod access to the API, and creates a Kyverno PolicyException to prevent an alert.

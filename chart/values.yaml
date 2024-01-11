@@ -54,6 +54,8 @@ expose:
   clusterIP:
     # The name of ClusterIP service
     name: harbor
+    # The ip address of the ClusterIP service (leave empty for acquiring dynamic ip)
+    staticClusterIP: ""
     # Annotations on the ClusterIP service
     annotations: {}
     ports:
@@ -298,6 +300,8 @@ persistence:
       username: username
       password: password
       container: containername
+      # keys in existing secret must be REGISTRY_STORAGE_SWIFT_PASSWORD, REGISTRY_STORAGE_SWIFT_SECRETKEY, REGISTRY_STORAGE_SWIFT_ACCESSKEY
+      existingSecret: ""
       #region: fr
       #tenant: tenantname
       #tenantid: tenantid
@@ -318,6 +322,8 @@ persistence:
       accesskeysecret: accesskeysecret
       region: regionname
       bucket: bucketname
+      # key in existingSecret must be REGISTRY_STORAGE_OSS_ACCESSKEYSECRET
+      existingSecret: ""
       #endpoint: endpoint
       #internal: false
       #encrypt: false
@@ -429,7 +435,7 @@ nginx:
 portal:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-    tag: v2.9.1
+    tag: v2.10.0
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -459,6 +465,8 @@ portal:
   podAnnotations: {}
   ## Additional deployment labels
   podLabels: {}
+  ## Additional service annotations
+  serviceAnnotations: {}
   ## The priority class to run the pod as
   priorityClassName:
   securityContext:
@@ -471,7 +479,7 @@ portal:
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-    tag: v2.9.1
+    tag: v2.10.0
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -524,10 +532,13 @@ core:
   # the scenario of high concurrent pushing to same project, no improvment for other scenes.
   quotaUpdateProvider: db # Or redis
   # Secret is used when core server communicates with other components.
-  # If a secret key is not specified, Helm will generate one.
+  # If a secret key is not specified, Helm will generate one. Alternatively set existingSecret to use an existing secret
   # Must be a string of 16 chars.
   secret: ""
   # Fill in the name of a kubernetes secret if you want to use your own
+  # If using existingSecret, the key must be secret
+  existingSecret: ""
+  # Fill the name of a kubernetes secret if you want to use your own
   # TLS certificate and private key for token encryption/decryption.
   # The secret must contain keys named:
   # "tls.key" - the private key
@@ -542,6 +553,10 @@ core:
   tokenCert:
   # The XSRF key. Will be generated automatically if it isn't specified
   xsrfKey: ""
+  # If using existingSecret, the key is defined by core.existingXsrfSecretKey
+  existingXsrfSecret: ""
+  # If using existingSecret, the key
+  existingXsrfSecretKey: CSRF_KEY
   ## The priority class to run the pod as
   priorityClassName:
   # The time duration for async update artifact pull_time and repository
@@ -564,7 +579,7 @@ core:
 jobservice:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-    tag: v2.9.1
+    tag: v2.10.0
     pullSecrets:
     - private-registry
   replicas: 1
@@ -621,6 +636,10 @@ jobservice:
   # If a secret key is not specified, Helm will generate one.
   # Must be a string of 16 chars.
   secret: ""
+  # Use an existing secret resource
+  existingSecret: ""
+  # Key within the existing secret for the job service secret
+  existingSecretKey: JOBSERVICE_SECRET
   ## The priority class to run the pod as
   priorityClassName:
 
@@ -632,7 +651,7 @@ registry:
   registry:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-      tag: v2.9.1
+      tag: v2.10.0
       pullSecrets:
       - private-registry
     resources:
@@ -651,7 +670,7 @@ registry:
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-      tag: v2.9.1
+      tag: v2.10.0
       pullSecrets:
       - private-registry
     resources:
@@ -690,6 +709,10 @@ registry:
   # If a secret key is not specified, Helm will generate one.
   # Must be a string of 16 chars.
   secret: ""
+  # Use an existing secret resource
+  existingSecret: ""
+  # Key within the existing secret for the registry service secret
+  existingSecretKey: REGISTRY_HTTP_SECRET
   # If true, the registry returns relative URLs in Location headers. The client is responsible for resolving the correct URL.
   relativeurls: false
   credentials:
@@ -699,6 +722,7 @@ registry:
     existingSecret: ""
     # Login and password in htpasswd string format. Excludes `registry.credentials.username`  and `registry.credentials.password`. May come in handy when integrating with tools like argocd or flux. This allows the same line to be generated each time the template is rendered, instead of the `htpasswd` function from helm, which generates different lines each time because of the salt.
     # htpasswdString: $apr1$XLefHzeG$Xl4.s00sMSCCcMyJljSZb0 # example string
+    htpasswdString: ""
   middleware:
     enabled: false
     type: cloudFront
@@ -726,7 +750,7 @@ trivy:
     # repository the repository for Trivy adapter image
     repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
-    tag: v2.9.1
+    tag: v2.10.0
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -821,7 +845,7 @@ database:
     automountServiceAccountToken: false
     #image:
     #  repository: goharbor/harbor-db
-    #  tag: v2.9.0
+    #  tag: v2.10.0
     # The initial superuser password for internal database
     password: "changeit"
     # The size limit for Shared memory, pgSQL use it for shared_buffer
@@ -900,7 +924,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql12
-    tag: 12.16
+    tag: 12.17
     debug: true
   # used in:
   # deps/postgresql/templates/statefulset-readreplicas.yaml
@@ -976,7 +1000,7 @@ redis:
     automountServiceAccountToken: false
     image:
       repository: goharbor/redis-photon
-      tag: v2.9.1
+      tag: v2.10.0
       pullSecrets:
       - private-registry
     resources:
@@ -1089,7 +1113,7 @@ exporter:
   automountServiceAccountToken: false
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-    tag: v2.9.1
+    tag: v2.10.0
     pullSecrets:
     - private-registry
   nodeSelector: {}
