@@ -2,6 +2,12 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.0-bb.1] - 2024-01-15
+### Changed
+- Updating gluon to 0.4.7
+- Updated cypress test to delete resources created by it
+- Removed cypress config as it is now using shared config
+
 ## [1.13.1-bb.5] - 2024-01-02
 ### Changed
 - Updating app version from 2.9.1 to 2.10.0

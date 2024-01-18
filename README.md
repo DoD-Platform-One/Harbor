@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.14.0-bb.0](https://img.shields.io/badge/Version-1.14.0--bb.0-informational?style=flat-square) ![AppVersion: v2.10.0](https://img.shields.io/badge/AppVersion-v2.10.0-informational?style=flat-square)
+![Version: 1.14.0-bb.1](https://img.shields.io/badge/Version-1.14.0--bb.1-informational?style=flat-square) ![AppVersion: v2.10.0](https://img.shields.io/badge/AppVersion-v2.10.0-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
