@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.0-bb.2] - 2024-02-15
+### Fixed
+- Fixed Prometheus Network Policy
+
 ## [1.14.0-bb.1] - 2024-01-15
 ### Changed
 - Updating gluon to 0.4.7
