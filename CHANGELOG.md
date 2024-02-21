@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.0-bb.3] - 2024-02-21
+### Added
+- Added port to Prometheus Network Policy for envoy status
+
 ## [1.14.0-bb.2] - 2024-02-15
 ### Fixed
 - Fixed Prometheus Network Policy
