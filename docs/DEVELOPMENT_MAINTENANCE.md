@@ -80,7 +80,14 @@ helm upgrade \
   --values ./bigbang/chart/values.yaml \
   --values ./bigbang/chart/ingress-certs.yaml \
   --set gatekeeper.enabled=false \
-  --set addons.harbor.enabled=true
+  --set addons.monitoring.enabled=true \
+  --set addons.harbor.enabled=true \
+  --set addons.harbor.values.istio.enabled=true \
+  --set addons.harbor.values.istio.hardened.enabled=true \
+  --set addons.harbor.values.monitoring.enabled=true \
+  --set addons.harbor.values.metrics.enabled=true \
+  --set addons.harbor.values.metrics.serviceMonitor.enabled=true \
+  --set addons.harbor.values.networkPolicies.enabled=true
 ```
 Visit `https://harbor.bigbang.dev` and login
 
@@ -104,6 +111,7 @@ docker push alpine-latest.tar harbor.bigbang.dev/alpine:latest
 
 ```
 
+Navigate to the Prometheus target page (https://prometheus.bigbang.dev/targets) and validate that the Harbor targets show as up.
 # Chart Additions
 
 ### automountServiceAccountToken

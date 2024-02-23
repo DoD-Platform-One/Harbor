@@ -2,6 +2,14 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.0-bb.4] - 2024-02-21
+### Added
+- Added istio `allow-nothing` policy
+- Added istio `allow-ingress polic(y|ies)`
+- Added istio `custom policy` template
+- Added isito `allow-prometheus-scraping` policy
+- Added istio `allow-namespace-wide-communication` policy
+
 ## [1.14.0-bb.3] - 2024-02-21
 ### Added
 - Added port to Prometheus Network Policy for envoy status
