@@ -128,3 +128,7 @@ bbtests:
         memory:
           requests: 512Mi
           limits: 2048Mi
+
+istio:
+  hardened:
+    enabled: true

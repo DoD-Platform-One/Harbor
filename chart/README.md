@@ -4,6 +4,7 @@
 
 This repository, including the issues, focuses on deploying Harbor chart via helm. For functionality issues or Harbor questions, please open issues on [goharbor/harbor](https://github.com/goharbor/harbor)
 
+
 ## Introduction
 
 This [Helm](https://github.com/kubernetes/helm) chart installs [Harbor](https://github.com/goharbor/harbor) in a Kubernetes cluster. Welcome to [contribute](CONTRIBUTING.md) to Helm Chart for Harbor.
