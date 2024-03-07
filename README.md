@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.14.0-bb.4](https://img.shields.io/badge/Version-1.14.0--bb.4-informational?style=flat-square) ![AppVersion: v2.10.0](https://img.shields.io/badge/AppVersion-v2.10.0-informational?style=flat-square)
+![Version: 1.14.0-bb.5](https://img.shields.io/badge/Version-1.14.0--bb.5-informational?style=flat-square) ![AppVersion: v2.10.0](https://img.shields.io/badge/AppVersion-v2.10.0-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -542,6 +542,7 @@ helm install harbor chart/
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
 | cache.enabled | bool | `false` |  |
 | cache.expireHours | int | `24` |  |
+| openshift | bool | `false` |  |
 | bbtests.enabled | bool | `false` |  |
 | bbtests.cypress.artifacts | bool | `true` |  |
 | bbtests.cypress.envs.cypress_url | string | `"http://harbor:80"` |  |

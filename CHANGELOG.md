@@ -2,6 +2,11 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+
+## [1.14.0-bb.5] - 2024-03-05
+### Added
+- Added Openshift update for deploying harbor into Openshift cluster
+
 ## [1.14.0-bb.4] - 2024-02-21
 ### Added
 - Added istio `allow-nothing` policy

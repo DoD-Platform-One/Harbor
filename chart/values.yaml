@@ -1254,6 +1254,9 @@ cache:
   # default keep cache for one day.
   expireHours: 24
 
+# Default to false, override in openshift-test-values.yaml 
+openshift: false
+  
 bbtests:
   enabled: false
   cypress:
