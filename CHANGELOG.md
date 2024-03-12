@@ -2,6 +2,9 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.0-bb.6] - 2024-03-11
+### Added
+- Fixed issue with templating the containerSecurityContext
 
 ## [1.14.0-bb.5] - 2024-03-05
 ### Added
@@ -52,7 +55,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [1.13.1-bb.0] - 2023-11-03
 ### Changed
-- Updated app to v2.9.1 and helm chart to v1.13.1 
+- Updated app to v2.9.1 and helm chart to v1.13.1
 - goharbor/redis-photon minor v2.9.0 -> v2.9.1
 - ironbank/opensource/goharbor/harbor-core minor v2.9.0 -> v2.9.1
 - registry1.dso.mil/ironbank/opensource/goharbor/harbor-core minor v2.9.0 -> v2.9.1
@@ -76,7 +79,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [1.13.0-bb.2] - 2023-10-26
 ### Changed
-- add maintenance documentation 
+- add maintenance documentation
 
 ## [1.13.0-bb.1] - 2023-10-24
 ### Changed
@@ -85,7 +88,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [1.13.0-bb.0] - 2023-10-23
 ### Changed
-- Updated app to v2.9.0 and helm chart to v1.13.0 
+- Updated app to v2.9.0 and helm chart to v1.13.0
 - goharbor/redis-photon minor v2.8.4 -> v2.9.0
 - ironbank/opensource/goharbor/harbor-core minor v2.8.4 -> v2.9.0
 - registry1.dso.mil/ironbank/opensource/goharbor/chartmuseum minor v2.7.2 -> v2.7.3
@@ -101,7 +104,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [1.12.4-bb.5] - 2023-10-16
 ### Changed
-- Fixed Security Context 
+- Fixed Security Context
 
 ## [1.12.4-bb.4] - 2023-10-11
 ### Added
@@ -137,7 +140,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [1.12.2-bb.4] - 2023-07-13
 ### Added
-- Adding Security context to drop all capabilities to reduce syscall attack surface.  Capabilities permit certain named root actions without giving full root access.git 
+- Adding Security context to drop all capabilities to reduce syscall attack surface.  Capabilities permit certain named root actions without giving full root access.git
 
 ## [1.12.2-bb.3] - 2023-07-10
 ### Added

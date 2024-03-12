@@ -57,8 +57,7 @@ spec:
         image: {{ .Values.exporter.image.repository }}:{{ .Values.exporter.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         {{- with .Values.exporter.containerSecurityContext }}
-        securityContext:
-          {{- toYaml $.Values.exporter.containerSecurityContext | nindent 10 }}
+          {{- toYaml . | nindent 8 }}
         {{- end }}
         livenessProbe:
           httpGet:
