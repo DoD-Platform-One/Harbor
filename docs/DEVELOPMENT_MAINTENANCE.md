@@ -118,3 +118,14 @@ Navigate to the Prometheus target page (https://prometheus.bigbang.dev/targets) 
 The mutating Kyverno policy named `update-automountserviceaccounttokens` is leveraged to harden all ServiceAccounts in this package with `automountServiceAccountToken: false`. This policy is configured by namespace in the Big Bang umbrella chart repository at [chart/templates/kyverno-policies/values.yaml](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/chart/templates/kyverno-policies/values.yaml?ref_type=heads).
 
 This policy revokes access to the K8s API for Pods utilizing said ServiceAccounts. If a Pod truly requires access to the K8s API (for app functionality), the Pod is added to the `pods:` array of the same mutating policy. This grants the Pod access to the API, and creates a Kyverno PolicyException to prevent an alert.
+
+# Modifications made to upstream chart
+This is a high-level list of modifications that Big Bang has made to the upstream helm chart. You can use this as as cross-check to make sure that no modifications were lost during the upgrade process.
+
+## chart/templates/exporter/exporter-dpl.yaml
+- Added lines 59-61 to enable setting of container securityContext for exporter.  This was absent from the upstream chart, but appears as though it will be added in chart version 1.15.x.
+```yaml
+{{- with .Values.exporter.containerSecurityContext }}
+    {{- toYaml . | nindent 10 }}
+{{- end }}
+```
