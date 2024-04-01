@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.0-bb.7] - 2024-04-01
+### Added
+- Added new AuthorizationPolicy for istio hardening that allows the registry Harbor component to accept traffic from anywhere.  This change is needed in order to work around an issue where the Harbor core component exchanges the Basic Authorization header for a service token and then forwards the request to the registry component without any of the original istio headers (including `X-Forwarded-Client-Cert`).
+
 ## [1.14.0-bb.6] - 2024-03-11
 ### Added
 - Fixed issue with templating the containerSecurityContext
