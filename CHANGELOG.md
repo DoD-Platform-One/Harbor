@@ -2,6 +2,22 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.1-bb.0] - 2024-04-08
+### Changed
+- Updated bitnami common chart dependency for postgresql MAJOR 1.x.x -> 2.x
+- Updated redis MAJOR 16.12.3-bb.3 -> 18.15.0-bb.0
+- Updated gluon PATCH 0.4.7 -> 0.4.9
+- Updated redis-photon PATCH v2.10.0 -> v2.10.1
+- Updated harbor-core PATCH v2.10.0 -> v2.10.1
+- Updated harbor-exporter PATCH v2.10.0 -> v2.10.1
+- Updated harbor-jobservice PATCH v2.10.0 -> v2.10.1
+- Updated harbor-portal PATCH v2.10.0 -> v2.10.1
+- Updated harbor-registryctl PATCH v2.10.0 -> v2.10.1
+- Updated registry PATCH v2.10.0 -> v2.10.1
+- Updated trivy-adapter PATCH v2.10.0 -> v2.10.1
+- Updated nginx PATCH 1.25.3 -> 1.25.4
+- Updated postgresql12 MINOR 12.17 -> 12.18
+
 ## [1.14.0-bb.7] - 2024-04-01
 ### Added
 - Added new AuthorizationPolicy for istio hardening that allows the registry Harbor component to accept traffic from anywhere.  This change is needed in order to work around an issue where the Harbor core component exchanges the Basic Authorization header for a service token and then forwards the request to the registry component without any of the original istio headers (including `X-Forwarded-Client-Cert`).

@@ -393,7 +393,7 @@ enableMigrateHelmHook: false
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: 1.25.3
+    tag: 1.25.4
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -435,7 +435,7 @@ nginx:
 portal:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-    tag: v2.10.0
+    tag: v2.10.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -479,7 +479,7 @@ portal:
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-    tag: v2.10.0
+    tag: v2.10.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -566,6 +566,7 @@ core:
   artifactPullAsyncFlushDuration:
   gdpr:
     deleteUser: false
+    auditLogsCompliant: false
 
   jobservice:
     containerSecurityContext:
@@ -579,7 +580,7 @@ core:
 jobservice:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-    tag: v2.10.0
+    tag: v2.10.1
     pullSecrets:
     - private-registry
   replicas: 1
@@ -651,7 +652,7 @@ registry:
   registry:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-      tag: v2.10.0
+      tag: v2.10.1
       pullSecrets:
       - private-registry
     resources:
@@ -670,7 +671,7 @@ registry:
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-      tag: v2.10.0
+      tag: v2.10.1
       pullSecrets:
       - private-registry
     resources:
@@ -750,7 +751,7 @@ trivy:
     # repository the repository for Trivy adapter image
     repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
-    tag: v2.10.0
+    tag: v2.10.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -791,6 +792,10 @@ trivy:
   # If the value is set to `true` you have to manually download the `trivy.db` file and mount it in the
   # `/home/scanner/.cache/trivy/db/trivy.db` path.
   skipUpdate: false
+  # skipJavaDBUpdate If the flag is enabled you have to manually download the `trivy-java.db` file and mount it in the
+  # `/home/scanner/.cache/trivy/java-db/trivy-java.db` path
+  #
+  skipJavaDBUpdate: false  
   # The offlineScan option prevents Trivy from sending API requests to identify dependencies.
   #
   # Scanning JAR files and pom.xml may require Internet access for better detection, but this option tries to avoid it.
@@ -845,7 +850,7 @@ database:
     automountServiceAccountToken: false
     #image:
     #  repository: goharbor/harbor-db
-    #  tag: v2.10.0
+    #  tag: v2.10.1
     # The initial superuser password for internal database
     password: "changeit"
     # The size limit for Shared memory, pgSQL use it for shared_buffer
@@ -924,7 +929,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql12
-    tag: 12.17
+    tag: 12.18
     debug: true
   # used in:
   # deps/postgresql/templates/statefulset-readreplicas.yaml
@@ -1000,7 +1005,7 @@ redis:
     automountServiceAccountToken: false
     image:
       repository: goharbor/redis-photon
-      tag: v2.10.0
+      tag: v2.10.1
       pullSecrets:
       - private-registry
     resources:
@@ -1113,7 +1118,7 @@ exporter:
   automountServiceAccountToken: false
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-    tag: v2.10.0
+    tag: v2.10.1
     pullSecrets:
     - private-registry
   nodeSelector: {}
