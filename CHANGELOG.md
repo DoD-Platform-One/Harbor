@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.1-bb.1] - 2024-04-13
+### Added
+- Added the ability to deploy additional custom NetworkPolicy objects via override values (see chart/templates/bigbang/additional-networkpolicies.yaml)
+
 ## [1.14.1-bb.0] - 2024-04-08
 ### Changed
 - Updated bitnami common chart dependency for postgresql MAJOR 1.x.x -> 2.x
