@@ -72,24 +72,36 @@ registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.9.0
 # Testing new harbor Version
 
 ### Deploy harbor as part of BigBang in the local dev cluster
+
+harbor-values-overrides.yaml
 ```
-helm upgrade \
-  --install bigbang ./bigbang/chart \
-  --create-namespace \
-  --namespace bigbang \
-  --values ./bigbang/chart/values.yaml \
-  --values ./bigbang/chart/ingress-certs.yaml \
-  --set gatekeeper.enabled=false \
-  --set addons.monitoring.enabled=true \
-  --set addons.harbor.enabled=true \
-  --set addons.harbor.values.istio.enabled=true \
-  --set addons.harbor.values.istio.hardened.enabled=true \
-  --set addons.harbor.values.monitoring.enabled=true \
-  --set addons.harbor.values.metrics.enabled=true \
-  --set addons.harbor.values.metrics.serviceMonitor.enabled=true \
-  --set addons.harbor.values.networkPolicies.enabled=true
+monitoring:
+  enabled: true
+addons:
+  monitoring:
+    enabled: true
+  harbor:
+    enabled: true
+    git:
+      tag: null
+      branch: "your-development-branch-name"
+    values:
+      istio:
+        enabled: true
+        hardened:
+          enabled: true
+          monitoring:
+            enabled: true
+      monitoring:
+        enabled: true
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      networkPolicies:
+        enabled: true
 ```
-Visit `https://harbor.bigbang.dev` and login
+Visit `https://harbor.dev.bigbang.mil` and login
 
 default credentials
 ```
@@ -101,17 +113,17 @@ default credentials
 From the CLI, run the following to test pushing/pulling from registry is working as expected
 
 ```
-docker login harbor.bigbang.dev
+docker login harbor.dev.bigbang.mil
 
 # Enter default credentials
 
 docker pull alpine:latest alpine-latest.tar
 
-docker push alpine-latest.tar harbor.bigbang.dev/alpine:latest
+docker push alpine-latest.tar harbor.dev.bigbang.mil/alpine:latest
 
 ```
 
-Navigate to the Prometheus target page (https://prometheus.bigbang.dev/targets) and validate that the Harbor targets show as up.
+Navigate to the Prometheus target page (https://prometheus.dev.bigbang.mil/targets) and validate that the Harbor targets show as up.
 # Chart Additions
 
 ### automountServiceAccountToken

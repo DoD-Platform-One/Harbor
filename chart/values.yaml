@@ -435,7 +435,7 @@ nginx:
 portal:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-    tag: v2.10.1
+    tag: v2.10.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -479,7 +479,7 @@ portal:
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-    tag: v2.10.1
+    tag: v2.10.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -580,7 +580,7 @@ core:
 jobservice:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-    tag: v2.10.1
+    tag: v2.10.2
     pullSecrets:
     - private-registry
   replicas: 1
@@ -652,7 +652,7 @@ registry:
   registry:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-      tag: v2.10.1
+      tag: v2.10.2
       pullSecrets:
       - private-registry
     resources:
@@ -671,7 +671,7 @@ registry:
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-      tag: v2.10.1
+      tag: v2.10.2
       pullSecrets:
       - private-registry
     resources:
@@ -751,7 +751,7 @@ trivy:
     # repository the repository for Trivy adapter image
     repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
-    tag: v2.10.1
+    tag: v2.10.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -1005,7 +1005,7 @@ redis:
     automountServiceAccountToken: false
     image:
       repository: goharbor/redis-photon
-      tag: v2.10.1
+      tag: v2.10.2
       pullSecrets:
       - private-registry
     resources:
@@ -1118,7 +1118,7 @@ exporter:
   automountServiceAccountToken: false
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-    tag: v2.10.1
+    tag: v2.10.2
     pullSecrets:
     - private-registry
   nodeSelector: {}
@@ -1214,7 +1214,7 @@ trace:
     timeout: 10
 
 # Big Bang Additions
-domain: bigbang.dev
+domain: dev.bigbang.mil
 istio:
   enabled: false
   hardened:
