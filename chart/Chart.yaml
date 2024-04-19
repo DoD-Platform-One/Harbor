@@ -1,7 +1,7 @@
 apiVersion: v2
 name: harbor
-version: 1.14.1-bb.1
-appVersion: v2.10.1
+version: 1.14.2-bb.0
+appVersion: 2.10.2
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:
 - docker
@@ -40,20 +40,20 @@ annotations:
     - name: nginx
       image: registry1.dso.mil/ironbank/opensource/nginx/nginx:1.25.4
     - name: harbor-portal
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.10.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.10.2
     - name: harbor-core
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.10.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.10.2
     - name: harbor-jobservice
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.10.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.10.2
     - name: registry
-      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.10.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.10.2
     - name: harbor-registryctl
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.10.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.10.2
     - name: harbor-exporter
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.10.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.10.2
     - name: trivy
       condition: trivy.enabled
-      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.10.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.10.2
     - name: postgresql12
       condition: postgresql.enabled
       image: registry1.dso.mil/ironbank/opensource/postgres/postgresql12:12.18

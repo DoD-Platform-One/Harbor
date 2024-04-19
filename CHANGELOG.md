@@ -2,6 +2,19 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.2-bb.0] - 2024-04-16
+### Changed
+- Updated version 1.14.1-bb.0 -> 1.14.2-bb.0
+- Updated appVersion 2.10.1 -> 2.10.2
+- Updated goharbor/redis-photon minor v2.10.1 -> v2.10.2
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-core minor v2.10.1 -> v2.10.2
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter minor v2.10.1 -> v2.10.2
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice minor v2.10.1 -> v2.10.2
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal minor v2.10.1 -> v2.10.2
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl minor v2.10.1 -> v2.10.2
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/registry minor v2.10.1 -> v2.10.2
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter minor v2.10.1 -> v2.10.2
+
 ## [1.14.1-bb.1] - 2024-04-13
 ### Added
 - Added the ability to deploy additional custom NetworkPolicy objects via override values (see chart/templates/bigbang/additional-networkpolicies.yaml)
