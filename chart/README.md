@@ -1,785 +1,411 @@
-# harbor
+# Helm Chart for Harbor
 
-![Version: 1.14.1-bb.0](https://img.shields.io/badge/Version-1.14.1--bb.0-informational?style=flat-square) ![AppVersion: v2.10.1](https://img.shields.io/badge/AppVersion-v2.10.1-informational?style=flat-square)
+**Notes:** The master branch is in heavy development, please use the other stable versions instead. A highly available solution for Harbor based on chart can be found [here](docs/High%20Availability.md). And refer to the [guide](docs/Upgrade.md) to upgrade the existing deployment.
 
-An open source trusted cloud native registry that stores, signs, and scans content
+This repository, including the issues, focuses on deploying Harbor chart via helm. For functionality issues or Harbor questions, please open issues on [goharbor/harbor](https://github.com/goharbor/harbor)
 
-## Upstream References
-* <https://goharbor.io>
+## Introduction
 
-* <https://github.com/goharbor/harbor>
-* <https://github.com/goharbor/harbor-helm>
+This [Helm](https://github.com/kubernetes/helm) chart installs [Harbor](https://github.com/goharbor/harbor) in a Kubernetes cluster. Welcome to [contribute](CONTRIBUTING.md) to Helm Chart for Harbor.
 
-## Learn More
-* [Application Overview](docs/overview.md)
-* [Other Documentation](docs/)
+## Prerequisites
 
-## Pre-Requisites
+- Kubernetes cluster 1.20+
+- Helm v3.2.0+
 
-* Kubernetes Cluster deployed
-* Kubernetes config installed in `~/.kube/config`
-* Helm installed
+## Installation
 
-Install Helm
+### Add Helm repository
 
-https://helm.sh/docs/intro/install/
-
-## Deployment
-
-* Clone down the repository
-* cd into directory
 ```bash
-helm install harbor chart/
+helm repo add harbor https://helm.goharbor.io
 ```
 
-## Values
+### Configure the chart
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| expose.type | string | `"ingress"` |  |
-| expose.tls.enabled | bool | `true` |  |
-| expose.tls.certSource | string | `"auto"` |  |
-| expose.tls.auto.commonName | string | `""` |  |
-| expose.tls.secret.secretName | string | `""` |  |
-| expose.ingress.hosts.core | string | `"core.harbor.domain"` |  |
-| expose.ingress.controller | string | `"default"` |  |
-| expose.ingress.kubeVersionOverride | string | `""` |  |
-| expose.ingress.className | string | `""` |  |
-| expose.ingress.annotations."ingress.kubernetes.io/ssl-redirect" | string | `"true"` |  |
-| expose.ingress.annotations."ingress.kubernetes.io/proxy-body-size" | string | `"0"` |  |
-| expose.ingress.annotations."nginx.ingress.kubernetes.io/ssl-redirect" | string | `"true"` |  |
-| expose.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"0"` |  |
-| expose.ingress.harbor.annotations | object | `{}` |  |
-| expose.ingress.harbor.labels | object | `{}` |  |
-| expose.clusterIP.name | string | `"harbor"` |  |
-| expose.clusterIP.staticClusterIP | string | `""` |  |
-| expose.clusterIP.annotations | object | `{}` |  |
-| expose.clusterIP.ports.httpPort | int | `80` |  |
-| expose.clusterIP.ports.httpsPort | int | `443` |  |
-| expose.nodePort.name | string | `"harbor"` |  |
-| expose.nodePort.ports.http.port | int | `80` |  |
-| expose.nodePort.ports.http.nodePort | int | `30002` |  |
-| expose.nodePort.ports.https.port | int | `443` |  |
-| expose.nodePort.ports.https.nodePort | int | `30003` |  |
-| expose.loadBalancer.name | string | `"harbor"` |  |
-| expose.loadBalancer.IP | string | `""` |  |
-| expose.loadBalancer.ports.httpPort | int | `80` |  |
-| expose.loadBalancer.ports.httpsPort | int | `443` |  |
-| expose.loadBalancer.annotations | object | `{}` |  |
-| expose.loadBalancer.sourceRanges | list | `[]` |  |
-| externalURL | string | `"https://core.harbor.domain"` |  |
-| internalTLS.enabled | bool | `false` |  |
-| internalTLS.strong_ssl_ciphers | bool | `false` |  |
-| internalTLS.certSource | string | `"auto"` |  |
-| internalTLS.trustCa | string | `""` |  |
-| internalTLS.core.secretName | string | `""` |  |
-| internalTLS.core.crt | string | `""` |  |
-| internalTLS.core.key | string | `""` |  |
-| internalTLS.jobservice.secretName | string | `""` |  |
-| internalTLS.jobservice.crt | string | `""` |  |
-| internalTLS.jobservice.key | string | `""` |  |
-| internalTLS.registry.secretName | string | `""` |  |
-| internalTLS.registry.crt | string | `""` |  |
-| internalTLS.registry.key | string | `""` |  |
-| internalTLS.portal.secretName | string | `""` |  |
-| internalTLS.portal.crt | string | `""` |  |
-| internalTLS.portal.key | string | `""` |  |
-| internalTLS.trivy.secretName | string | `""` |  |
-| internalTLS.trivy.crt | string | `""` |  |
-| internalTLS.trivy.key | string | `""` |  |
-| ipFamily.ipv6.enabled | bool | `true` |  |
-| ipFamily.ipv4.enabled | bool | `true` |  |
-| persistence.enabled | bool | `true` |  |
-| persistence.resourcePolicy | string | `"keep"` |  |
-| persistence.persistentVolumeClaim.registry.existingClaim | string | `""` |  |
-| persistence.persistentVolumeClaim.registry.storageClass | string | `""` |  |
-| persistence.persistentVolumeClaim.registry.subPath | string | `""` |  |
-| persistence.persistentVolumeClaim.registry.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.persistentVolumeClaim.registry.size | string | `"5Gi"` |  |
-| persistence.persistentVolumeClaim.registry.annotations | object | `{}` |  |
-| persistence.persistentVolumeClaim.jobservice.jobLog.existingClaim | string | `""` |  |
-| persistence.persistentVolumeClaim.jobservice.jobLog.storageClass | string | `""` |  |
-| persistence.persistentVolumeClaim.jobservice.jobLog.subPath | string | `""` |  |
-| persistence.persistentVolumeClaim.jobservice.jobLog.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.persistentVolumeClaim.jobservice.jobLog.size | string | `"1Gi"` |  |
-| persistence.persistentVolumeClaim.jobservice.jobLog.annotations | object | `{}` |  |
-| persistence.persistentVolumeClaim.jobservice.scanDataExports.existingClaim | string | `""` |  |
-| persistence.persistentVolumeClaim.jobservice.scanDataExports.storageClass | string | `""` |  |
-| persistence.persistentVolumeClaim.jobservice.scanDataExports.subPath | string | `""` |  |
-| persistence.persistentVolumeClaim.jobservice.scanDataExports.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.persistentVolumeClaim.jobservice.scanDataExports.size | string | `"1Gi"` |  |
-| persistence.persistentVolumeClaim.jobservice.scanDataExports.annotations | object | `{}` |  |
-| persistence.persistentVolumeClaim.database.existingClaim | string | `""` |  |
-| persistence.persistentVolumeClaim.database.storageClass | string | `""` |  |
-| persistence.persistentVolumeClaim.database.subPath | string | `""` |  |
-| persistence.persistentVolumeClaim.database.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.persistentVolumeClaim.database.size | string | `"1Gi"` |  |
-| persistence.persistentVolumeClaim.database.annotations | object | `{}` |  |
-| persistence.persistentVolumeClaim.redis.existingClaim | string | `""` |  |
-| persistence.persistentVolumeClaim.redis.storageClass | string | `""` |  |
-| persistence.persistentVolumeClaim.redis.subPath | string | `""` |  |
-| persistence.persistentVolumeClaim.redis.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.persistentVolumeClaim.redis.size | string | `"1Gi"` |  |
-| persistence.persistentVolumeClaim.redis.annotations | object | `{}` |  |
-| persistence.persistentVolumeClaim.trivy.existingClaim | string | `""` |  |
-| persistence.persistentVolumeClaim.trivy.storageClass | string | `""` |  |
-| persistence.persistentVolumeClaim.trivy.subPath | string | `""` |  |
-| persistence.persistentVolumeClaim.trivy.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.persistentVolumeClaim.trivy.size | string | `"5Gi"` |  |
-| persistence.persistentVolumeClaim.trivy.annotations | object | `{}` |  |
-| persistence.imageChartStorage.disableredirect | bool | `false` |  |
-| persistence.imageChartStorage.type | string | `"filesystem"` |  |
-| persistence.imageChartStorage.filesystem.rootdirectory | string | `"/storage"` |  |
-| persistence.imageChartStorage.azure.accountname | string | `"accountname"` |  |
-| persistence.imageChartStorage.azure.accountkey | string | `"base64encodedaccountkey"` |  |
-| persistence.imageChartStorage.azure.container | string | `"containername"` |  |
-| persistence.imageChartStorage.azure.existingSecret | string | `""` |  |
-| persistence.imageChartStorage.gcs.bucket | string | `"bucketname"` |  |
-| persistence.imageChartStorage.gcs.encodedkey | string | `"base64-encoded-json-key-file"` |  |
-| persistence.imageChartStorage.gcs.existingSecret | string | `""` |  |
-| persistence.imageChartStorage.gcs.useWorkloadIdentity | bool | `false` |  |
-| persistence.imageChartStorage.s3.region | string | `"us-west-1"` |  |
-| persistence.imageChartStorage.s3.bucket | string | `"bucketname"` |  |
-| persistence.imageChartStorage.swift.authurl | string | `"https://storage.myprovider.com/v3/auth"` |  |
-| persistence.imageChartStorage.swift.username | string | `"username"` |  |
-| persistence.imageChartStorage.swift.password | string | `"password"` |  |
-| persistence.imageChartStorage.swift.container | string | `"containername"` |  |
-| persistence.imageChartStorage.swift.existingSecret | string | `""` |  |
-| persistence.imageChartStorage.oss.accesskeyid | string | `"accesskeyid"` |  |
-| persistence.imageChartStorage.oss.accesskeysecret | string | `"accesskeysecret"` |  |
-| persistence.imageChartStorage.oss.region | string | `"regionname"` |  |
-| persistence.imageChartStorage.oss.bucket | string | `"bucketname"` |  |
-| persistence.imageChartStorage.oss.existingSecret | string | `""` |  |
-| imagePullPolicy | string | `"IfNotPresent"` |  |
-| imagePullSecrets[0].name | string | `"private-registry"` |  |
-| updateStrategy.type | string | `"RollingUpdate"` |  |
-| logLevel | string | `"info"` |  |
-| existingSecretAdminPasswordKey | string | `"HARBOR_ADMIN_PASSWORD"` |  |
-| harborAdminPassword | string | `"Harbor12345"` |  |
-| caSecretName | string | `""` |  |
-| secretKey | string | `"not-a-secure-key"` |  |
-| existingSecretSecretKey | string | `""` |  |
-| proxy.httpProxy | string | `nil` |  |
-| proxy.httpsProxy | string | `nil` |  |
-| proxy.noProxy | string | `"127.0.0.1,localhost,.local,.internal"` |  |
-| proxy.components[0] | string | `"core"` |  |
-| proxy.components[1] | string | `"jobservice"` |  |
-| proxy.components[2] | string | `"trivy"` |  |
-| enableMigrateHelmHook | bool | `false` |  |
-| nginx.image.repository | string | `"registry1.dso.mil/ironbank/opensource/nginx/nginx"` |  |
-| nginx.image.tag | string | `"1.25.4"` |  |
-| nginx.image.pullSecrets[0] | string | `"private-registry"` |  |
-| nginx.serviceAccountName | string | `""` |  |
-| nginx.automountServiceAccountToken | bool | `false` |  |
-| nginx.replicas | int | `1` |  |
-| nginx.revisionHistoryLimit | int | `10` |  |
-| nginx.resources.requests.memory | string | `"256Mi"` |  |
-| nginx.resources.requests.cpu | string | `"100m"` |  |
-| nginx.resources.limits.cpu | string | `"100m"` |  |
-| nginx.resources.limits.memory | string | `"256Mi"` |  |
-| nginx.extraEnvVars | list | `[]` |  |
-| nginx.nodeSelector | object | `{}` |  |
-| nginx.tolerations | list | `[]` |  |
-| nginx.affinity | object | `{}` |  |
-| nginx.topologySpreadConstraints | list | `[]` |  |
-| nginx.podAnnotations | object | `{}` |  |
-| nginx.podLabels | object | `{}` |  |
-| nginx.priorityClassName | string | `nil` |  |
-| nginx.securityContext.runAsUser | int | `1000` |  |
-| nginx.securityContext.runAsGroup | int | `1000` |  |
-| nginx.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| portal.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal"` |  |
-| portal.image.tag | string | `"v2.10.1"` |  |
-| portal.image.pullSecrets[0] | string | `"private-registry"` |  |
-| portal.serviceAccountName | string | `""` |  |
-| portal.automountServiceAccountToken | bool | `false` |  |
-| portal.replicas | int | `1` |  |
-| portal.revisionHistoryLimit | int | `10` |  |
-| portal.resources.requests.memory | string | `"256Mi"` |  |
-| portal.resources.requests.cpu | string | `"100m"` |  |
-| portal.resources.limits.cpu | string | `"100m"` |  |
-| portal.resources.limits.memory | string | `"256Mi"` |  |
-| portal.extraEnvVars | list | `[]` |  |
-| portal.nodeSelector | object | `{}` |  |
-| portal.tolerations | list | `[]` |  |
-| portal.affinity | object | `{}` |  |
-| portal.topologySpreadConstraints | list | `[]` |  |
-| portal.podAnnotations | object | `{}` |  |
-| portal.podLabels | object | `{}` |  |
-| portal.serviceAnnotations | object | `{}` |  |
-| portal.priorityClassName | string | `nil` |  |
-| portal.securityContext.runAsUser | int | `1000` |  |
-| portal.securityContext.runAsGroup | int | `1000` |  |
-| portal.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| core.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-core"` |  |
-| core.image.tag | string | `"v2.10.1"` |  |
-| core.image.pullSecrets[0] | string | `"private-registry"` |  |
-| core.serviceAccountName | string | `""` |  |
-| core.automountServiceAccountToken | bool | `false` |  |
-| core.replicas | int | `1` |  |
-| core.revisionHistoryLimit | int | `10` |  |
-| core.securityContext.runAsUser | int | `1000` |  |
-| core.securityContext.runAsGroup | int | `1000` |  |
-| core.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| core.startupProbe.enabled | bool | `true` |  |
-| core.startupProbe.initialDelaySeconds | int | `30` |  |
-| core.resources.requests.memory | string | `"256Mi"` |  |
-| core.resources.requests.cpu | string | `"100m"` |  |
-| core.resources.limits.cpu | string | `"100m"` |  |
-| core.resources.limits.memory | string | `"256Mi"` |  |
-| core.extraEnvVars | list | `[]` |  |
-| core.nodeSelector | object | `{}` |  |
-| core.tolerations | list | `[]` |  |
-| core.affinity | object | `{}` |  |
-| core.topologySpreadConstraints | list | `[]` |  |
-| core.podAnnotations | object | `{}` |  |
-| core.podLabels | object | `{}` |  |
-| core.serviceAnnotations | object | `{}` |  |
-| core.configureUserSettings | string | `nil` |  |
-| core.quotaUpdateProvider | string | `"db"` |  |
-| core.secret | string | `""` |  |
-| core.existingSecret | string | `""` |  |
-| core.secretName | string | `""` |  |
-| core.tokenKey | string | `nil` |  |
-| core.tokenCert | string | `nil` |  |
-| core.xsrfKey | string | `""` |  |
-| core.existingXsrfSecret | string | `""` |  |
-| core.existingXsrfSecretKey | string | `"CSRF_KEY"` |  |
-| core.priorityClassName | string | `nil` |  |
-| core.artifactPullAsyncFlushDuration | string | `nil` |  |
-| core.gdpr.deleteUser | bool | `false` |  |
-| core.gdpr.auditLogsCompliant | bool | `false` |  |
-| core.jobservice.containerSecurityContext.securityContext.runAsUser | int | `1000` |  |
-| core.jobservice.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
-| core.jobservice.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| jobservice.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice"` |  |
-| jobservice.image.tag | string | `"v2.10.1"` |  |
-| jobservice.image.pullSecrets[0] | string | `"private-registry"` |  |
-| jobservice.replicas | int | `1` |  |
-| jobservice.revisionHistoryLimit | int | `10` |  |
-| jobservice.serviceAccountName | string | `""` |  |
-| jobservice.automountServiceAccountToken | bool | `false` |  |
-| jobservice.maxJobWorkers | int | `10` |  |
-| jobservice.jobLoggers[0] | string | `"file"` |  |
-| jobservice.loggerSweeperDuration | int | `14` |  |
-| jobservice.notification.webhook_job_max_retry | int | `3` |  |
-| jobservice.notification.webhook_job_http_client_timeout | int | `3` |  |
-| jobservice.reaper.max_update_hours | int | `24` |  |
-| jobservice.reaper.max_dangling_hours | int | `168` |  |
-| jobservice.securityContext.runAsUser | int | `1000` |  |
-| jobservice.securityContext.runAsGroup | int | `1000` |  |
-| jobservice.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| jobservice.resources.requests.memory | string | `"256Mi"` |  |
-| jobservice.resources.requests.cpu | string | `"100m"` |  |
-| jobservice.resources.limits.cpu | string | `"100m"` |  |
-| jobservice.resources.limits.memory | string | `"256Mi"` |  |
-| jobservice.extraEnvVars | list | `[]` |  |
-| jobservice.nodeSelector | object | `{}` |  |
-| jobservice.tolerations | list | `[]` |  |
-| jobservice.affinity | object | `{}` |  |
-| jobservice.topologySpreadConstraints | string | `nil` |  |
-| jobservice.podAnnotations | object | `{}` |  |
-| jobservice.podLabels | object | `{}` |  |
-| jobservice.secret | string | `""` |  |
-| jobservice.existingSecret | string | `""` |  |
-| jobservice.existingSecretKey | string | `"JOBSERVICE_SECRET"` |  |
-| jobservice.priorityClassName | string | `nil` |  |
-| registry.serviceAccountName | string | `""` |  |
-| registry.automountServiceAccountToken | bool | `false` |  |
-| registry.registry.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/registry"` |  |
-| registry.registry.image.tag | string | `"v2.10.1"` |  |
-| registry.registry.image.pullSecrets[0] | string | `"private-registry"` |  |
-| registry.registry.resources.requests.memory | string | `"256Mi"` |  |
-| registry.registry.resources.requests.cpu | string | `"100m"` |  |
-| registry.registry.resources.limits.cpu | string | `"100m"` |  |
-| registry.registry.resources.limits.memory | string | `"256Mi"` |  |
-| registry.registry.securityContext.runAsGroup | int | `1000` |  |
-| registry.registry.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| registry.registry.extraEnvVars | list | `[]` |  |
-| registry.controller.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl"` |  |
-| registry.controller.image.tag | string | `"v2.10.1"` |  |
-| registry.controller.image.pullSecrets[0] | string | `"private-registry"` |  |
-| registry.controller.resources.requests.memory | string | `"256Mi"` |  |
-| registry.controller.resources.requests.cpu | string | `"100m"` |  |
-| registry.controller.resources.limits.cpu | string | `"100m"` |  |
-| registry.controller.resources.limits.memory | string | `"256Mi"` |  |
-| registry.controller.securityContext.runAsGroup | int | `1000` |  |
-| registry.controller.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| registry.controller.extraEnvVars | list | `[]` |  |
-| registry.replicas | int | `1` |  |
-| registry.revisionHistoryLimit | int | `10` |  |
-| registry.nodeSelector | object | `{}` |  |
-| registry.tolerations | list | `[]` |  |
-| registry.affinity | object | `{}` |  |
-| registry.topologySpreadConstraints | list | `[]` |  |
-| registry.podAnnotations | object | `{}` |  |
-| registry.podLabels | object | `{}` |  |
-| registry.priorityClassName | string | `nil` |  |
-| registry.secret | string | `""` |  |
-| registry.existingSecret | string | `""` |  |
-| registry.existingSecretKey | string | `"REGISTRY_HTTP_SECRET"` |  |
-| registry.relativeurls | bool | `false` |  |
-| registry.credentials.username | string | `"harbor_registry_user"` |  |
-| registry.credentials.password | string | `"harbor_registry_password"` |  |
-| registry.credentials.existingSecret | string | `""` |  |
-| registry.credentials.htpasswdString | string | `""` |  |
-| registry.middleware.enabled | bool | `false` |  |
-| registry.middleware.type | string | `"cloudFront"` |  |
-| registry.middleware.cloudFront.baseurl | string | `"example.cloudfront.net"` |  |
-| registry.middleware.cloudFront.keypairid | string | `"KEYPAIRID"` |  |
-| registry.middleware.cloudFront.duration | string | `"3000s"` |  |
-| registry.middleware.cloudFront.ipfilteredby | string | `"none"` |  |
-| registry.middleware.cloudFront.privateKeySecret | string | `"my-secret"` |  |
-| registry.upload_purging.enabled | bool | `true` |  |
-| registry.upload_purging.age | string | `"168h"` |  |
-| registry.upload_purging.interval | string | `"24h"` |  |
-| registry.upload_purging.dryrun | bool | `false` |  |
-| trivy.enabled | bool | `true` |  |
-| trivy.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter"` |  |
-| trivy.image.tag | string | `"v2.10.1"` |  |
-| trivy.image.pullSecrets[0] | string | `"private-registry"` |  |
-| trivy.serviceAccountName | string | `""` |  |
-| trivy.automountServiceAccountToken | bool | `false` |  |
-| trivy.replicas | int | `1` |  |
-| trivy.debugMode | bool | `false` |  |
-| trivy.vulnType | string | `"os,library"` |  |
-| trivy.severity | string | `"UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"` |  |
-| trivy.ignoreUnfixed | bool | `false` |  |
-| trivy.insecure | bool | `false` |  |
-| trivy.gitHubToken | string | `""` |  |
-| trivy.skipUpdate | bool | `false` |  |
-| trivy.skipJavaDBUpdate | bool | `false` |  |
-| trivy.offlineScan | bool | `false` |  |
-| trivy.securityCheck | string | `"vuln"` |  |
-| trivy.timeout | string | `"5m0s"` |  |
-| trivy.resources.requests.cpu | string | `"200m"` |  |
-| trivy.resources.requests.memory | string | `"512Mi"` |  |
-| trivy.resources.limits.cpu | string | `"200m"` |  |
-| trivy.resources.limits.memory | string | `"512Mi"` |  |
-| trivy.extraEnvVars | list | `[]` |  |
-| trivy.nodeSelector | object | `{}` |  |
-| trivy.tolerations | list | `[]` |  |
-| trivy.affinity | object | `{}` |  |
-| trivy.topologySpreadConstraints | list | `[]` |  |
-| trivy.podAnnotations | object | `{}` |  |
-| trivy.podLabels | object | `{}` |  |
-| trivy.priorityClassName | string | `nil` |  |
-| trivy.securityContext.privileged | bool | `false` |  |
-| trivy.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| trivy.securityContext.runAsGroup | int | `1000` |  |
-| trivy.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| database.type | string | `"external"` |  |
-| database.internal.serviceAccountName | string | `""` |  |
-| database.internal.automountServiceAccountToken | bool | `false` |  |
-| database.internal.password | string | `"changeit"` |  |
-| database.internal.shmSizeLimit | string | `"512Mi"` |  |
-| database.internal.resources.requests.memory | string | `"256Mi"` |  |
-| database.internal.resources.requests.cpu | string | `"100m"` |  |
-| database.internal.resources.limits.cpu | string | `"100m"` |  |
-| database.internal.resources.limits.memory | string | `"256Mi"` |  |
-| database.internal.extraEnvVars | list | `[]` |  |
-| database.internal.nodeSelector | object | `{}` |  |
-| database.internal.tolerations | list | `[]` |  |
-| database.internal.affinity | object | `{}` |  |
-| database.internal.priorityClassName | string | `nil` |  |
-| database.internal.initContainer.migrator | object | `{}` |  |
-| database.internal.initContainer.resources.requests.memory | string | `"128Mi"` |  |
-| database.internal.initContainer.resources.requests.cpu | string | `"100m"` |  |
-| database.internal.initContainer.resources.limits.cpu | string | `"100m"` |  |
-| database.internal.initContainer.resources.limits.memory | string | `"128Mi"` |  |
-| database.internal.initContainer.permissions | object | `{}` |  |
-| database.external.host | string | `"harbor-postgresql"` |  |
-| database.external.port | string | `"5432"` |  |
-| database.external.username | string | `"harborUser"` |  |
-| database.external.password | string | `"harborPW"` |  |
-| database.external.coreDatabase | string | `"harborUser"` |  |
-| database.external.existingSecret | string | `""` |  |
-| database.external.sslmode | string | `"disable"` |  |
-| postgresql.enabled | bool | `true` |  |
-| postgresql.postgresqlUsername | string | `"harborUser"` |  |
-| postgresql.postgresqlPassword | string | `"harborPW"` |  |
-| postgresql.coreDatabase | string | `"harborUser"` |  |
-| postgresql.maxIdleConns | int | `100` |  |
-| postgresql.maxOpenConns | int | `900` |  |
-| postgresql.networkPolicy.enabled | bool | `false` |  |
-| postgresql.global.imagePullSecrets[0] | string | `"private-registry"` |  |
-| postgresql.image.registry | string | `"registry1.dso.mil"` |  |
-| postgresql.image.repository | string | `"ironbank/opensource/postgres/postgresql12"` |  |
-| postgresql.image.tag | float | `12.18` |  |
-| postgresql.image.debug | bool | `true` |  |
-| postgresql.securityContext.enabled | bool | `true` |  |
-| postgresql.securityContext.fsGroup | int | `26` |  |
-| postgresql.securityContext.runAsUser | int | `26` |  |
-| postgresql.securityContext.runAsGroup | int | `26` |  |
-| postgresql.containerSecurityContext.enabled | bool | `true` |  |
-| postgresql.containerSecurityContext.runAsUser | int | `26` |  |
-| postgresql.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| postgresql.existingSecret | string | `""` |  |
-| postgresql.resources.requests.cpu | string | `"250m"` |  |
-| postgresql.resources.requests.memory | string | `"256Mi"` |  |
-| postgresql.resources.limits.cpu | string | `"250m"` |  |
-| postgresql.resources.limits.memory | string | `"256Mi"` |  |
-| postgresql.podAnnotations | object | `{}` |  |
-| postgresql.initdbUser | string | `"harborUser"` |  |
-| postgresql.initdbPassword | string | `"harborPW"` |  |
-| postgresql.externalDatabase.host | string | `"localhost"` |  |
-| postgresql.externalDatabase.port | int | `5432` |  |
-| postgresql.externalDatabase.user | string | `"bn_harbor"` |  |
-| postgresql.externalDatabase.password | string | `""` |  |
-| postgresql.externalDatabase.sslmode | string | `"disable"` |  |
-| postgresql.externalDatabase.coreDatabase | string | `""` |  |
-| postgresql.podLabels | object | `{}` |  |
-| redis.type | string | `"external"` |  |
-| redis.internal.serviceAccountName | string | `""` |  |
-| redis.internal.automountServiceAccountToken | bool | `false` |  |
-| redis.internal.image.repository | string | `"goharbor/redis-photon"` |  |
-| redis.internal.image.tag | string | `"v2.10.1"` |  |
-| redis.internal.image.pullSecrets[0] | string | `"private-registry"` |  |
-| redis.internal.resources.requests.memory | string | `"256Mi"` |  |
-| redis.internal.resources.requests.cpu | string | `"100m"` |  |
-| redis.internal.resources.limits.memory | string | `"256Mi"` |  |
-| redis.internal.resources.limits.cpu | string | `"100m"` |  |
-| redis.internal.nodeSelector | object | `{}` |  |
-| redis.internal.tolerations | list | `[]` |  |
-| redis.internal.affinity | object | `{}` |  |
-| redis.internal.priorityClassName | string | `nil` |  |
-| redis.internal.jobserviceDatabaseIndex | string | `"1"` |  |
-| redis.internal.registryDatabaseIndex | string | `"2"` |  |
-| redis.internal.trivyAdapterIndex | string | `"5"` |  |
-| redis.external.addr | string | `"harbor-redis-bb-master:6379"` |  |
-| redis.external.sentinelMasterSet | string | `""` |  |
-| redis.external.coreDatabaseIndex | string | `"0"` |  |
-| redis.external.jobserviceDatabaseIndex | string | `"1"` |  |
-| redis.external.registryDatabaseIndex | string | `"2"` |  |
-| redis.external.trivyAdapterIndex | string | `"5"` |  |
-| redis.external.username | string | `""` |  |
-| redis.external.password | string | `""` |  |
-| redis.external.existingSecret | string | `""` |  |
-| redis.podAnnotations | object | `{}` |  |
-| redis.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| redis-bb.enabled | bool | `true` | Enable BigBang provided redis sub-chart. Disable if using external cloud elasticache or redis endpoint and fill in `redis.external.addr` in above section |
-| redis-bb.auth.enabled | bool | `false` |  |
-| redis-bb.istio.redis.enabled | bool | `false` |  |
-| redis-bb.image.registry | string | `"registry1.dso.mil"` |  |
-| redis-bb.image.repository | string | `"ironbank/bitnami/redis"` |  |
-| redis-bb.image.tag | string | `"7.0.0-debian-10-r3"` |  |
-| redis-bb.image.pullSecrets[0] | string | `"private-registry"` |  |
-| redis-bb.networkPolicies.enabled | bool | `true` |  |
-| redis-bb.networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
-| redis-bb.master.containerSecurityContext.enabled | bool | `true` |  |
-| redis-bb.master.containerSecurityContext.runAsUser | int | `1000` |  |
-| redis-bb.master.containerSecurityContext.runAsGroup | int | `1000` |  |
-| redis-bb.master.containerSecurityContext.runAsNonRoot | bool | `true` |  |
-| redis-bb.replica.replicaCount | int | `0` |  |
-| redis-bb.replica.containerSecurityContext.enabled | bool | `true` |  |
-| redis-bb.replica.containerSecurityContext.runAsUser | int | `1000` |  |
-| redis-bb.replica.containerSecurityContext.runAsGroup | int | `1000` |  |
-| redis-bb.replica.containerSecurityContext.runAsNonRoot | bool | `true` |  |
-| redis-bb.commonConfiguration | string | `"# Enable AOF https://redis.io/topics/persistence#append-only-file\nappendonly no\nmaxmemory 200mb\nmaxmemory-policy allkeys-lru\nsave \"\""` |  |
-| redis-bb.podLabels | object | `{}` |  |
-| exporter.replicas | int | `1` |  |
-| exporter.revisionHistoryLimit | int | `10` |  |
-| exporter.resources.requests.memory | string | `"256Mi"` |  |
-| exporter.resources.requests.cpu | string | `"100m"` |  |
-| exporter.resources.limits.cpu | string | `"100m"` |  |
-| exporter.resources.limits.memory | string | `"256Mi"` |  |
-| exporter.extraEnvVars | list | `[]` |  |
-| exporter.podAnnotations | object | `{}` |  |
-| exporter.podLabels | object | `{}` |  |
-| exporter.serviceAccountName | string | `""` |  |
-| exporter.automountServiceAccountToken | bool | `false` |  |
-| exporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter"` |  |
-| exporter.image.tag | string | `"v2.10.1"` |  |
-| exporter.image.pullSecrets[0] | string | `"private-registry"` |  |
-| exporter.nodeSelector | object | `{}` |  |
-| exporter.tolerations | list | `[]` |  |
-| exporter.affinity | object | `{}` |  |
-| exporter.topologySpreadConstraints | list | `[]` |  |
-| exporter.cacheDuration | int | `23` |  |
-| exporter.cacheCleanInterval | int | `14400` |  |
-| exporter.containerSecurityContext.securityContext.runAsUser | int | `1000` |  |
-| exporter.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
-| exporter.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| exporter.priorityClassName | string | `nil` |  |
-| metrics.enabled | bool | `false` |  |
-| metrics.core.path | string | `"/metrics"` |  |
-| metrics.core.port | int | `8001` |  |
-| metrics.registry.path | string | `"/metrics"` |  |
-| metrics.registry.port | int | `8001` |  |
-| metrics.jobservice.path | string | `"/metrics"` |  |
-| metrics.jobservice.port | int | `8001` |  |
-| metrics.exporter.path | string | `"/metrics"` |  |
-| metrics.exporter.port | int | `8001` |  |
-| metrics.serviceMonitor.enabled | bool | `false` |  |
-| metrics.serviceMonitor.additionalLabels | object | `{}` |  |
-| metrics.serviceMonitor.interval | string | `""` |  |
-| metrics.serviceMonitor.metricRelabelings | list | `[]` |  |
-| metrics.serviceMonitor.relabelings | list | `[]` |  |
-| metrics.serviceMonitor.scheme | string | `""` |  |
-| metrics.serviceMonitor.tlsConfig | object | `{}` |  |
-| trace.enabled | bool | `false` |  |
-| trace.provider | string | `"jaeger"` |  |
-| trace.sample_rate | int | `1` |  |
-| trace.jaeger.endpoint | string | `"http://hostname:14268/api/traces"` |  |
-| trace.otel.endpoint | string | `"hostname:4318"` |  |
-| trace.otel.url_path | string | `"/v1/traces"` |  |
-| trace.otel.compression | bool | `false` |  |
-| trace.otel.insecure | bool | `true` |  |
-| trace.otel.timeout | int | `10` |  |
-| domain | string | `"bigbang.dev"` |  |
-| istio.enabled | bool | `false` |  |
-| istio.hardened.enabled | bool | `false` |  |
-| istio.hardened.customAuthorizationPolicies | list | `[]` |  |
-| istio.hardened.monitoring.enabled | bool | `false` |  |
-| istio.hardened.monitoring.namespaces[0] | string | `"monitoring"` |  |
-| istio.hardened.monitoring.principals[0] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-prometheus"` |  |
-| istio.mtls.mode | string | `"PERMISSIVE"` | STRICT = Allow only mutual TLS traffic, PERMISSIVE = Allow both plain text and mutual TLS traffic |
-| istio.harbor.gateways[0] | string | `"istio-system/public"` |  |
-| istio.harbor.hosts[0] | string | `"harbor.{{ .Values.domain }}"` |  |
-| istio.injection | string | `"disabled"` |  |
-| monitoring.enabled | bool | `false` |  |
-| monitoring.namespace | string | `"monitoring"` |  |
-| networkPolicies.enabled | bool | `false` |  |
-| networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
-| networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
-| cache.enabled | bool | `false` |  |
-| cache.expireHours | int | `24` |  |
-| openshift | bool | `false` |  |
-| bbtests.enabled | bool | `false` |  |
-| bbtests.cypress.artifacts | bool | `true` |  |
-| bbtests.cypress.envs.cypress_url | string | `"http://harbor:80"` |  |
-| bbtests.cypress.envs.cypress_user | string | `"admin"` |  |
-| bbtests.cypress.envs.cypress_harbor_password | string | `"Harbor12345"` |  |
-| bbtests.cypress.envs.cypress_project | string | `"bbcypress-test"` |  |
-| bbtests.scripts.image | string | `"registry1.dso.mil/bigbang-ci/gitlab-tester:0.0.4"` |  |
-| bbtests.scripts.envs.HARBOR_USER | string | `"admin"` |  |
-| bbtests.scripts.envs.HARBOR_PASS | string | `"Harbor12345"` |  |
-| bbtests.scripts.envs.HARBOR_REGISTRY | string | `"harbor:80"` |  |
-| bbtests.scripts.envs.HARBOR_PROJECT | string | `"library"` |  |
+The following items can be set via `--set` flag during installation or configured by editing the `values.yaml` directly (need to download the chart first).
 
-## Contributing
+#### Configure how to expose Harbor service
 
-Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
-# postgresql
+- **Ingress**: The ingress controller must be installed in the Kubernetes cluster.
+  **Notes:** if TLS is disabled, the port must be included in the command when pulling/pushing images. Refer to issue [#5291](https://github.com/goharbor/harbor/issues/5291) for details.
+- **ClusterIP**: Exposes the service on a cluster-internal IP. Choosing this value makes the service only reachable from within the cluster.
+- **NodePort**: Exposes the service on each Node’s IP at a static port (the NodePort). You’ll be able to contact the NodePort service, from outside the cluster, by requesting `NodeIP:NodePort`.
+- **LoadBalancer**: Exposes the service externally using a cloud provider’s load balancer.
 
-![Version: 10.3.13](https://img.shields.io/badge/Version-10.3.13-informational?style=flat-square) ![AppVersion: 12.15.0](https://img.shields.io/badge/AppVersion-12.15.0-informational?style=flat-square)
+#### Configure the external URL
 
-Chart for PostgreSQL, an object-relational database management system (ORDBMS) with an emphasis on extensibility and on standards-compliance.
+The external URL for Harbor core service is used to:
 
-## Upstream References
-* <https://github.com/bitnami/charts/tree/master/bitnami/postgresql>
+1. populate the docker/helm commands showed on portal
+2. populate the token service URL returned to docker client
 
-* <https://github.com/bitnami/bitnami-docker-postgresql>
-* <https://www.postgresql.org/>
+Format: `protocol://domain[:port]`. Usually:
 
-## Learn More
-* [Application Overview](docs/overview.md)
-* [Other Documentation](docs/)
+- if service exposed via `Ingress`, the `domain` should be the value of `expose.ingress.hosts.core`
+- if service exposed via `ClusterIP`, the `domain` should be the value of `expose.clusterIP.name`
+- if service exposed via `NodePort`, the `domain` should be the IP address of one Kubernetes node
+- if service exposed via `LoadBalancer`, set the `domain` as your own domain name and add a CNAME record to map the domain name to the one you got from the cloud provider
 
-## Pre-Requisites
+If Harbor is deployed behind the proxy, set it as the URL of proxy.
 
-* Kubernetes Cluster deployed
-* Kubernetes config installed in `~/.kube/config`
-* Helm installed
+#### Configure how to persist data
 
-Install Helm
+- **Disable**: The data does not survive the termination of a pod.
+- **Persistent Volume Claim(default)**: A default `StorageClass` is needed in the Kubernetes cluster to dynamically provision the volumes. Specify another StorageClass in the `storageClass` or set `existingClaim` if you already have existing persistent volumes to use.
+- **External Storage(only for images and charts)**: For images and charts, the external storages are supported: `azure`, `gcs`, `s3` `swift` and `oss`.
 
-https://helm.sh/docs/intro/install/
+#### Configure the other items listed in [configuration](#configuration) section
 
-## Deployment
+### Install the chart
 
-* Clone down the repository
-* cd into directory
+Install the Harbor helm chart with a release name `my-release`:
 ```bash
-helm install postgresql chart/
+helm install my-release harbor/harbor
 ```
 
-## Values
+## Uninstallation
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| global.postgresql | object | `{}` |  |
-| image.registry | string | `"registry1.dso.mil"` |  |
-| image.repository | string | `"ironbank/opensource/postgres/postgresql12"` |  |
-| image.tag | float | `12.18` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.debug | bool | `false` |  |
-| volumePermissions.enabled | bool | `false` |  |
-| volumePermissions.image.registry | string | `"registry1.dso.mil"` |  |
-| volumePermissions.image.repository | string | `"ironbank/big-bang/base"` |  |
-| volumePermissions.image.tag | string | `"2.1.0"` |  |
-| volumePermissions.image.pullPolicy | string | `"Always"` |  |
-| volumePermissions.securityContext.runAsUser | int | `0` |  |
-| securityContext.enabled | bool | `true` |  |
-| securityContext.fsGroup | int | `26` |  |
-| securityContext.runAsUser | int | `26` |  |
-| securityContext.runAsGroup | int | `26` |  |
-| containerSecurityContext.enabled | bool | `true` |  |
-| containerSecurityContext.runAsUser | int | `26` |  |
-| containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| serviceAccount.enabled | bool | `false` |  |
-| psp.create | bool | `false` |  |
-| rbac.create | bool | `false` |  |
-| replication.enabled | bool | `false` |  |
-| replication.user | string | `"repl_user"` |  |
-| replication.password | string | `"repl_password"` |  |
-| replication.readReplicas | int | `1` |  |
-| replication.synchronousCommit | string | `"off"` |  |
-| replication.numSynchronousReplicas | int | `0` |  |
-| replication.applicationName | string | `"my_application"` |  |
-| postgresqlUsername | string | `"postgres"` |  |
-| postgresqlDataDir | string | `"/var/lib/postgresql/data"` |  |
-| extraEnv | list | `[]` |  |
-| postgresqlConfiguration.listen_addresses | string | `"*"` |  |
-| primaryAsStandBy.enabled | bool | `false` |  |
-| pgHbaConfiguration | string | `"local all all md5\nhost all all all md5"` |  |
-| audit.logHostname | bool | `false` |  |
-| audit.logConnections | bool | `false` |  |
-| audit.logDisconnections | bool | `false` |  |
-| audit.pgAuditLog | string | `""` |  |
-| audit.pgAuditLogCatalog | string | `"off"` |  |
-| audit.clientMinMessages | string | `"error"` |  |
-| audit.logLinePrefix | string | `""` |  |
-| audit.logTimezone | string | `""` |  |
-| postgresqlSharedPreloadLibraries | string | `"pgaudit"` |  |
-| postgresqlMaxConnections | string | `nil` |  |
-| postgresqlPostgresConnectionLimit | string | `nil` |  |
-| postgresqlDbUserConnectionLimit | string | `nil` |  |
-| postgresqlTcpKeepalivesInterval | string | `nil` |  |
-| postgresqlTcpKeepalivesIdle | string | `nil` |  |
-| postgresqlTcpKeepalivesCount | string | `nil` |  |
-| postgresqlStatementTimeout | string | `nil` |  |
-| postgresqlPghbaRemoveFilters | string | `nil` |  |
-| ldap.enabled | bool | `false` |  |
-| ldap.url | string | `""` |  |
-| ldap.server | string | `""` |  |
-| ldap.port | string | `""` |  |
-| ldap.prefix | string | `""` |  |
-| ldap.suffix | string | `""` |  |
-| ldap.baseDN | string | `""` |  |
-| ldap.bindDN | string | `""` |  |
-| ldap.bind_password | string | `nil` |  |
-| ldap.search_attr | string | `""` |  |
-| ldap.search_filter | string | `""` |  |
-| ldap.scheme | string | `""` |  |
-| ldap.tls | object | `{}` |  |
-| service.type | string | `"ClusterIP"` |  |
-| service.port | int | `5432` |  |
-| service.annotations | object | `{}` |  |
-| shmVolume.enabled | bool | `true` |  |
-| shmVolume.chmod.enabled | bool | `true` |  |
-| persistence.enabled | bool | `true` |  |
-| persistence.mountPath | string | `"/var/lib/postgresql"` |  |
-| persistence.subPath | string | `"pgdata"` |  |
-| persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
-| persistence.size | string | `"8Gi"` |  |
-| persistence.annotations | object | `{}` |  |
-| persistence.selector | object | `{}` |  |
-| updateStrategy.type | string | `"RollingUpdate"` |  |
-| primary.podAffinityPreset | string | `""` |  |
-| primary.podAntiAffinityPreset | string | `"soft"` |  |
-| primary.nodeAffinityPreset.type | string | `""` |  |
-| primary.nodeAffinityPreset.key | string | `""` |  |
-| primary.nodeAffinityPreset.values | list | `[]` |  |
-| primary.affinity | object | `{}` |  |
-| primary.nodeSelector | object | `{}` |  |
-| primary.tolerations | list | `[]` |  |
-| primary.labels | object | `{}` |  |
-| primary.annotations | object | `{}` |  |
-| primary.podLabels | object | `{}` |  |
-| primary.podAnnotations | object | `{}` |  |
-| primary.priorityClassName | string | `""` |  |
-| primary.extraInitContainers | list | `[]` |  |
-| primary.extraVolumeMounts | list | `[]` |  |
-| primary.extraVolumes | list | `[]` |  |
-| primary.sidecars | list | `[]` |  |
-| primary.service | object | `{}` |  |
-| readReplicas.podAffinityPreset | string | `""` |  |
-| readReplicas.podAntiAffinityPreset | string | `"soft"` |  |
-| readReplicas.nodeAffinityPreset.type | string | `""` |  |
-| readReplicas.nodeAffinityPreset.key | string | `""` |  |
-| readReplicas.nodeAffinityPreset.values | list | `[]` |  |
-| readReplicas.affinity | object | `{}` |  |
-| readReplicas.nodeSelector | object | `{}` |  |
-| readReplicas.tolerations | list | `[]` |  |
-| readReplicas.labels | object | `{}` |  |
-| readReplicas.annotations | object | `{}` |  |
-| readReplicas.podLabels | object | `{}` |  |
-| readReplicas.podAnnotations | object | `{}` |  |
-| readReplicas.priorityClassName | string | `""` |  |
-| readReplicas.extraInitContainers | list | `[]` |  |
-| readReplicas.extraVolumeMounts | list | `[]` |  |
-| readReplicas.extraVolumes | list | `[]` |  |
-| readReplicas.sidecars | list | `[]` |  |
-| readReplicas.service | object | `{}` |  |
-| readReplicas.persistence.enabled | bool | `true` |  |
-| readReplicas.resources | object | `{}` |  |
-| resources.requests.memory | string | `"256Mi"` |  |
-| resources.requests.cpu | string | `"250m"` |  |
-| commonAnnotations | object | `{}` |  |
-| networkPolicy.enabled | bool | `false` |  |
-| networkPolicy.allowExternal | bool | `true` |  |
-| networkPolicy.explicitNamespacesSelector | object | `{}` |  |
-| startupProbe.enabled | bool | `false` |  |
-| startupProbe.initialDelaySeconds | int | `30` |  |
-| startupProbe.periodSeconds | int | `15` |  |
-| startupProbe.timeoutSeconds | int | `5` |  |
-| startupProbe.failureThreshold | int | `10` |  |
-| startupProbe.successThreshold | int | `1` |  |
-| livenessProbe.enabled | bool | `true` |  |
-| livenessProbe.initialDelaySeconds | int | `30` |  |
-| livenessProbe.periodSeconds | int | `10` |  |
-| livenessProbe.timeoutSeconds | int | `5` |  |
-| livenessProbe.failureThreshold | int | `6` |  |
-| livenessProbe.successThreshold | int | `1` |  |
-| readinessProbe.enabled | bool | `true` |  |
-| readinessProbe.initialDelaySeconds | int | `5` |  |
-| readinessProbe.periodSeconds | int | `10` |  |
-| readinessProbe.timeoutSeconds | int | `5` |  |
-| readinessProbe.failureThreshold | int | `6` |  |
-| readinessProbe.successThreshold | int | `1` |  |
-| customStartupProbe | object | `{}` |  |
-| customLivenessProbe | object | `{}` |  |
-| customReadinessProbe | object | `{}` |  |
-| tls.enabled | bool | `false` |  |
-| tls.preferServerCiphers | bool | `true` |  |
-| tls.certificatesSecret | string | `""` |  |
-| tls.certFilename | string | `""` |  |
-| tls.certKeyFilename | string | `""` |  |
-| tls.certCAFilename | string | `nil` |  |
-| tls.crlFilename | string | `nil` |  |
-| metrics.enabled | bool | `false` |  |
-| metrics.service.type | string | `"ClusterIP"` |  |
-| metrics.service.annotations."prometheus.io/scrape" | string | `"true"` |  |
-| metrics.service.annotations."prometheus.io/port" | string | `"9187"` |  |
-| metrics.service.loadBalancerIP | string | `nil` |  |
-| metrics.serviceMonitor.enabled | bool | `false` |  |
-| metrics.serviceMonitor.additionalLabels | object | `{}` |  |
-| metrics.prometheusRule.enabled | bool | `false` |  |
-| metrics.prometheusRule.additionalLabels | object | `{}` |  |
-| metrics.prometheusRule.namespace | string | `""` |  |
-| metrics.prometheusRule.rules | list | `[]` |  |
-| metrics.image.registry | string | `"registry1.dso.mil"` |  |
-| metrics.image.repository | string | `"ironbank/bitnami/postgres-exporter"` |  |
-| metrics.image.tag | string | `"0.15.0"` |  |
-| metrics.image.pullPolicy | string | `"IfNotPresent"` |  |
-| metrics.extraEnvVars | object | `{}` |  |
-| metrics.securityContext.enabled | bool | `false` |  |
-| metrics.securityContext.runAsUser | int | `1001` |  |
-| metrics.livenessProbe.enabled | bool | `true` |  |
-| metrics.livenessProbe.initialDelaySeconds | int | `5` |  |
-| metrics.livenessProbe.periodSeconds | int | `10` |  |
-| metrics.livenessProbe.timeoutSeconds | int | `5` |  |
-| metrics.livenessProbe.failureThreshold | int | `6` |  |
-| metrics.livenessProbe.successThreshold | int | `1` |  |
-| metrics.readinessProbe.enabled | bool | `true` |  |
-| metrics.readinessProbe.initialDelaySeconds | int | `5` |  |
-| metrics.readinessProbe.periodSeconds | int | `10` |  |
-| metrics.readinessProbe.timeoutSeconds | int | `5` |  |
-| metrics.readinessProbe.failureThreshold | int | `6` |  |
-| metrics.readinessProbe.successThreshold | int | `1` |  |
-| extraDeploy | list | `[]` |  |
+To uninstall/delete the `my-release` deployment:
+```bash
+helm uninstall my-release
+```
 
-## Contributing
+## Configuration
 
-Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+The following table lists the configurable parameters of the Harbor chart and the default values.
+
+| Parameter                                                            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Default                              |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| **Expose**                                                           |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `expose.type`                                                        | How to expose the service: `ingress`, `clusterIP`, `nodePort` or `loadBalancer`, other values will be ignored and the creation of service will be skipped.                                                                                                                                                                                                                                                                                                        | `ingress`                             |
+| `expose.tls.enabled`                                                 | Enable TLS or not. Delete the `ssl-redirect` annotations in `expose.ingress.annotations` when TLS is disabled and `expose.type` is `ingress`. Note: if the `expose.type` is `ingress` and TLS is disabled, the port must be included in the command when pulling/pushing images. Refer to https://github.com/goharbor/harbor/issues/5291 for details.                                                                                                             | `true`                                |
+| `expose.tls.certSource`                                              | The source of the TLS certificate. Set as `auto`, `secret` or `none` and fill the information in the corresponding section: 1) auto: generate the TLS certificate automatically 2) secret: read the TLS certificate from the specified secret. The TLS certificate can be generated manually or by cert manager 3) none: configure no TLS certificate for the ingress. If the default TLS certificate is configured in the ingress controller, choose this option | `auto`                                |
+| `expose.tls.auto.commonName`                                         | The common name used to generate the certificate, it's necessary when the type isn't `ingress`                                                                                                                                                                                                                                                                                                                                                                    |                                       |
+| `expose.tls.secret.secretName`                                       | The name of secret which contains keys named: `tls.crt` - the certificate; `tls.key` - the private key                                                                                                                                                                                                                                                                                                                                                            |                                       |
+| `expose.ingress.hosts.core`                                          | The host of Harbor core service in ingress rule                                                                                                                                                                                                                                                                                                                                                                                                                   | `core.harbor.domain`                  |
+| `expose.ingress.controller`                                          | The ingress controller type. Currently supports `default`, `gce`, `alb`, `f5-bigip` and `ncp`                                                                                                                                                                                                                                                                                                                                                                     | `default`                             |
+| `expose.ingress.kubeVersionOverride`                                 | Allows the ability to override the kubernetes version used while templating the ingress                                                                                                                                                                                                                                                                                                                                                                           |                                       |
+| `expose.ingress.annotations`                                         | The annotations used commonly for ingresses                                                                                                                                                                                                                                                                                                                                                                                                                       |                                       |
+| `expose.ingress.harbor.annotations`                                  | The annotations specific to harbor ingress                                                                                                                                                                                                                                                                                                                                                                                                                        | {}                                    |
+| `expose.ingress.harbor.labels`                                       | The labels specific to harbor ingress                                                                                                                                                                                                                                                                                                                                                                                                                             | {}                                    |
+| `expose.clusterIP.name`                                              | The name of ClusterIP service                                                                                                                                                                                                                                                                                                                                                                                                                                     | `harbor`                              |
+| `expose.clusterIP.annotations`                                       | The annotations attached to the ClusterIP service                                                                                                                                                                                                                                                                                                                                                                                                                 | {}                                    |
+| `expose.clusterIP.ports.httpPort`                                    | The service port Harbor listens on when serving HTTP                                                                                                                                                                                                                                                                                                                                                                                                              | `80`                                  |
+| `expose.clusterIP.ports.httpsPort`                                   | The service port Harbor listens on when serving HTTPS                                                                                                                                                                                                                                                                                                                                                                                                             | `443`                                 |
+| `expose.nodePort.name`                                               | The name of NodePort service                                                                                                                                                                                                                                                                                                                                                                                                                                      | `harbor`                              |
+| `expose.nodePort.ports.http.port`                                    | The service port Harbor listens on when serving HTTP                                                                                                                                                                                                                                                                                                                                                                                                              | `80`                                  |
+| `expose.nodePort.ports.http.nodePort`                                | The node port Harbor listens on when serving HTTP                                                                                                                                                                                                                                                                                                                                                                                                                 | `30002`                               |
+| `expose.nodePort.ports.https.port`                                   | The service port Harbor listens on when serving HTTPS                                                                                                                                                                                                                                                                                                                                                                                                             | `443`                                 |
+| `expose.nodePort.ports.https.nodePort`                               | The node port Harbor listens on when serving HTTPS                                                                                                                                                                                                                                                                                                                                                                                                                | `30003`                               |
+| `expose.loadBalancer.name`                                           | The name of service                                                                                                                                                                                                                                                                                                                                                                                                                                               | `harbor`                              |
+| `expose.loadBalancer.IP`                                             | The IP of the loadBalancer. It only works when loadBalancer supports assigning IP                                                                                                                                                                                                                                                                                                                                                                                 | `""`                                  |
+| `expose.loadBalancer.ports.httpPort`                                 | The service port Harbor listens on when serving HTTP                                                                                                                                                                                                                                                                                                                                                                                                              | `80`                                  |
+| `expose.loadBalancer.ports.httpsPort`                                | The service port Harbor listens on when serving HTTPS                                                                                                                                                                                                                                                                                                                                                                                                             | `30002`                               |
+| `expose.loadBalancer.annotations`                                    | The annotations attached to the loadBalancer service                                                                                                                                                                                                                                                                                                                                                                                                              | {}                                    |
+| `expose.loadBalancer.sourceRanges`                                   | List of IP address ranges to assign to loadBalancerSourceRanges                                                                                                                                                                                                                                                                                                                                                                                                   | []                                    |
+| **Internal TLS**                                                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `internalTLS.enabled`                                                | Enable TLS for the components (core, jobservice, portal, registry, trivy)                                                                                                                                                                                                                                                                                                                                                                            | `false`                               |
+| `internalTLS.strong_ssl_ciphers`                                     | Enable strong ssl ciphers for nginx and portal                              | `false`
+| `internalTLS.certSource`                                             | Method to provide TLS for the components, options are `auto`, `manual`, `secret`.                                                                                                                                                                                                                                                                                                                                                                                 | `auto`                                |
+| `internalTLS.trustCa`                                                | The content of trust CA, only available when `certSource` is `manual`. **Note**: all the internal certificates of the components must be issued by this CA                                                                                                                                                                                                                                                                                                        |                                       |
+| `internalTLS.core.secretName`                                        | The secret name for core component, only available when `certSource` is `secret`. The secret must contain keys named: `ca.crt` - the CA certificate which is used to issue internal key and crt pair for components and all Harbor components must be issued by the same CA, `tls.crt` - the content of the TLS cert file, `tls.key` - the content of the TLS key file.                                                                                           |                                       |
+| `internalTLS.core.crt`                                               | Content of core's TLS cert file, only available when `certSource` is `manual`                                                                                                                                                                                                                                                                                                                                                                                     |                                       |
+| `internalTLS.core.key`                                               | Content of core's TLS key file, only available when `certSource` is `manual`                                                                                                                                                                                                                                                                                                                                                                                      |                                       |
+| `internalTLS.jobservice.secretName`                                  | The secret name for jobservice component, only available when `certSource` is `secret`. The secret must contain keys named: `ca.crt` - the CA certificate which is used to issue internal key and crt pair for components and all Harbor components must be issued by the same CA, `tls.crt` - the content of the TLS cert file, `tls.key` - the content of the TLS key file.                                                                                     |                                       |
+| `internalTLS.jobservice.crt`                                         | Content of jobservice's TLS cert file, only available when `certSource` is `manual`                                                                                                                                                                                                                                                                                                                                                                               |                                       |
+| `internalTLS.jobservice.key`                                         | Content of jobservice's TLS key file, only available when `certSource` is `manual`                                                                                                                                                                                                                                                                                                                                                                                |                                       |
+| `internalTLS.registry.secretName`                                    | The secret name for registry component, only available when `certSource` is `secret`. The secret must contain keys named: `ca.crt` - the CA certificate which is used to issue internal key and crt pair for components and all Harbor components must be issued by the same CA, `tls.crt` - the content of the TLS cert file, `tls.key` - the content of the TLS key file.                                                                                       |                                       |
+| `internalTLS.registry.crt`                                           | Content of registry's TLS cert file, only available when `certSource` is `manual`                                                                                                                                                                                                                                                                                                                                                                                 |                                       |
+| `internalTLS.registry.key`                                           | Content of registry's TLS key file, only available when `certSource` is `manual`                                                                                                                                                                                                                                                                                                                                                                                  |                                       |
+| `internalTLS.portal.secretName`                                      | The secret name for portal component, only available when `certSource` is `secret`. The secret must contain keys named: `ca.crt` - the CA certificate which is used to issue internal key and crt pair for components and all Harbor components must be issued by the same CA, `tls.crt` - the content of the TLS cert file, `tls.key` - the content of the TLS key file.                                                                                         |                                       |
+| `internalTLS.portal.crt`                                             | Content of portal's TLS cert file, only available when `certSource` is `manual`                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `internalTLS.portal.key`                                             | Content of portal's TLS key file, only available when `certSource` is `manual`                                                                                                                                                                                                                                                                                                                                                                                    |                                       |
+| `internalTLS.trivy.secretName`                                       | The secret name for trivy component, only available when `certSource` is `secret`. The secret must contain keys named: `ca.crt` - the CA certificate which is used to issue internal key and crt pair for components and all Harbor components must be issued by the same CA, `tls.crt` - the content of the TLS cert file, `tls.key` - the content of the TLS key file.                                                                                          |                                       |
+| `internalTLS.trivy.crt`                                              | Content of trivy's TLS cert file, only available when `certSource` is `manual`                                                                                                                                                                                                                                                                                                                                                                                    |                                       |
+| `internalTLS.trivy.key`                                              | Content of trivy's TLS key file, only available when `certSource` is `manual`                                                                                                                                                                                                                                                                                                                                                                                     |                                       |
+| **IPFamily**        |                                |                                                  |
+| `ipFamily.ipv4.enabled` | if cluster is ipv4 enabled, all ipv4 related configs will set correspondingly, but currently it only affects the nginx related components ｜ `true` |
+| `ipFamily.ipv6.enabled` | if cluster is ipv6 enabled, all ipv6 related configs will set correspondingly, but currently it only affects the nginx related components ｜ `true` |
+| **Persistence**                                                      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `persistence.enabled`                                                | Enable the data persistence or not                                                                                                                                                                                                                                                                                                                                                                                                                                | `true`                                |
+| `persistence.resourcePolicy`                                         | Setting it to `keep` to avoid removing PVCs during a helm delete operation. Leaving it empty will delete PVCs after the chart deleted. Does not affect PVCs created for internal database and redis components.                                                                                                                                                                                                                                                   | `keep`                                |
+| `persistence.persistentVolumeClaim.registry.existingClaim`           | Use the existing PVC which must be created manually before bound, and specify the `subPath` if the PVC is shared with other components                                                                                                                                                                                                                                                                                                                            |                                       |
+| `persistence.persistentVolumeClaim.registry.storageClass`            | Specify the `storageClass` used to provision the volume. Or the default StorageClass will be used (the default). Set it to `-` to disable dynamic provisioning                                                                                                                                                                                                                                                                                                    |                                       |
+| `persistence.persistentVolumeClaim.registry.subPath`                 | The sub path used in the volume                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `persistence.persistentVolumeClaim.registry.accessMode`              | The access mode of the volume                                                                                                                                                                                                                                                                                                                                                                                                                                     | `ReadWriteOnce`                       |
+| `persistence.persistentVolumeClaim.registry.size`                    | The size of the volume                                                                                                                                                                                                                                                                                                                                                                                                                                            | `5Gi`                                 |
+| `persistence.persistentVolumeClaim.registry.annotations`             | The annotations of the volume                                                                                                                                                                                                                                                                                                                                                                                                                                     |                                       |
+|`persistence.persistentVolumeClaim.jobservice.jobLog.existingClaim`              | Use the existing PVC which must be created manually before bound, and specify the `subPath` if the PVC is shared with other components.                                                                                                                                                                                                                                                                                                                           |                                       |
+| `persistence.persistentVolumeClaim.jobservice.jobLog.storageClass`               | Specify the `storageClass` used to provision the volume. Or the default StorageClass will be used (the default). Set it to `-` to disable dynamic provisioning                                                                                                                                                                                                                                                                                                    |                                       |
+| `persistence.persistentVolumeClaim.jobservice.jobLog.subPath`                    | The sub path used in the volume                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `persistence.persistentVolumeClaim.jobservice.jobLog.accessMode`                 | The access mode of the volume                                                                                                                                                                                                                                                                                                                                                                                                                                     | `ReadWriteOnce`                       |
+| `persistence.persistentVolumeClaim.jobservice.jobLog.size`                       | The size of the volume                                                                                                                                                                                                                                                                                                                                                                                                                                            | `1Gi`                                 |
+| `persistence.persistentVolumeClaim.jobservice.jobLog.annotations`                | The annotations of the volume                                                                                                                                                                                                                                                                                                                                                                                                                                     |                                       |
+| `persistence.persistentVolumeClaim.database.existingClaim`           | Use the existing PVC which must be created manually before bound, and specify the `subPath` if the PVC is shared with other components. If external database is used, the setting will be ignored                                                                                                                                                                                                                                                                 |                                       |
+| `persistence.persistentVolumeClaim.database.storageClass`            | Specify the `storageClass` used to provision the volume. Or the default StorageClass will be used (the default). Set it to `-` to disable dynamic provisioning. If external database is used, the setting will be ignored                                                                                                                                                                                                                                         |                                       |
+| `persistence.persistentVolumeClaim.database.subPath`                 | The sub path used in the volume. If external database is used, the setting will be ignored                                                                                                                                                                                                                                                                                                                                                                        |                                       |
+| `persistence.persistentVolumeClaim.database.accessMode`              | The access mode of the volume. If external database is used, the setting will be ignored                                                                                                                                                                                                                                                                                                                                                                          | `ReadWriteOnce`                       |
+| `persistence.persistentVolumeClaim.database.size`                    | The size of the volume. If external database is used, the setting will be ignored                                                                                                                                                                                                                                                                                                                                                                                 | `1Gi`                                 |
+| `persistence.persistentVolumeClaim.database.annotations`             | The annotations of the volume                                                                                                                                                                                                                                                                                                                                                                                                                                     |                                       |
+| `persistence.persistentVolumeClaim.redis.existingClaim`              | Use the existing PVC which must be created manually before bound, and specify the `subPath` if the PVC is shared with other components. If external Redis is used, the setting will be ignored                                                                                                                                                                                                                                                                    |                                       |
+| `persistence.persistentVolumeClaim.redis.storageClass`               | Specify the `storageClass` used to provision the volume. Or the default StorageClass will be used (the default). Set it to `-` to disable dynamic provisioning. If external Redis is used, the setting will be ignored                                                                                                                                                                                                                                            |                                       |
+| `persistence.persistentVolumeClaim.redis.subPath`                    | The sub path used in the volume. If external Redis is used, the setting will be ignored                                                                                                                                                                                                                                                                                                                                                                           |                                       |
+| `persistence.persistentVolumeClaim.redis.accessMode`                 | The access mode of the volume. If external Redis is used, the setting will be ignored                                                                                                                                                                                                                                                                                                                                                                             | `ReadWriteOnce`                       |
+| `persistence.persistentVolumeClaim.redis.size`                       | The size of the volume. If external Redis is used, the setting will be ignored                                                                                                                                                                                                                                                                                                                                                                                    | `1Gi`                                 |
+| `persistence.persistentVolumeClaim.redis.annotations`                | The annotations of the volume                                                                                                                                                                                                                                                                                                                                                                                                                                     |                                       |
+|  `persistence.persistentVolumeClaim.trivy.existingClaim`         | Use the existing PVC which must be created manually before bound, and specify the `subPath` if the PVC is shared with other components                                                                                                                                                                                                                                                                                                                            |                                       |
+| `persistence.persistentVolumeClaim.trivy.storageClass`          | Specify the `storageClass` used to provision the volume. Or the default StorageClass will be used (the default). Set it to `-` to disable dynamic provisioning                                                                                                                                                                                                                                                                                                    |                                       |
+| `persistence.persistentVolumeClaim.trivy.subPath`               | The sub path used in the volume                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `persistence.persistentVolumeClaim.trivy.accessMode`            | The access mode of the volume                                                                                                                                                                                                                                                                                                                                                                                                                                     | `ReadWriteOnce`                       |
+| `persistence.persistentVolumeClaim.trivy.size`                  | The size of the volume                                                                                                                                                                                                                                                                                                                                                                                                                                            | `1Gi`                                 |
+| `persistence.persistentVolumeClaim.trivy.annotations`           | The annotations of the volume                                                                                                                                                                                                                                                                                                                                                                                                                                     |                                       |
+| `persistence.imageChartStorage.disableredirect`                      | The configuration for managing redirects from content backends. For backends which not supported it (such as using minio for `s3` storage type), please set it to `true` to disable redirects. Refer to the [guide](https://github.com/docker/distribution/blob/master/docs/configuration.md#redirect) for more details                                                                                                                                           | `false`                               |
+| `persistence.imageChartStorage.caBundleSecretName`                   | Specify the `caBundleSecretName` if the storage service uses a self-signed certificate. The secret must contain keys named `ca.crt` which will be injected into the trust store of registry's and containers.                                                                                                                                                                                                                                       |                                       |
+| `persistence.imageChartStorage.type`                                 | The type of storage for images and charts: `filesystem`, `azure`, `gcs`, `s3`, `swift` or `oss`. The type must be `filesystem` if you want to use persistent volumes for registry. Refer to the [guide](https://github.com/docker/distribution/blob/master/docs/configuration.md#storage) for more details                                                                                                                                        | `filesystem`                          |
+| `persistence.imageChartStorage.gcs.existingSecret`                                 | An existing secret containing the gcs service account json key. The key must be gcs-key.json.                                                                                                                                       | `""`                          |
+| `persistence.imageChartStorage.gcs.useWorkloadIdentity`                                 | A boolean to allow the use of workloadidentity in a GKE cluster. To use it, create a kubernetes service account and set the name in the key `serviceAccountName` of each component, then allow automounting the service account.                                                                                                                                        | `false`                          |
+| **General**                                                          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `externalURL`                                                        | The external URL for Harbor core service                                                                                                                                                                                                                                                                                                                                                                                                                          | `https://core.harbor.domain`          |
+| `caBundleSecretName`                                                 | The custom CA bundle secret name, the secret must contain key named "ca.crt" which will be injected into the trust store for core, jobservice, registry, trivy components.                                                                                                                                                                                                                                                                           |                                       |
+| `uaaSecretName`                                                      | If using external UAA auth which has a self signed cert, you can provide a pre-created secret containing it under the key `ca.crt`.                                                                                                                                                                                                                                                                                                                               |                                       |
+| `imagePullPolicy`                                                    | The image pull policy                                                                                                                                                                                                                                                                                                                                                                                                                                             |                                       |
+| `imagePullSecrets`                                                   | The imagePullSecrets names for all deployments                                                                                                                                                                                                                                                                                                                                                                                                                    |                                       |
+| `updateStrategy.type`                                                | The update strategy for deployments with persistent volumes(jobservice, registry): `RollingUpdate` or `Recreate`. Set it as `Recreate` when `RWM` for volumes isn't supported                                                                                                                                                                                                                                                                     | `RollingUpdate`                       |
+| `logLevel`                                                           | The log level: `debug`, `info`, `warning`, `error` or `fatal`                                                                                                                                                                                                                                                                                                                                                                                                     | `info`                                |
+| `harborAdminPassword`                                                | The initial password of Harbor admin. Change it from portal after launching Harbor                                                                                                                                                                                                                                                                                                                                                                                | `Harbor12345`                         |
+| `existingSecretAdminPassword`                                        | The name of secret where admin password can be found.                                                                                                                                                                                                                                                                                                                                                                                                             |                                       |
+| `existingSecretAdminPasswordKey`                                     | The name of the key in the secret where to find harbor admin password Harbor                                                                                                                                                                                                                                                                                                                                                                                      | `HARBOR_ADMIN_PASSWORD`               |
+| `caSecretName`                                                       | The name of the secret which contains key named `ca.crt`. Setting this enables the download link on portal to download the CA certificate when the certificate isn't generated automatically                                                                                                                                                                                                                                                                      |                                       |
+| `secretKey`                                                          | The key used for encryption. Must be a string of 16 chars                                                                                                                                                                                                                                                                                                                                                                                                         | `not-a-secure-key`                    |
+| `existingSecretSecretKey`                                                          | An existing secret containing the encoding secretKey                                                                                                                                                                                                                                                                                                                                                                                                         | `""`                    |
+| `proxy.httpProxy`                                                    | The URL of the HTTP proxy server                                                                                                                                                                                                                                                                                                                                                                                                                                  |                                       |
+| `proxy.httpsProxy`                                                   | The URL of the HTTPS proxy server                                                                                                                                                                                                                                                                                                                                                                                                                                 |                                       |
+| `proxy.noProxy`                                                      | The URLs that the proxy settings not apply to                                                                                                                                                                                                                                                                                                                                                                                                                     | 127.0.0.1,localhost,.local,.internal  |
+| `proxy.components`                                                   | The component list that the proxy settings apply to                                                                                                                                                                                                                                                                                                                                                                                                               | core, jobservice, trivy               |
+| `enableMigrateHelmHook`                                              | Run the migration job via helm hook, if it is true, the database migration will be separated from harbor-core, run with a preupgrade job migration-job                                                                                                                                                                                                                                                                                                            | `false`                               |
+| **Nginx** (if service exposed via `ingress`, Nginx will not be used) |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `nginx.image.repository`                                             | Image repository                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `goharbor/nginx-photon`               |
+| `nginx.image.tag`                                                    | Image tag                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `dev`                                 |
+| `nginx.replicas`                                                     | The replica count                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `1`                                   |
+| `nginx.revisionHistoryLimit`                                         | The revision history limit                                                                                                                                                                                                                                                                                                                                                                                                                                        | `10`                                  |
+| `nginx.resources`                                                    | The [resources] to allocate for container                                                                                                                                                                                                                                                                                                                                                                                                                         | undefined                             |
+| `nginx.automountServiceAccountToken`                                 | Mount serviceAccountToken?                                                                                                                                                                                                                                                                                                                                                                                                                                        | `false`                               |
+| `nginx.nodeSelector`                                                 | Node labels for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `{}`                                  |
+| `nginx.tolerations`                                                  | Tolerations for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `[]`                                  |
+| `nginx.affinity`                                                     | Node/Pod affinities                                                                                                                                                                                                                                                                                                                                                                                                                                               | `{}`                                  |
+| `nginx.topologySpreadConstraints`                                    | Constraints that define how Pods are spread across failure-domains like regions or availability zones                                                                                                                                                                                                                                                                                                                                                             | `[]`                                  |
+| `nginx.podAnnotations`                                               | Annotations to add to the nginx pod                                                                                                                                                                                                                                                                                                                                                                                                                               | `{}`                                  |
+| `nginx.priorityClassName`                                            | The priority class to run the pod as                                                                                                                                                                                                                                                                                                                                                                                                                              |                                       |
+| **Portal**                                                           |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `portal.image.repository`                                            | Repository for portal image                                                                                                                                                                                                                                                                                                                                                                                                                                       | `goharbor/harbor-portal`              |
+| `portal.image.tag`                                                   | Tag for portal image                                                                                                                                                                                                                                                                                                                                                                                                                                              | `dev`                                 |
+| `portal.replicas`                                                    | The replica count                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `1`                                   |
+| `portal.revisionHistoryLimit`                                        | The revision history limit                                                                                                                                                                                                                                                                                                                                                                                                                                        | `10`                                  |
+| `portal.resources`                                                   | The [resources] to allocate for container                                                                                                                                                                                                                                                                                                                                                                                                                         | undefined                             |
+| `portal.automountServiceAccountToken`                                | Mount serviceAccountToken?                                                                                                                                                                                                                                                                                                                                                                                                                                        | `false`                               |
+| `portal.nodeSelector`                                                | Node labels for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `{}`                                  |
+| `portal.tolerations`                                                 | Tolerations for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `[]`                                  |
+| `portal.affinity`                                                    | Node/Pod affinities                                                                                                                                                                                                                                                                                                                                                                                                                                               | `{}`                                  |
+| `portal.topologySpreadConstraints`                                   | Constraints that define how Pods are spread across failure-domains like regions or availability zones                                                                                                                                                                                                                                                                                                                                                             | `[]`                                  |
+| `portal.podAnnotations`                                              | Annotations to add to the portal pod                                                                                                                                                                                                                                                                                                                                                                                                                              | `{}`                                  |
+| `portal.serviceAnnotations`                                          | Annotations to add to the portal service                                                                                                                                                                                                                                                                                                                                                                                                                            | `{}`                                  |
+| `portal.priorityClassName`                                           | The priority class to run the pod as                                                                                                                                                                                                                                                                                                                                                                                                                              |                                       |
+| **Core**                                                             |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `core.image.repository`                                              | Repository for Harbor core image                                                                                                                                                                                                                                                                                                                                                                                                                                  | `goharbor/harbor-core`                |
+| `core.image.tag`                                                     | Tag for Harbor core image                                                                                                                                                                                                                                                                                                                                                                                                                                         | `dev`                                 |
+| `core.replicas`                                                      | The replica count                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `1`                                   |
+| `core.revisionHistoryLimit`                                          | The revision history limit                                                                                                                                                                                                                                                                                                                                                                                                                                        | `10`                                  |
+| `core.startupProbe.initialDelaySeconds`                              | The initial delay in seconds for the startup probe                                                                                                                                                                                                                                                                                                                                                                                                                | `10`                                  |
+| `core.resources`                                                     | The [resources] to allocate for container                                                                                                                                                                                                                                                                                                                                                                                                                         | undefined                             |
+| `core.automountServiceAccountToken`                                  | Mount serviceAccountToken?                                                                                                                                                                                                                                                                                                                                                                                                                                        | `false`                               |
+| `core.nodeSelector`                                                  | Node labels for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `{}`                                  |
+| `core.tolerations`                                                   | Tolerations for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `[]`                                  |
+| `core.affinity`                                                      | Node/Pod affinities                                                                                                                                                                                                                                                                                                                                                                                                                                               | `{}`                                  |
+| `core.topologySpreadConstraints`                                     | Constraints that define how Pods are spread across failure-domains like regions or availability zones                                                                                                                                                                                                                                                                                                                                                             | `[]`                                  |
+| `core.podAnnotations`                                                | Annotations to add to the core pod                                                                                                                                                                                                                                                                                                                                                                                                                                | `{}`                                  |
+| `core.serviceAnnotations`                                            | Annotations to add to the core service                                                                                                                                                                                                                                                                                                                                                                                                                     | `{}`                                  |
+| `core.configureUserSettings`                                         | A JSON string to set in the environment variable `CONFIG_OVERWRITE_JSON` to configure user settings. See the [official docs](https://goharbor.io/docs/latest/install-config/configure-user-settings-cli/#configure-users-settings-using-an-environment-variable).                                                                                                                                                                                                                              |                                                                                     |
+| `core.quotaUpdateProvider`                                                        | The provider for updating project quota(usage), there are 2 options, redis or db. By default it is implemented by db but you can configure it to redis which can improve the performance of high concurrent pushing to the same project, and reduce the database connections spike and occupies. Using redis will bring up some delay for quota usage updation for display, so only suggest switch provider to redis if you were ran into the db connections spike around the scenario of high concurrent pushing to same project, no improvment for other scenes.                           |                          `db`             |
+| `core.secret`                                                        | Secret is used when core server communicates with other components. If a secret key is not specified, Helm will generate one. Must be a string of 16 chars.                                                                                                                                                                                                                                                                                                       |                                       |
+| `core.secretName`                                                    | Fill the name of a kubernetes secret if you want to use your own TLS certificate and private key for token encryption/decryption. The secret must contain keys named: `tls.crt` - the certificate and `tls.key` - the private key. The default key pair will be used if it isn't set                                                                                                                                                                              |                                       |
+| `core.tokenKey`                                                    | PEM-formatted RSA private key used to sign service tokens.  Only used if `core.secretName` is unset. If set, `core.tokenCert` MUST also be set.                                                                                                                                                                                                                                  |                                        |
+| `core.tokenCert`                                                    | PEM-formatted certificate signed by `core.tokenKey` used to validate service tokens.  Only used if `core.secretName` is unset. If set, `core.tokenKey` MUST also be set.                                                                                                                                                                                                                                 |                                        |
+| `core.xsrfKey`                                                       | The XSRF key. Will be generated automatically if it isn't specified                                                                                                                                                                                                                                                                                                                                                                                               |                                       |
+| `core.priorityClassName`                                             | The priority class to run the pod as                                                                                                                                                                                                                                                                                                                                                                                                                              |                                       |
+| `core.artifactPullAsyncFlushDuration`                                | The time duration for async update artifact pull_time and repository pull_count                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `core.gdpr.deleteUser`                                               | Enable GDPR compliant user delete                                                                                                                                                                                                                                                                                                                                                                                                                                 | `false`                               |
+| `core.gdpr.auditLogsCompliant`                                               | Enable GDPR compliant for audit logs by changing username to its CRC32 value if that user was deleted from the system                                                                                                                                                                                                                                                                                                                                                                                                                                 | `false`                               |
+| **Jobservice**                                                       |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `jobservice.image.repository`                                        | Repository for jobservice image                                                                                                                                                                                                                                                                                                                                                                                                                                   | `goharbor/harbor-jobservice`          |
+| `jobservice.image.tag`                                               | Tag for jobservice image                                                                                                                                                                                                                                                                                                                                                                                                                                          | `dev`                                 |
+| `jobservice.replicas`                                                | The replica count                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `1`                                   |
+| `jobservice.revisionHistoryLimit`                                    | The revision history limit                                                                                                                                                                                                                                                                                                                                                                                                                                        | `10`                                  |
+| `jobservice.maxJobWorkers`                                           | The max job workers                                                                                                                                                                                                                                                                                                                                                                                                                                               | `10`                                  |
+| `jobservice.jobLoggers`                                              | The loggers for jobs: `file`, `database` or `stdout`                                                                                                                                                                                                                                                                                                                                                                                                              | `[file]`                                |
+| `jobservice.loggerSweeperDuration`                                   | The jobLogger sweeper duration in days (ignored if `jobLoggers` is set to `stdout`)                                                                                                                                                                                                                                                                                                                                                                               | `14`                                  |
+| `jobservice.notification.webhook_job_max_retry`                     | The maximum retry of webhook sending notifications                                                                                                                                                                                                                                                                                                                                                                                                                 | `3`                                  |
+| `jobservice.notification.webhook_job_http_client_timeout`           | The http client timeout value of webhook sending notifications                                                                                                                                                                                                                                                                                                                                                                                                     | `3`                                  |
+| `jobservice.reaper.max_update_hours`           | the max time to wait for a task to finish, if unfinished after max_update_hours, the task will be mark as error, but the task will continue to run, default value is 24                                                                                                                                                                                                                                                                                                                                                                                                     | `24`                                  |
+| `jobservice.reaper.max_dangling_hours`           | the max time for execution in running state without new task created                                                                                                                                                                                                                                                                                                                                                                                                     | `168`                                  |
+| `jobservice.resources`                                               | The [resources] to allocate for container                                                                                                                                                                                                                                                                                                                                                                                                                         | undefined                             |
+| `jobservice.automountServiceAccountToken`                            | Mount serviceAccountToken?                                                                                                                                                                                                                                                                                                                                                                                                                                        | `false`                               |
+| `jobservice.nodeSelector`                                            | Node labels for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `{}`                                  |
+| `jobservice.tolerations`                                             | Tolerations for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `[]`                                  |
+| `jobservice.affinity`                                                | Node/Pod affinities                                                                                                                                                                                                                                                                                                                                                                                                                                               | `{}`                                  |
+| `jobservice.topologySpreadConstraints`                               | Constraints that define how Pods are spread across failure-domains like regions or availability zones                                                                                                                                                                                                                                                                                                                                                             | `[]`                                  |
+| `jobservice.podAnnotations`                                          | Annotations to add to the jobservice pod                                                                                                                                                                                                                                                                                                                                                                                                                          | `{}`                                  |
+| `jobservice.priorityClassName`                                       | The priority class to run the pod as                                                                                                                                                                                                                                                                                                                                                                                                                              |                                       |
+| `jobservice.secret`                                                  | Secret is used when job service communicates with other components. If a secret key is not specified, Helm will generate one. Must be a string of 16 chars.                                                                                                                                                                                                                                                                                                       |                                       |
+| **Registry**                                                         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `registry.registry.image.repository`                                 | Repository for registry image                                                                                                                                                                                                                                                                                                                                                                                                                                     | `goharbor/registry-photon`            |
+| `registry.registry.image.tag`                                        | Tag for registry image                                                                                                                                                                                                                                                                                                                                                                                                                                            | `dev`                                 |
+| `registry.registry.resources`                                        | The [resources] to allocate for container                                                                                                                                                                                                                                                                                                                                                                                                                         | undefined                             |
+| `registry.controller.image.repository`                               | Repository for registry controller image                                                                                                                                                                                                                                                                                                                                                                                                                          | `goharbor/harbor-registryctl`         |
+| `registry.controller.image.tag`                                      | Tag for registry controller image                                                                                                                                                                                                                                                                                                                                                                                                                                 | `dev`                                 |
+| `registry.controller.resources`                                      | The [resources] to allocate for container                                                                                                                                                                                                                                                                                                                                                                                                                         | undefined                             |
+| `registry.replicas`                                                  | The replica count                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `1`                                   |
+| `registry.revisionHistoryLimit`                                      | The revision history limit                                                                                                                                                                                                                                                                                                                                                                                                                                        | `10`                                  |
+| `registry.nodeSelector`                                              | Node labels for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `{}`                                  |
+| `registry.automountServiceAccountToken`                              | Mount serviceAccountToken?                                                                                                                                                                                                                                                                                                                                                                                                                                        | `false`                               |
+| `registry.tolerations`                                               | Tolerations for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `[]`                                  |
+| `registry.affinity`                                                  | Node/Pod affinities                                                                                                                                                                                                                                                                                                                                                                                                                                               | `{}`                                  |
+| `registry.topologySpreadConstraints`                                 | Constraints that define how Pods are spread across failure-domains like regions or availability zones                                                                                                                                                                                                                                                                                                                                                             | `[]`                                  |
+| `registry.middleware`                                                | Middleware is used to add support for a CDN between backend storage and `docker pull` recipient. See [official docs](https://github.com/docker/distribution/blob/master/docs/configuration.md#middleware).                                                                                                                                                                                                                                                        |                                       |
+| `registry.podAnnotations`                                            | Annotations to add to the registry pod                                                                                                                                                                                                                                                                                                                                                                                                                            | `{}`                                  |
+| `registry.priorityClassName`                                         | The priority class to run the pod as                                                                                                                                                                                                                                                                                                                                                                                                                              |                                       |
+| `registry.secret`                                                    | Secret is used to secure the upload state from client and registry storage backend. See [official docs](https://github.com/docker/distribution/blob/master/docs/configuration.md#http). If a secret key is not specified, Helm will generate one. Must be a string of 16 chars.                                                                                                                                                                                   |                                       |
+| `registry.credentials.username`                                      | The username that harbor core uses internally to access the registry instance.  Together with the `registry.credentials.password`, a htpasswd  is created. This is an alternative to providing `registry.credentials.htpasswdString`. For more details see [official docs](https://github.com/docker/distribution/blob/master/docs/configuration.md#htpasswd).                                                                                                                                                                                                                                                     | `harbor_registry_user`                |
+| `registry.credentials.password`                                      | The password that harbor core uses internally to access the registry instance. Together with the `registry.credentials.username`, a htpasswd  is created. This is an alternative to providing `registry.credentials.htpasswdString`. For more details see [official docs](https://github.com/docker/distribution/blob/master/docs/configuration.md#htpasswd). It is suggested you update this value before installation.                                                                                                                                                                                          | `harbor_registry_password`            |
+| `registry.credentials.existingSecret`                                      | An existing secret containing the password for accessing the registry instance, which is hosted by htpasswd auth mode. More details see [official docs](https://github.com/docker/distribution/blob/master/docs/configuration.md#htpasswd). The key must be `REGISTRY_PASSWD`                                                                                                                                                                                          | `""`            |
+| `registry.credentials.htpasswdString`                                | Login and password in htpasswd string format. Excludes `registry.credentials.username`  and `registry.credentials.password`. May come in handy when integrating with tools like argocd or flux. This allows the same line to be generated each time the template is rendered, instead of the `htpasswd` function from helm, which generates different lines each time because of the salt.                                                                        | undefined                             |
+| `registry.relativeurls`                                              | If true, the registry returns relative URLs in Location headers. The client is responsible for resolving the correct URL. Needed if harbor is behind a reverse proxy                                                                                                                                                                                                                                                                                              | `false`                               |
+| `registry.upload_purging.enabled`                                    | If true, enable purge _upload directories                                                                                                                                                                | `true`   |
+| `registry.upload_purging.age`                                        | Remove files in _upload directories which exist for a period of time, default is one week.                                                                                                                                                                | `168h`   |
+| `registry.upload_purging.interval`                                   | The interval of the purge operations                                                                                                                                                                | `24h`   |
+| `registry.upload_purging.dryrun`                                     | If true, enable dryrun for purging _upload, default false                                                                                                                                                                | `false`   |
+| **[Trivy][trivy]**                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `trivy.enabled`                                                      | The flag to enable Trivy scanner                                                                                                                                                                                                                                                                                                                                                                                                                                  | `true`                                |
+| `trivy.image.repository`                                             | Repository for Trivy adapter image                                                                                                                                                                                                                                                                                                                                                                                                                                | `goharbor/trivy-adapter-photon`       |
+| `trivy.image.tag`                                                    | Tag for Trivy adapter image                                                                                                                                                                                                                                                                                                                                                                                                                                       | `dev`                                 |
+| `trivy.resources`                                                    | The [resources] to allocate for Trivy adapter container                                                                                                                                                                                                                                                                                                                                                                                                           |                                       |
+| `trivy.automountServiceAccountToken`                                 | Mount serviceAccountToken?                                                                                                                                                                                                                                                                                                                                                                                                                                        | `false`                               |
+| `trivy.replicas`                                                     | The number of Pod replicas                                                                                                                                                                                                                                                                                                                                                                                                                                        | `1`                                   |
+| `trivy.debugMode`                                                    | The flag to enable Trivy debug mode                                                                                                                                                                                                                                                                                                                                                                                                                               | `false`                               |
+| `trivy.vulnType`                                                     | Comma-separated list of vulnerability types. Possible values `os` and `library`.                                                                                                                                                                                                                                                                                                                                                                                  | `os,library`                          |
+| `trivy.severity`                                                     | Comma-separated list of severities to be checked                                                                                                                                                                                                                                                                                                                                                                                                                  | `UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL`    |
+| `trivy.ignoreUnfixed`                                                | The flag to display only fixed vulnerabilities                                                                                                                                                                                                                                                                                                                                                                                                                    | `false`                               |
+| `trivy.insecure`                                                     | The flag to skip verifying registry certificate                                                                                                                                                                                                                                                                                                                                                                                                                   | `false`                               |
+| `trivy.skipUpdate`                                                   | The flag to disable [Trivy DB][trivy-db] downloads from GitHub                                                                                                                                                                                                                                                                                                                                                                                                    | `false`                               |
+| `trivy.skipJavaDBUpdate`                                             | If the flag is enabled you have to manually download the `trivy-java.db` file [Trivy Java DB][trivy-java-db] and mount it in the `/home/scanner/.cache/trivy/java-db/trivy-java.db` path                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `false`                               |
+| `trivy.offlineScan`                                                  | The flag prevents Trivy from sending API requests to identify dependencies.                                                                                                                                                                                                                                                                                                                                                                                       | `false`                               |
+| `trivy.securityCheck`                                                | Comma-separated list of what security issues to detect. Possible values are `vuln`, `config` and `secret`.                                                                                                                                                                                                                                                                                                                                                        | `vuln`                                |
+| `trivy.timeout`                                                      | The duration to wait for scan completion                                                                                                                                                                                                                                                                                                                                                                                                                          | `5m0s`                                |
+| `trivy.gitHubToken`                                                  | The GitHub access token to download [Trivy DB][trivy-db] (see [GitHub rate limiting][trivy-rate-limiting])                                                                                                                                                                                                                                                                                                                                                        |                                       |
+| `trivy.priorityClassName`                                            | The priority class to run the pod as                                                                                                                                                                                                                                                                                                                                                                                                                              |                                       |
+| `trivy.topologySpreadConstraints`                                           | The priority class to run the pod as                                                                                                                                                                                                                                                                                                                                                                                                                              |                                       |
+| **Database**                                                         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `database.type`                                                      | If external database is used, set it to `external`                                                                                                                                                                                                                                                                                                                                                                                                                | `internal`                            |
+| `database.internal.image.repository`                                 | Repository for database image                                                                                                                                                                                                                                                                                                                                                                                                                                     | `goharbor/harbor-db`                  |
+| `database.internal.image.tag`                                        | Tag for database image                                                                                                                                                                                                                                                                                                                                                                                                                                            | `dev`                                 |
+| `database.internal.password`                                         | The password for database                                                                                                                                                                                                                                                                                                                                                                                                                                         | `changeit`                            |
+| `database.internal.shmSizeLimit`                                     | The limit for the size of shared memory for internal PostgreSQL, conventionally it's around 50% of the memory limit of the container                                                                                                                                                                                                                                                                                                                              | `512Mi`                               |
+| `database.internal.resources`                                        | The [resources] to allocate for container                                                                                                                                                                                                                                                                                                                                                                                                                         | undefined                             |
+| `database.internal.automountServiceAccountToken`                     | Mount serviceAccountToken?                                                                                                                                                                                                                                                                                                                                                                                                                                        | `false`                               |
+| `database.internal.initContainer.migrator.resources`                 | The [resources] to allocate for the database migrator initContainer                                                                                                                                                                                                                                                                                                                                                                                               | undefined                             |
+| `database.internal.initContainer.permissions.resources`              | The [resources] to allocate for the database permissions initContainer                                                                                                                                                                                                                                                                                                                                                                                            | undefined                             |
+| `database.internal.nodeSelector`                                     | Node labels for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `{}`                                  |
+| `database.internal.tolerations`                                      | Tolerations for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `[]`                                  |
+| `database.internal.affinity`                                         | Node/Pod affinities                                                                                                                                                                                                                                                                                                                                                                                                                                               | `{}`                                  |
+| `database.internal.priorityClassName`                                | The priority class to run the pod as                                                                                                                                                                                                                                                                                                                                                                                                                              |                                       |
+| `database.internal.livenessProbe.timeoutSeconds`                     | The timeout used in liveness probe; 1 to 5 seconds                                                                                                                                                                                                                                                                                                                                                                                                                | 1                                     |
+| `database.internal.readinessProbe.timeoutSeconds`                    | The timeout used in readiness probe; 1 to 5 seconds                                                                                                                                                                                                                                                                                                                                                                                                               | 1                                     |
+| `database.external.host`                                             | The hostname of external database                                                                                                                                                                                                                                                                                                                                                                                                                                 | `192.168.0.1`                         |
+| `database.external.port`                                             | The port of external database                                                                                                                                                                                                                                                                                                                                                                                                                                     | `5432`                                |
+| `database.external.username`                                         | The username of external database                                                                                                                                                                                                                                                                                                                                                                                                                                 | `user`                                |
+| `database.external.password`                                         | The password of external database                                                                                                                                                                                                                                                                                                                                                                                                                                 | `password`                            |
+| `database.external.coreDatabase`                                     | The database used by core service                                                                                                                                                                                                                                                                                                                                                                                                                                 | `registry`                            |
+| `database.external.existingSecret`                             | An existing password containing the database password. the key must be `password`.                                                                                                                                                                                                                                                                                                                                                                                                                                 | `""`                       |
+| `database.external.sslmode`                                          | Connection method of external database (require, verify-full, verify-ca, disable)                                                                                                                                                                                                                                                                                                                                                                                 | `disable`                             |
+| `database.maxIdleConns`                                              | The maximum number of connections in the idle connection pool. If it <=0, no idle connections are retained.                                                                                                                                                                                                                                                                                                                                                       | `50`                                  |
+| `database.maxOpenConns`                                              | The maximum number of open connections to the database. If it <= 0, then there is no limit on the number of open connections.                                                                                                                                                                                                                                                                                                                                     | `100`                                 |
+| `database.podAnnotations`                                            | Annotations to add to the database pod                                                                                                                                                                                                                                                                                                                                                                                                                            | `{}`                                  |
+| **Redis**                                                            |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `redis.type`                                                         | If external redis is used, set it to `external`                                                                                                                                                                                                                                                                                                                                                                                                                   | `internal`                            |
+| `redis.internal.image.repository`                                    | Repository for redis image                                                                                                                                                                                                                                                                                                                                                                                                                                        | `goharbor/redis-photon`               |
+| `redis.internal.image.tag`                                           | Tag for redis image                                                                                                                                                                                                                                                                                                                                                                                                                                               | `dev`                                 |
+| `redis.internal.resources`                                           | The [resources] to allocate for container                                                                                                                                                                                                                                                                                                                                                                                                                         | undefined                             |
+| `redis.internal.automountServiceAccountToken`                        | Mount serviceAccountToken?                                                                                                                                                                                                                                                                                                                                                                                                                                        | `false`                               |
+| `redis.internal.nodeSelector`                                        | Node labels for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `{}`                                  |
+| `redis.internal.tolerations`                                         | Tolerations for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `[]`                                  |
+| `redis.internal.affinity`                                            | Node/Pod affinities                                                                                                                                                                                                                                                                                                                                                                                                                                               | `{}`                                  |
+| `redis.internal.priorityClassName`                                   | The priority class to run the pod as                                                                                                                                                                                                                                                                                                                                                                                                                              |                                       |
+| `redis.internal.jobserviceDatabaseIndex`                             | The database index for jobservice                                                                                                                                                                                                                                                                                                                                                                                                                                 | `1`                                   |
+| `redis.internal.registryDatabaseIndex`                               | The database index for registry                                                                                                                                                                                                                                                                                                                                                                                                                                   | `2`                                   |
+| `redis.internal.trivyAdapterIndex`                                   | The database index for trivy adapter                                                                                                                                                                                                                                                                                                                                                                                                                              | `5`                                   |
+| `redis.internal.harborDatabaseIndex`                             | The database index for harbor miscellaneous business logic                                                                                                                                                                                                                                                                                                                                                                                                                                 | `0`                                   |
+| `redis.internal.cacheLayerDatabaseIndex`                             | The database index for harbor cache layer                                                                                                                                                                                                                                                                                                                                                                                                                                 | `0`                                   |
+| `redis.external.addr`                                                | The addr of external Redis: <host_redis>:<port_redis>. When using sentinel, it should be <host_sentinel1>:<port_sentinel1>,<host_sentinel2>:<port_sentinel2>,<host_sentinel3>:<port_sentinel3>                                                                                                                                                                                                                                                                    | `192.168.0.2:6379`                    |
+| `redis.external.sentinelMasterSet`                                   | The name of the set of Redis instances to monitor                                                                                                                                                                                                                                                                                                                                                                                                                 |                                       |
+| `redis.external.coreDatabaseIndex`                                   | The database index for core                                                                                                                                                                                                                                                                                                                                                                                                                                       | `0`                                   |
+| `redis.external.jobserviceDatabaseIndex`                             | The database index for jobservice                                                                                                                                                                                                                                                                                                                                                                                                                                 | `1`                                   |
+| `redis.external.registryDatabaseIndex`                               | The database index for registry                                                                                                                                                                                                                                                                                                                                                                                                                                   | `2`                                   |
+| `redis.external.trivyAdapterIndex`                                   | The database index for trivy adapter                                                                                                                                                                                                                                                                                                                                                                                                                              | `5`                                   |
+| `redis.external.harborDatabaseIndex`                             | The database index for harbor miscellaneous business logic                                                                                                                                                                                                                                                                                                                                                                                                                                 | `0`                                   |
+| `redis.external.cacheLayerDatabaseIndex`                             | The database index for harbor cache layer                                                                                                                                                                                                                                                                                                                                                                                                                                 | `0`                                   |
+| `redis.external.username`                                            | The username of external Redis                                                                                                                                                                                                                                                                                                                                                                                                                                    |                                       |
+| `redis.external.password`                                            | The password of external Redis                                                                                                                                                                                                                                                                                                                                                                                                                                    |                                       |
+| `redis.external.existingSecret`                                            | Use an existing secret to connect to redis. The key must be `REDIS_PASSWORD`.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `""`                                      |
+| `redis.podAnnotations`                                               | Annotations to add to the redis pod                                                                                                                                                                                                                                                                                                                                                                                                                               | `{}`                                  |
+| **Exporter**                                                         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `exporter.replicas`                                                  | The replica count                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `1`                                   |
+| `exporter.revisionHistoryLimit`                                      | The revision history limit                                                                                                                                                                                                                                                                                                                                                                                                                                        | `10`                                  |
+| `exporter.podAnnotations`                                            | Annotations to add to the exporter pod                                                                                                                                                                                                                                                                                                                                                                                                                            | `{}`                                  |
+| `exporter.image.repository`                                          | Repository for redis image                                                                                                                                                                                                                                                                                                                                                                                                                                        | `goharbor/harbor-exporter`            |
+| `exporter.image.tag`                                                 | Tag for exporter image                                                                                                                                                                                                                                                                                                                                                                                                                                            | `dev`                                 |
+| `exporter.nodeSelector`                                              | Node labels for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `{}`                                  |
+| `exporter.tolerations`                                               | Tolerations for pod assignment                                                                                                                                                                                                                                                                                                                                                                                                                                    | `[]`                                  |
+| `exporter.affinity`                                                  | Node/Pod affinities                                                                                                                                                                                                                                                                                                                                                                                                                                               | `{}`                                  |
+| `exporter.topologySpreadConstraints`                                 | Constraints that define how Pods are spread across failure-domains like regions or availability zones                                                                                                                                                                                                                                                                                                                                                             | `[]`                                  |
+| `exporter.automountServiceAccountToken`                              | Mount serviceAccountToken?                                                                                                                                                                                                                                                                                                                                                                                                                                        | `false`                               |
+| `exporter.cacheDuration`                                             | the cache duration for information that exporter collected from Harbor                                                                                                                                                                                                                                                                                                                                                                                            | `30`                                  |
+| `exporter.cacheCleanInterval`                                        | cache clean interval for information that exporter collected from Harbor                                                                                                                                                                                                                                                                                                                                                                                          | `14400`                               |
+| `exporter.priorityClassName`                                         | The priority class to run the pod as                                                                                                                                                                                                                                                                                                                                                                                                                              |                                       |
+| **Metrics**                                                          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `metrics.enabled`                                                    | if enable harbor metrics                                                                                                                                                                                                                                                                                                                                                                                                                                          | `false`                               |
+| `metrics.core.path`                                                  | the url path for core metrics                                                                                                                                                                                                                                                                                                                                                                                                                                     | `/metrics`                            |
+| `metrics.core.port`                                                  | the port for core metrics                                                                                                                                                                                                                                                                                                                                                                                                                                         | `8001`                                |
+| `metrics.registry.path`                                              | the url path for registry metrics                                                                                                                                                                                                                                                                                                                                                                                                                                 | `/metrics`                            |
+| `metrics.registry.port`                                              | the port for registry metrics                                                                                                                                                                                                                                                                                                                                                                                                                                     | `8001`                                |
+| `metrics.exporter.path`                                              | the url path for exporter metrics                                                                                                                                                                                                                                                                                                                                                                                                                                 | `/metrics`                            |
+| `metrics.exporter.port`                                              | the port for exporter metrics                                                                                                                                                                                                                                                                                                                                                                                                                                     | `8001`                                |
+| `metrics.serviceMonitor.enabled`                                     | create prometheus serviceMonitor. Requires prometheus CRD's                                                                                                                                                                                                                                                                                                                                                                                                       | `false`                               |
+| `metrics.serviceMonitor.additionalLabels`                            | additional labels to upsert to the manifest                                                                                                                                                                                                                                                                                                                                                                                                                       | `""`                                  |
+| `metrics.serviceMonitor.interval`                                    | scrape period for harbor metrics                                                                                                                                                                                                                                                                                                                                                                                                                                  | `""`                                  |
+| `metrics.serviceMonitor.metricRelabelings`                           | metrics relabel to add/mod/del before ingestion                                                                                                                                                                                                                                                                                                                                                                                                                   | `[]`                                  |
+| `metrics.serviceMonitor.relabelings`                                 | relabels to add/mod/del to sample before scrape                                                                                                                                                                                                                                                                                                                                                                                                                   | `[]`                                  |
+| **Trace**                                                            |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `trace.enabled`                                                      | Enable tracing or not                                                                                                                                                                                                                                                                                                                                                                                                                                             | `false`                               |
+| `trace.provider`                                                     | The tracing provider: `jaeger` or `otel`. `jaeger` should be 1.26+                                                                                                                                                                                                                                                                                                                                                                                                | `jaeger`                              |
+| `trace.sample_rate`                                                  | Set `sample_rate` to 1 if you want sampling 100% of trace data; set 0.5 if you want sampling 50% of trace data, and so forth                                                                                                                                                                                                                                                                                                                                      | `1`                                   |
+| `trace.namespace`                                                    | Namespace used to differentiate different harbor services                                                                                                                                                                                                                                                                                                                                                                                                         |                                       |
+| `trace.attributes`                                                   | `attributes` is a key value dict contains user defined attributes used to initialize trace provider                                                                                                                                                                                                                                                                                                                                                               |                                       |
+| `trace.jaeger.endpoint`                                              | The endpoint of jaeger                                                                                                                                                                                                                                                                                                                                                                                                                                            | `http://hostname:14268/api/traces`    |
+| `trace.jaeger.username`                                              | The username of jaeger                                                                                                                                                                                                                                                                                                                                                                                                                                            |                                       |
+| `trace.jaeger.password`                                              | The password of jaeger                                                                                                                                                                                                                                                                                                                                                                                                                                            |                                       |
+| `trace.jaeger.agent_host`                                            | The agent host of jaeger                                                                                                                                                                                                                                                                                                                                                                                                                                          |                                       |
+| `trace.jaeger.agent_port`                                            | The agent port of jaeger                                                                                                                                                                                                                                                                                                                                                                                                                                          | `6831`                                |
+| `trace.otel.endpoint`                                                | The endpoint of otel                                                                                                                                                                                                                                                                                                                                                                                                                                              | `hostname:4318`                       |
+| `trace.otel.url_path`                                                | The URL path of otel                                                                                                                                                                                                                                                                                                                                                                                                                                              | `/v1/traces`                          |
+| `trace.otel.compression`                                             | Whether enable compression or not for otel                                                                                                                                                                                                                                                                                                                                                                                                                        | `false`                               |
+| `trace.otel.insecure`                                                | Whether establish insecure connection or not for otel                                                                                                                                                                                                                                                                                                                                                                                                             | `true`                                |
+| `trace.otel.timeout`                                                 | The timeout in seconds of otel                                                                                                                                                                                                                                                                                                                                                                                                                                    | `10`                                  |
+| **Cache**                                                            |                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |                                       |
+| `cache.enabled`                                                      | Enable cache layer or not                                                                                                                                                                                                                                                                                                                                                                                                                                             | `false`                               |
+| `cache.expireHours`                                                  | The expire hours of cache layer                                                                                                                                                                                                                                                                                                                                                                                                                                             | `24`                               |
+
+[resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+[trivy]: https://github.com/aquasecurity/trivy
+[trivy-db]: https://github.com/aquasecurity/trivy-db
+[trivy-java-db]: https://github.com/aquasecurity/trivy-java-db
+[trivy-rate-limiting]: https://github.com/aquasecurity/trivy#github-rate-limiting

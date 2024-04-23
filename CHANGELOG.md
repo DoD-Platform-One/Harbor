@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.2-bb.1] - 2024-04-23
+### Fixed
+- Fix chart nested readme
+
 ## [1.14.2-bb.0] - 2024-04-16
 ### Changed
 - Updated version 1.14.1-bb.0 -> 1.14.2-bb.0
