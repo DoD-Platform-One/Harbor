@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.2-bb.2] - 2024-04-26
+### Fixed
+- Updated gluon to 0.4.10
+
 ## [1.14.2-bb.1] - 2024-04-23
 ### Fixed
 - Fix chart nested readme
