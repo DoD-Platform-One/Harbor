@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.14.2-bb.2](https://img.shields.io/badge/Version-1.14.2--bb.2-informational?style=flat-square) ![AppVersion: 2.10.2](https://img.shields.io/badge/AppVersion-2.10.2-informational?style=flat-square)
+![Version: 1.14.2-bb.3](https://img.shields.io/badge/Version-1.14.2--bb.3-informational?style=flat-square) ![AppVersion: 2.10.2](https://img.shields.io/badge/AppVersion-2.10.2-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -533,6 +533,8 @@ helm install harbor chart/
 | istio.hardened.monitoring.enabled | bool | `false` |  |
 | istio.hardened.monitoring.namespaces[0] | string | `"monitoring"` |  |
 | istio.hardened.monitoring.principals[0] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-prometheus"` |  |
+| istio.hardened.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
+| istio.hardened.customServiceEntries | list | `[]` |  |
 | istio.mtls.mode | string | `"PERMISSIVE"` | STRICT = Allow only mutual TLS traffic, PERMISSIVE = Allow both plain text and mutual TLS traffic |
 | istio.harbor.gateways[0] | string | `"istio-system/public"` |  |
 | istio.harbor.hosts[0] | string | `"harbor.{{ .Values.domain }}"` |  |
