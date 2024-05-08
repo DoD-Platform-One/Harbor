@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.2-bb.4] - 2024-05-08
+### Fixed
+- Fixed harbor core annotation version
+
 ## [1.14.2-bb.3] - 2024-04-29
 ### Added
 - Add istio egress whitelist functionality
