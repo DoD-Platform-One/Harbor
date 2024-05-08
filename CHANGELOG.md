@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.2-bb.3] - 2024-04-29
+### Added
+- Add istio egress whitelist functionality
+
 ## [1.14.2-bb.2] - 2024-04-26
 ### Fixed
 - Updated gluon to 0.4.10

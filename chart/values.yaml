@@ -1229,6 +1229,20 @@ istio:
         - monitoring
       principals:
         - cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-prometheus
+    outboundTrafficPolicyMode: "REGISTRY_ONLY"
+    customServiceEntries: []
+      # - name: "allow-google"
+      #   enabled: true
+      #   spec:
+      #     hosts:
+      #       - "www.google.com"
+      #       - "google.com"
+      #     location: MESH_EXTERNAL
+      #     ports:
+      #       - number: 443
+      #         protocol: TLS
+      #         name: https
+      #     resolution: DNS
   mtls:
     # -- STRICT = Allow only mutual TLS traffic,
     # PERMISSIVE = Allow both plain text and mutual TLS traffic
