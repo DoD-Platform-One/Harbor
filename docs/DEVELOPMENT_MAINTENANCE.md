@@ -117,9 +117,11 @@ docker login harbor.dev.bigbang.mil
 
 # Enter default credentials
 
-docker pull alpine:latest alpine-latest.tar
+docker pull alpine:latest 
 
-docker push alpine-latest.tar harbor.dev.bigbang.mil/alpine:latest
+docker tag alpine:latest harbor.dev.bigbang.mil/library/alpine:latest
+
+docker push harbor.dev.bigbang.mil/library/alpine:latest
 
 ```
 
@@ -140,4 +142,18 @@ This is a high-level list of modifications that Big Bang has made to the upstrea
 {{- with .Values.exporter.containerSecurityContext }}
     {{- toYaml . | nindent 10 }}
 {{- end }}
+```
+
+## chart/templates/registry/registry-svc.yaml
+- remove `https` prefix from registry to allow for mTLS STRICT mode to function correctly. 
+```diff
+@@ -6,7 +6,7 @@ metadata:
+{{ include "harbor.labels" . | indent 4 }}
+spec:
+  ports:
+-   - name: {{ ternary "https-registry" "http-registry" .Values.internalTLS.enabled }}
++   - name: registry
+      port: {{ template "harbor.registry.servicePort" . }}
+
+    - name: {{ ternary "https-controller" "http-controller" .Values.internalTLS.enabled }}
 ```
