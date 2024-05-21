@@ -2,6 +2,13 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.2-bb.6] - 2024-05-21
+### Changed
+- Updated gluon to 0.5.0
+- Updated redis chart to 19.3.2-bb.0
+- Updated nginx to 1.26.0
+- Updated postgres to 12.19
+
 ## [1.14.2-bb.5] - 2024-05-10
 ### Changed
 - Set default `istio.mtls.mode` to STRICT
