@@ -5,12 +5,14 @@
 An open source trusted cloud native registry that stores, signs, and scans content
 
 ## Upstream References
+
 * <https://goharbor.io>
 
 * <https://github.com/goharbor/harbor>
 * <https://github.com/goharbor/harbor-helm>
 
 ## Learn More
+
 * [Application Overview](docs/overview.md)
 * [Other Documentation](docs/)
 
@@ -22,12 +24,13 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 
 Install Helm
 
-https://helm.sh/docs/intro/install/
+<https://helm.sh/docs/intro/install/>
 
 ## Deployment
 
 * Clone down the repository
 * cd into directory
+
 ```bash
 helm install harbor chart/
 ```
