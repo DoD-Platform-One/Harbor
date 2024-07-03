@@ -1,18 +1,16 @@
 # harbor
 
-![Version: 1.14.2-bb.6](https://img.shields.io/badge/Version-1.14.2--bb.6-informational?style=flat-square) ![AppVersion: 2.10.2](https://img.shields.io/badge/AppVersion-2.10.2-informational?style=flat-square)
+![Version: 1.14.2-bb.7](https://img.shields.io/badge/Version-1.14.2--bb.7-informational?style=flat-square) ![AppVersion: 2.10.2](https://img.shields.io/badge/AppVersion-2.10.2-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
 ## Upstream References
-
 * <https://goharbor.io>
 
 * <https://github.com/goharbor/harbor>
 * <https://github.com/goharbor/harbor-helm>
 
 ## Learn More
-
 * [Application Overview](docs/overview.md)
 * [Other Documentation](docs/)
 
@@ -24,13 +22,12 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 
 Install Helm
 
-<https://helm.sh/docs/intro/install/>
+https://helm.sh/docs/intro/install/
 
 ## Deployment
 
 * Clone down the repository
 * cd into directory
-
 ```bash
 helm install harbor chart/
 ```
@@ -170,7 +167,7 @@ helm install harbor chart/
 | proxy.components[2] | string | `"trivy"` |  |
 | enableMigrateHelmHook | bool | `false` |  |
 | nginx.image.repository | string | `"registry1.dso.mil/ironbank/opensource/nginx/nginx"` |  |
-| nginx.image.tag | string | `"1.25.4"` |  |
+| nginx.image.tag | string | `"1.26.0"` |  |
 | nginx.image.pullSecrets[0] | string | `"private-registry"` |  |
 | nginx.serviceAccountName | string | `""` |  |
 | nginx.automountServiceAccountToken | bool | `false` |  |
@@ -408,7 +405,7 @@ helm install harbor chart/
 | postgresql.global.imagePullSecrets[0] | string | `"private-registry"` |  |
 | postgresql.image.registry | string | `"registry1.dso.mil"` |  |
 | postgresql.image.repository | string | `"ironbank/opensource/postgres/postgresql12"` |  |
-| postgresql.image.tag | float | `12.18` |  |
+| postgresql.image.tag | float | `12.19` |  |
 | postgresql.image.debug | bool | `true` |  |
 | postgresql.securityContext.enabled | bool | `true` |  |
 | postgresql.securityContext.fsGroup | int | `26` |  |
