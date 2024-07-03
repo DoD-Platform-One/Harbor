@@ -4,7 +4,7 @@ expose:
     enabled: false
 internalTLS:
   enabled: false
-externalURL: http://harbor:80
+externalURL: http://harbor-core:80
 nginx:
   resources:
     requests:

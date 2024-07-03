@@ -3,13 +3,16 @@ set -ex
 
 export HOME=/test
 
-/go/bin/crane auth login ${HARBOR_REGISTRY} -u ${HARBOR_USER} -p ${HARBOR_PASS} --insecure
+# Copy registry1 auth for skopeo multi-auth
+cat /.docker/auth.json > /test/auth.json
 
+# Login to harbor to push
 
-echo "pulling image..."
-/go/bin/crane pull alpine:latest alpine-latest.tar
+echo "[+] Login to harbor"
+skopeo login --tls-verify=false --authfile=/test/auth.json ${HARBOR_REGISTRY} -u ${HARBOR_USER} -p ${HARBOR_PASS}
 
-echo "pushing image to Harbor registry..."
-/go/bin/crane push alpine-latest.tar ${HARBOR_REGISTRY}/${HARBOR_PROJECT}/alpine:latest --insecure
+echo "[+] Copy image from registry1 to Harbor registry..."
 
-echo "All tests complete!"
+skopeo copy --dest-tls-verify=false --authfile=/test/auth.json docker://registry1.dso.mil/ironbank/opensource/alpinelinux/alpine:latest docker://${HARBOR_REGISTRY}/${HARBOR_PROJECT}/alpine:latest
+
+echo "[+] All tests complete!"
