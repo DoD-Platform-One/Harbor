@@ -1,6 +1,6 @@
 # harbor
 
-![Version: 1.14.2-bb.7](https://img.shields.io/badge/Version-1.14.2--bb.7-informational?style=flat-square) ![AppVersion: 2.10.2](https://img.shields.io/badge/AppVersion-2.10.2-informational?style=flat-square)
+![Version: 1.14.2-bb.8](https://img.shields.io/badge/Version-1.14.2--bb.8-informational?style=flat-square) ![AppVersion: 2.10.2](https://img.shields.io/badge/AppVersion-2.10.2-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -554,10 +554,16 @@ helm install harbor chart/
 | bbtests.cypress.envs.cypress_user | string | `"admin"` |  |
 | bbtests.cypress.envs.cypress_harbor_password | string | `"Harbor12345"` |  |
 | bbtests.cypress.envs.cypress_project | string | `"bbcypress-test"` |  |
-| bbtests.scripts.image | string | `"registry1.dso.mil/bigbang-ci/gitlab-tester:0.0.4"` |  |
+| bbtests.scripts.image | string | `"registry1.dso.mil/bigbang-ci/devops-tester:1.0.0"` |  |
+| bbtests.scripts.additionalVolumes[0].name | string | `"docker-config"` |  |
+| bbtests.scripts.additionalVolumes[0].secret.secretName | string | `"private-registry"` |  |
+| bbtests.scripts.additionalVolumes[0].secret.items[0].key | string | `".dockerconfigjson"` |  |
+| bbtests.scripts.additionalVolumes[0].secret.items[0].path | string | `"auth.json"` |  |
+| bbtests.scripts.additionalVolumeMounts[0].name | string | `"docker-config"` |  |
+| bbtests.scripts.additionalVolumeMounts[0].mountPath | string | `"/.docker/"` |  |
 | bbtests.scripts.envs.HARBOR_USER | string | `"admin"` |  |
 | bbtests.scripts.envs.HARBOR_PASS | string | `"Harbor12345"` |  |
-| bbtests.scripts.envs.HARBOR_REGISTRY | string | `"harbor:80"` |  |
+| bbtests.scripts.envs.HARBOR_REGISTRY | string | `"harbor-core:80"` |  |
 | bbtests.scripts.envs.HARBOR_PROJECT | string | `"library"` |  |
 
 ## Contributing

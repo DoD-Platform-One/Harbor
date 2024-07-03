@@ -2,6 +2,13 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+=======
+## [1.14.2-bb.8] - 2024-07-03
+
+### Changed
+
+- Refactor script tests to use hardened devops-tester image and skopeo tool
+
 ## [1.14.2-bb.7] - 2024-06-26
 
 ### Changed

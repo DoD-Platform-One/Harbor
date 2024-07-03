@@ -1290,9 +1290,19 @@ bbtests:
       cypress_harbor_password: "Harbor12345"
       cypress_project: "bbcypress-test"
   scripts:
-    image: "registry1.dso.mil/bigbang-ci/gitlab-tester:0.0.4"
+    image: "registry1.dso.mil/bigbang-ci/devops-tester:1.0.0"
+    additionalVolumes:
+      - name: docker-config
+        secret:
+          secretName: private-registry
+          items:
+          - key: .dockerconfigjson
+            path: auth.json
+    additionalVolumeMounts:
+      - name: docker-config
+        mountPath: /.docker/
     envs:
       HARBOR_USER: "admin"
       HARBOR_PASS: "Harbor12345"
-      HARBOR_REGISTRY: "harbor:80"
+      HARBOR_REGISTRY: "harbor-core:80"
       HARBOR_PROJECT: "library"
