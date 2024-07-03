@@ -2,6 +2,14 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [1.14.2-bb.7] - 2024-06-26
+
+### Changed
+
+- Removed the allow nothing policy
+- Moved the authorization policies
+- Updated the istio hardened doc
+
 ## [1.14.2-bb.6] - 2024-05-21
 
 ### Changed
