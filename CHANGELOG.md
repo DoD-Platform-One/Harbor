@@ -3,6 +3,25 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
+
+## [1.15.0-bb.0] - 2024-07-10
+
+### Changed
+
+- Updated goharbor/redis-photon minor v2.10.2 -> v2.11.0
+- Updated redis (source) minor 19.3.2-bb.0 -> 19.5.5-bb.0
+- Updated registry1.dso.mil/bigbang-ci/devops-tester (source) minor 1.0.0 -> 1.1.1
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-core (source) minor v2.10.2 -> v2.11.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-core (source) minor 2.10.2 -> 2.11.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter (source) minor v2.10.2 -> v2.11.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice (source) minor v2.10.2 -> v2.11.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal (source) minor v2.10.2 -> v2.11.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl (source) minor v2.10.2 -> v2.11.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/registry (source) minor v2.10.2 -> v2.11.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter (source) minor v2.10.2 -> v2.11.0
+- Updated registry1.dso.mil/ironbank/opensource/nginx/nginx (source) patch 1.26.0 -> 1.26.1
+- Add Authorization Policies for core, exporter, and jobservice
+
 ## [1.14.2-bb.8] - 2024-07-03
 
 ### Changed
