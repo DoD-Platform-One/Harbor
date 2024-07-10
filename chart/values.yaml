@@ -46,23 +46,22 @@ expose:
       ingress.kubernetes.io/proxy-body-size: "0"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    harbor:
-      # harbor ingress-specific annotations
-      annotations: {}
-      # harbor ingress-specific labels
-      labels: {}
+    # ingress-specific labels
+    labels: {}
   clusterIP:
     # The name of ClusterIP service
     name: harbor
     # The ip address of the ClusterIP service (leave empty for acquiring dynamic ip)
     staticClusterIP: ""
-    # Annotations on the ClusterIP service
-    annotations: {}
     ports:
       # The service port Harbor listens on when serving HTTP
       httpPort: 80
       # The service port Harbor listens on when serving HTTPS
       httpsPort: 443
+    # Annotations on the ClusterIP service
+    annotations: {}
+    # ClusterIP-specific labels
+    labels: {}
   nodePort:
     # The name of NodePort service
     name: harbor
@@ -77,6 +76,10 @@ expose:
         port: 443
         # The node port Harbor listens on when serving HTTPS
         nodePort: 30003
+    # Annotations on the nodePort service
+    annotations: {}
+    # nodePort-specific labels
+    labels: {}
   loadBalancer:
     # The name of LoadBalancer service
     name: harbor
@@ -87,7 +90,10 @@ expose:
       httpPort: 80
       # The service port Harbor listens on when serving HTTPS
       httpsPort: 443
+    # Annotations on the loadBalancer service
     annotations: {}
+    # loadBalancer-specific labels
+    labels: {}
     sourceRanges: []
 
 # The external URL for Harbor core service. It is used to
@@ -104,69 +110,6 @@ expose:
 #
 # If Harbor is deployed behind the proxy, set it as the URL of proxy
 externalURL: https://core.harbor.domain
-
-# The internal TLS used for harbor components secure communicating. In order to enable https
-# in each component tls cert files need to provided in advance.
-internalTLS:
-  # If internal TLS enabled
-  enabled: false
-  # enable strong ssl ciphers (default: false)
-  strong_ssl_ciphers: false
-  # There are three ways to provide tls
-  # 1) "auto" will generate cert automatically
-  # 2) "manual" need provide cert file manually in following value
-  # 3) "secret" internal certificates from secret
-  certSource: "auto"
-  # The content of trust ca, only available when `certSource` is "manual"
-  trustCa: ""
-  # core related cert configuration
-  core:
-    # secret name for core's tls certs
-    secretName: ""
-    # Content of core's TLS cert file, only available when `certSource` is "manual"
-    crt: ""
-    # Content of core's TLS key file, only available when `certSource` is "manual"
-    key: ""
-  # jobservice related cert configuration
-  jobservice:
-    # secret name for jobservice's tls certs
-    secretName: ""
-    # Content of jobservice's TLS key file, only available when `certSource` is "manual"
-    crt: ""
-    # Content of jobservice's TLS key file, only available when `certSource` is "manual"
-    key: ""
-  # registry related cert configuration
-  registry:
-    # secret name for registry's tls certs
-    secretName: ""
-    # Content of registry's TLS key file, only available when `certSource` is "manual"
-    crt: ""
-    # Content of registry's TLS key file, only available when `certSource` is "manual"
-    key: ""
-  # portal related cert configuration
-  portal:
-    # secret name for portal's tls certs
-    secretName: ""
-    # Content of portal's TLS key file, only available when `certSource` is "manual"
-    crt: ""
-    # Content of portal's TLS key file, only available when `certSource` is "manual"
-    key: ""
-  # trivy related cert configuration
-  trivy:
-    # secret name for trivy's tls certs
-    secretName: ""
-    # Content of trivy's TLS key file, only available when `certSource` is "manual"
-    crt: ""
-    # Content of trivy's TLS key file, only available when `certSource` is "manual"
-    key: ""
-
-ipFamily:
-  # ipv6Enabled set to true if ipv6 is enabled in cluster, currently it affected the nginx related component
-  ipv6:
-    enabled: true
-  # ipv4Enabled set to true if ipv4 is enabled in cluster, currently it affected the nginx related component
-  ipv4:
-    enabled: true
 
 # The persistence is enabled by default and a default StorageClass
 # is needed in the k8s cluster to provision volumes dynamically.
@@ -237,7 +180,7 @@ persistence:
       annotations: {}
   # Define which storage backend is used for registry to store
   # images and charts. Refer to
-  # https://github.com/distribution/distribution/blob/main/docs/configuration.md#storage
+  # https://github.com/distribution/distribution/blob/main/docs/content/about/configuration.md#storage
   # for the detail.
   imageChartStorage:
     # Specify whether to disable `redirect` for images and chart storage, for
@@ -331,6 +274,76 @@ persistence:
       #chunksize: 10M
       #rootdirectory: rootdirectory
 
+# The initial password of Harbor admin. Change it from portal after launching Harbor
+# or give an existing secret for it
+# key in secret is given via (default to HARBOR_ADMIN_PASSWORD)
+# existingSecretAdminPassword:
+existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
+harborAdminPassword: "Harbor12345"
+
+# The internal TLS used for harbor components secure communicating. In order to enable https
+# in each component tls cert files need to provided in advance.
+internalTLS:
+  # If internal TLS enabled
+  enabled: false
+  # enable strong ssl ciphers (default: false)
+  strong_ssl_ciphers: false
+  # There are three ways to provide tls
+  # 1) "auto" will generate cert automatically
+  # 2) "manual" need provide cert file manually in following value
+  # 3) "secret" internal certificates from secret
+  certSource: "auto"
+  # The content of trust ca, only available when `certSource` is "manual"
+  trustCa: ""
+  # core related cert configuration
+  core:
+    # secret name for core's tls certs
+    secretName: ""
+    # Content of core's TLS cert file, only available when `certSource` is "manual"
+    crt: ""
+    # Content of core's TLS key file, only available when `certSource` is "manual"
+    key: ""
+  # jobservice related cert configuration
+  jobservice:
+    # secret name for jobservice's tls certs
+    secretName: ""
+    # Content of jobservice's TLS key file, only available when `certSource` is "manual"
+    crt: ""
+    # Content of jobservice's TLS key file, only available when `certSource` is "manual"
+    key: ""
+  # registry related cert configuration
+  registry:
+    # secret name for registry's tls certs
+    secretName: ""
+    # Content of registry's TLS key file, only available when `certSource` is "manual"
+    crt: ""
+    # Content of registry's TLS key file, only available when `certSource` is "manual"
+    key: ""
+  # portal related cert configuration
+  portal:
+    # secret name for portal's tls certs
+    secretName: ""
+    # Content of portal's TLS key file, only available when `certSource` is "manual"
+    crt: ""
+    # Content of portal's TLS key file, only available when `certSource` is "manual"
+    key: ""
+  # trivy related cert configuration
+  trivy:
+    # secret name for trivy's tls certs
+    secretName: ""
+    # Content of trivy's TLS key file, only available when `certSource` is "manual"
+    crt: ""
+    # Content of trivy's TLS key file, only available when `certSource` is "manual"
+    key: ""
+
+ipFamily:
+  # ipv6Enabled set to true if ipv6 is enabled in cluster, currently it affected the nginx related component
+  ipv6:
+    enabled: true
+  # ipv4Enabled set to true if ipv4 is enabled in cluster, currently it affected the nginx related component
+  ipv4:
+    enabled: true
+
 imagePullPolicy: IfNotPresent
 
 # Use this set to assign a list of default pullSecrets
@@ -346,13 +359,6 @@ updateStrategy:
 
 # debug, info, warning, error or fatal
 logLevel: info
-
-# The initial password of Harbor admin. Change it from portal after launching Harbor
-# or give an existing secret for it
-# key in secret is given via (default to HARBOR_ADMIN_PASSWORD)
-# existingSecretAdminPassword:
-existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
-harborAdminPassword: "Harbor12345"
 
 # The name of the secret which contains key named "ca.crt". Setting this enables the
 # download link on portal to download the CA certificate when the certificate isn't
@@ -389,11 +395,105 @@ enableMigrateHelmHook: false
 # contains a base64 encoded CA Certificate named `ca.crt`.
 # uaaSecretName:
 
+metrics:
+  enabled: false
+  core:
+    path: /metrics
+    port: 8001
+  registry:
+    path: /metrics
+    port: 8001
+  jobservice:
+    path: /metrics
+    port: 8001
+  exporter:
+    path: /metrics
+    port: 8001
+  ## Create prometheus serviceMonitor to scrape harbor metrics.
+  ## This requires the monitoring.coreos.com/v1 CRD. Please see
+  ## https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/getting-started.md
+  ##
+  serviceMonitor:
+    enabled: false
+    additionalLabels: {}
+    # Scrape interval. If not set, the Prometheus default scrape interval is used.
+    interval: ""
+    # Metric relabel configs to apply to samples before ingestion.
+    metricRelabelings:
+      []
+      # - action: keep
+    #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
+    #   sourceLabels: [__name__]
+    # Relabel configs to apply to samples before ingestion.
+    relabelings:
+      []
+      # - sourceLabels: [__meta_kubernetes_pod_node_name]
+      #   separator: ;
+      #   regex: ^(.*)$
+      #   targetLabel: nodename
+    #   replacement: $1
+    #   action: replace
+
+trace:
+  enabled: false
+  # trace provider: jaeger or otel
+  # jaeger should be 1.26+
+  provider: jaeger
+  # set sample_rate to 1 if you wanna sampling 100% of trace data; set 0.5 if you wanna sampling 50% of trace data, and so forth
+  sample_rate: 1
+  # namespace used to differentiate different harbor services
+  # namespace:
+  # attributes is a key value dict contains user defined attributes used to initialize trace provider
+  # attributes:
+  #   application: harbor
+  jaeger:
+    # jaeger supports two modes:
+    #   collector mode(uncomment endpoint and uncomment username, password if needed)
+    #   agent mode(uncomment agent_host and agent_port)
+    endpoint: http://hostname:14268/api/traces
+    # username:
+    # password:
+    # agent_host: hostname
+    # export trace data by jaeger.thrift in compact mode
+    # agent_port: 6831
+  otel:
+    endpoint: hostname:4318
+    url_path: /v1/traces
+    compression: false
+    insecure: true
+    # timeout is in seconds
+    timeout: 10
+
+# cache layer configurations
+# if this feature enabled, harbor will cache the resource
+# `project/project_metadata/repository/artifact/manifest` in the redis
+# which help to improve the performance of high concurrent pulling manifest.
+cache:
+  # default is not enabled.
+  enabled: false
+  # default keep cache for one day.
+  expireHours: 24
+
+## set Container Security Context to comply with PSP restricted policy if necessary
+## each of the conatiner will apply the same security context
+## containerSecurityContext:{} is initially an empty yaml that you could edit it on demand, we just filled with a common template for convenience
+containerSecurityContext:
+  # privileged: false
+  # allowPrivilegeEscalation: false
+  # seccompProfile:
+  #   type: RuntimeDefault
+  # runAsNonRoot: true
+  # runAsUser: 1000
+  runAsGroup: 1000  
+  capabilities:
+    drop:
+      - ALL
+
 # If service exposed via "ingress", the Nginx will not be used
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: 1.26.0
+    tag: 1.26.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -425,17 +525,11 @@ nginx:
   podLabels: {}
   ## The priority class to run the pod as
   priorityClassName:
-  securityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
-    capabilities:
-      drop:
-      - ALL
 
 portal:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-    tag: v2.10.2
+    tag: v2.11.0
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -469,17 +563,18 @@ portal:
   serviceAnnotations: {}
   ## The priority class to run the pod as
   priorityClassName:
-  securityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
-    capabilities:
-      drop:
-      - ALL
+  # containers to be run before the controller's container starts.
+  initContainers: []
+  # Example:
+  #
+  # - name: wait
+  #   image: busybox
+  #   command: [ 'sh', '-c', "sleep 20" ]
 
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-    tag: v2.10.2
+    tag: v2.11.0
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -488,12 +583,6 @@ core:
   automountServiceAccountToken: false
   replicas: 1
   revisionHistoryLimit: 10
-  securityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
-    capabilities:
-      drop:
-      - ALL
   ## Startup probe values
   startupProbe:
     enabled: true
@@ -521,6 +610,15 @@ core:
   podLabels: {}
   ## Additional service annotations
   serviceAnnotations: {}
+  ## The priority class to run the pod as
+  priorityClassName:
+  # containers to be run before the controller's container starts.
+  initContainers: []
+  # Example:
+  #
+  # - name: wait
+  #   image: busybox
+  #   command: [ 'sh', '-c', "sleep 20" ]
   ## User settings configuration json string
   configureUserSettings:
   # The provider for updating project quota(usage), there are 2 options, redis or db.
@@ -557,8 +655,6 @@ core:
   existingXsrfSecret: ""
   # If using existingSecret, the key
   existingXsrfSecretKey: CSRF_KEY
-  ## The priority class to run the pod as
-  priorityClassName:
   # The time duration for async update artifact pull_time and repository
   # pull_count, the unit is second. Will be 10 seconds if it isn't set.
   # eg. artifactPullAsyncFlushDuration: 10
@@ -568,50 +664,18 @@ core:
     deleteUser: false
     auditLogsCompliant: false
 
-  jobservice:
-    containerSecurityContext:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        capabilities:
-          drop:
-          - ALL
-
 jobservice:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-    tag: v2.10.2
+    tag: v2.11.0
     pullSecrets:
     - private-registry
-  replicas: 1
-  revisionHistoryLimit: 10
   # set the service account to be used, default if left empty
   serviceAccountName: ""
   # mount the service account token
   automountServiceAccountToken: false
-  maxJobWorkers: 10
-  # The logger for jobs: "file", "database" or "stdout"
-  jobLoggers:
-    - file
-    # - database
-    # - stdout
-  # The jobLogger sweeper duration (ignored if `jobLogger` is `stdout`)
-  loggerSweeperDuration: 14 #days
-  notification:
-    webhook_job_max_retry: 3
-    webhook_job_http_client_timeout: 3 # in seconds
-  reaper:
-    # the max time to wait for a task to finish, if unfinished after max_update_hours, the task will be mark as error, but the task will continue to run, default value is 24
-    max_update_hours: 24
-    # the max time for execution in running state without new task created
-    max_dangling_hours: 168
-  securityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
-    capabilities:
-      drop:
-      - ALL
-
+  replicas: 1
+  revisionHistoryLimit: 10
   resources:
     requests:
       memory: 256Mi
@@ -633,6 +697,31 @@ jobservice:
   podAnnotations: {}
   ## Additional deployment labels
   podLabels: {}
+  ## The priority class to run the pod as
+  priorityClassName:
+  # containers to be run before the controller's container starts.
+  initContainers: []
+  # Example:
+  #
+  # - name: wait
+  #   image: busybox
+  #   command: [ 'sh', '-c', "sleep 20" ]
+  maxJobWorkers: 10
+  # The logger for jobs: "file", "database" or "stdout"
+  jobLoggers:
+    - file
+    # - database
+    # - stdout
+  # The jobLogger sweeper duration (ignored if `jobLogger` is `stdout`)
+  loggerSweeperDuration: 14 #days
+  notification:
+    webhook_job_max_retry: 3
+    webhook_job_http_client_timeout: 3 # in seconds
+  reaper:
+    # the max time to wait for a task to finish, if unfinished after max_update_hours, the task will be mark as error, but the task will continue to run, default value is 24
+    max_update_hours: 24
+    # the max time for execution in running state without new task created
+    max_dangling_hours: 168
   # Secret is used when job service communicates with other components.
   # If a secret key is not specified, Helm will generate one.
   # Must be a string of 16 chars.
@@ -641,18 +730,12 @@ jobservice:
   existingSecret: ""
   # Key within the existing secret for the job service secret
   existingSecretKey: JOBSERVICE_SECRET
-  ## The priority class to run the pod as
-  priorityClassName:
 
 registry:
-  # set the service account to be used, default if left empty
-  serviceAccountName: ""
-  # mount the service account token
-  automountServiceAccountToken: false
   registry:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-      tag: v2.10.2
+      tag: v2.11.0
       pullSecrets:
       - private-registry
     resources:
@@ -662,16 +745,11 @@ registry:
       limits:
         cpu: 100m
         memory: 256Mi
-    securityContext:
-      runAsGroup: 1000
-      capabilities:
-        drop:
-        - ALL
     extraEnvVars: []
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-      tag: v2.10.2
+      tag: v2.11.0
       pullSecrets:
       - private-registry
     resources:
@@ -681,12 +759,11 @@ registry:
       limits:
         cpu: 100m
         memory: 256Mi
-    securityContext:
-      runAsGroup: 1000
-      capabilities:
-        drop:
-        - ALL
     extraEnvVars: []
+  # set the service account to be used, default if left empty
+  serviceAccountName: ""
+  # mount the service account token
+  automountServiceAccountToken: false
   replicas: 1
   revisionHistoryLimit: 10
   nodeSelector: {}
@@ -704,6 +781,13 @@ registry:
   podLabels: {}
   ## The priority class to run the pod as
   priorityClassName:
+  # containers to be run before the controller's container starts.
+  initContainers: []
+  # Example:
+  #
+  # - name: wait
+  #   image: busybox
+  #   command: [ 'sh', '-c', "sleep 20" ]
   # Secret is used to secure the upload state from client
   # and registry storage backend.
   # See: https://github.com/distribution/distribution/blob/main/docs/configuration.md#http
@@ -751,7 +835,7 @@ trivy:
     # repository the repository for Trivy adapter image
     repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
-    tag: v2.10.2
+    tag: v2.11.0
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -760,6 +844,36 @@ trivy:
   automountServiceAccountToken: false
   # replicas the number of Pod replicas
   replicas: 1
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+  extraEnvVars: []
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  # Spread Pods across failure-domains like regions, availability zones or nodes
+  topologySpreadConstraints: []
+  # - maxSkew: 1
+  #   topologyKey: topology.kubernetes.io/zone
+  #   nodeTaintsPolicy: Honor
+  #   whenUnsatisfiable: DoNotSchedule
+  ## Additional deployment annotations
+  podAnnotations: {}
+  ## Additional deployment labels
+  podLabels: {}
+  ## The priority class to run the pod as
+  priorityClassName:
+  # containers to be run before the controller's container starts.
+  initContainers: []
+  # Example:
+  #
+  # - name: wait
+  #   image: busybox
+  #   command: [ 'sh', '-c', "sleep 20" ]
   # debugMode the flag to enable Trivy debug mode with more verbose scanning log
   debugMode: false
   # vulnType a comma-separated list of vulnerability types. Possible values are `os` and `library`.
@@ -795,7 +909,7 @@ trivy:
   # skipJavaDBUpdate If the flag is enabled you have to manually download the `trivy-java.db` file and mount it in the
   # `/home/scanner/.cache/trivy/java-db/trivy-java.db` path
   #
-  skipJavaDBUpdate: false  
+  skipJavaDBUpdate: false
   # The offlineScan option prevents Trivy from sending API requests to identify dependencies.
   #
   # Scanning JAR files and pom.xml may require Internet access for better detection, but this option tries to avoid it.
@@ -808,42 +922,15 @@ trivy:
   securityCheck: "vuln"
   # The duration to wait for scan completion
   timeout: 5m0s
-  resources:
-    requests:
-      cpu: 200m
-      memory: 512Mi
-    limits:
-      cpu: 200m
-      memory: 512Mi
-  extraEnvVars: []
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
-  # Spread Pods across failure-domains like regions, availability zones or nodes
-  topologySpreadConstraints: []
-  # - maxSkew: 1
-  #   topologyKey: topology.kubernetes.io/zone
-  #   nodeTaintsPolicy: Honor
-  #   whenUnsatisfiable: DoNotSchedule
-  ## Additional deployment annotations
-  podAnnotations: {}
-  ## Additional deployment labels
-  podLabels: {}
-  ## The priority class to run the pod as
-  priorityClassName:
-  securityContext:
-    privileged: false
-    allowPrivilegeEscalation: false
-    runAsGroup: 1000
-    capabilities:
-      drop:
-      - ALL
 
 database:
   # if external database is used, set "type" to "external"
   # and fill the connection informations in "external" section
   type: external
   internal:
+    image:
+      repository: goharbor/harbor-db
+      tag: v2.11.0
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
@@ -870,6 +957,14 @@ database:
     affinity: {}
     ## The priority class to run the pod as
     priorityClassName:
+    # containers to be run before the controller's container starts.
+    extrInitContainers: []
+    # Example:
+    #
+    # - name: wait
+    #   image: busybox
+    #   command: [ 'sh', '-c', "sleep 20" ]
+    # The initial superuser password for internal database
     initContainer:
       migrator: {}
       resources:
@@ -916,6 +1011,9 @@ postgresql:
   # notarySignerUsername: "signeruser"
   coreDatabase: "harborUser"
   maxIdleConns: 100
+  # The maximum number of open connections to the database per pod (core+exporter).
+  # If it <= 0, then there is no limit on the number of open connections.
+  # Note: the default number of connections is 1024 for harbor's postgres.
   maxOpenConns: 900
   # PostgreSQL network policy configuration
   networkPolicy:
@@ -999,15 +1097,15 @@ redis:
   # and fill the connection informations in "external" section
   type: external
   internal:
+    image:
+      repository: goharbor/redis-photon
+      tag: v2.11.0
+      pullSecrets:
+      - private-registry
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
     automountServiceAccountToken: false
-    image:
-      repository: goharbor/redis-photon
-      tag: v2.10.2
-      pullSecrets:
-      - private-registry
     resources:
       requests:
         memory: 256Mi
@@ -1020,6 +1118,13 @@ redis:
     affinity: {}
     ## The priority class to run the pod as
     priorityClassName:
+    # containers to be run before the controller's container starts.
+    initContainers: []
+    # Example:
+    #
+    # - name: wait
+    #   image: busybox
+    #   command: [ 'sh', '-c', "sleep 20" ]
     # # jobserviceDatabaseIndex defaults to "1"
     # # registryDatabaseIndex defaults to "2"
     # # trivyAdapterIndex defaults to "5"
@@ -1054,11 +1159,6 @@ redis:
     existingSecret: ""
   ## Additional deployment annotations
   podAnnotations: {}
-  containerSecurityContext:
-    securityContext:
-      capabilities:
-        drop:
-        - ALL
 
 redis-bb:
   # -- Enable BigBang provided redis sub-chart. Disable if using external cloud elasticache or redis endpoint and fill in `redis.external.addr` in above section
@@ -1100,6 +1200,14 @@ redis-bb:
   podLabels: {}
 
 exporter:
+  image:
+    repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
+    tag: v2.11.0
+    pullSecrets:
+    - private-registry
+  serviceAccountName: ""
+  # mount the service account token
+  automountServiceAccountToken: false
   replicas: 1
   revisionHistoryLimit: 10
   resources:
@@ -1113,105 +1221,19 @@ exporter:
   podAnnotations: {}
   ## Additional deployment labels
   podLabels: {}
-  serviceAccountName: ""
-  # mount the service account token
-  automountServiceAccountToken: false
-  image:
-    repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-    tag: v2.10.2
-    pullSecrets:
-    - private-registry
   nodeSelector: {}
   tolerations: []
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
   topologySpreadConstraints: []
+  ## The priority class to run the pod as
+  priorityClassName:
   # - maxSkew: 1
   #   topologyKey: topology.kubernetes.io/zone
   #   nodeTaintsPolicy: Honor
   #   whenUnsatisfiable: DoNotSchedule
   cacheDuration: 23
   cacheCleanInterval: 14400
-  containerSecurityContext:
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      capabilities:
-        drop:
-        - ALL
-  ## The priority class to run the pod as
-  priorityClassName:
-
-metrics:
-  enabled: false
-  core:
-    path: /metrics
-    port: 8001
-  registry:
-    path: /metrics
-    port: 8001
-  jobservice:
-    path: /metrics
-    port: 8001
-  exporter:
-    path: /metrics
-    port: 8001
-  ## Create prometheus serviceMonitor to scrape harbor metrics.
-  ## This requires the monitoring.coreos.com/v1 CRD. Please see
-  ## https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/getting-started.md
-  ##
-  serviceMonitor:
-    enabled: false
-    additionalLabels: {}
-    # Scrape interval. If not set, the Prometheus default scrape interval is used.
-    interval: ""
-    # Metric relabel configs to apply to samples before ingestion.
-    metricRelabelings:
-      []
-      # - action: keep
-      #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
-      #   sourceLabels: [__name__]
-    # Relabel configs to apply to samples before ingestion.
-    relabelings:
-      []
-      # - sourceLabels: [__meta_kubernetes_pod_node_name]
-      #   separator: ;
-      #   regex: ^(.*)$
-      #   targetLabel: nodename
-      #   replacement: $1
-      #   action: replace
-    scheme: ""
-    tlsConfig: {}
-
-trace:
-  enabled: false
-  # trace provider: jaeger or otel
-  # jaeger should be 1.26+
-  provider: jaeger
-  # set sample_rate to 1 if you wanna sampling 100% of trace data; set 0.5 if you wanna sampling 50% of trace data, and so forth
-  sample_rate: 1
-  # namespace used to differentiate different harbor services
-  # namespace:
-  # attributes is a key value dict contains user defined attributes used to initialize trace provider
-  # attributes:
-  #   application: harbor
-  jaeger:
-    # jaeger supports two modes:
-    #   collector mode(uncomment endpoint and uncomment username, password if needed)
-    #   agent mode(uncomment agent_host and agent_port)
-    endpoint: http://hostname:14268/api/traces
-    # username:
-    # password:
-    # agent_host: hostname
-    # export trace data by jaeger.thrift in compact mode
-    # agent_port: 6831
-  otel:
-    endpoint: hostname:4318
-    url_path: /v1/traces
-    compression: false
-    insecure: true
-    # timeout is in seconds
-    timeout: 10
 
 # Big Bang Additions
 domain: dev.bigbang.mil
@@ -1267,16 +1289,6 @@ networkPolicies:
   # ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
   additionalPolicies: []
 
-# cache layer configurations
-# if this feature enabled, harbor will cache the resource
-# `project/project_metadata/repository/artifact/manifest` in the redis
-# which help to improve the performance of high concurrent pulling manifest.
-cache:
-  # default is not enabled.
-  enabled: false
-  # default keep cache for one day.
-  expireHours: 24
-
 # Default to false, override in openshift-test-values.yaml 
 openshift: false
   
@@ -1290,7 +1302,7 @@ bbtests:
       cypress_harbor_password: "Harbor12345"
       cypress_project: "bbcypress-test"
   scripts:
-    image: "registry1.dso.mil/bigbang-ci/devops-tester:1.0.0"
+    image: "registry1.dso.mil/bigbang-ci/devops-tester:1.1.1"
     additionalVolumes:
       - name: docker-config
         secret:

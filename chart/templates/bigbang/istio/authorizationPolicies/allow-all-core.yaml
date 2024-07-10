@@ -1,0 +1,16 @@
+{{- if and .Values.istio.enabled .Values.istio.hardened.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+ name: allow-all-core
+ namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      component: core
+      {{- include "harbor.matchLabels" $ | nindent 6 }}
+  action: ALLOW
+  rules:
+    - {}
+{{- end }}
+
