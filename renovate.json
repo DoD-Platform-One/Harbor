@@ -40,5 +40,6 @@
             "registryUrlTemplate": "https://registry1.dso.mil"
         }
     ],
-    "separateMajorMinor": false
+    "separateMajorMinor": false,
+    "postUpdateOptions": ["helmUpdateSubChartArchives"]
 }
