@@ -10,6 +10,10 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 * <https://github.com/goharbor/harbor>
 * <https://github.com/goharbor/harbor-helm>
 
+### Upstream Release Notes
+
+The [upstream harbor release notes](https://github.com/goharbor/harbor/blob/main/CHANGELOG.md) may help when reviewing this package.
+
 ## Learn More
 * [Application Overview](docs/overview.md)
 * [Other Documentation](docs/)
