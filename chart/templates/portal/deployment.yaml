@@ -34,8 +34,8 @@ spec:
 {{- end }}
     spec:
       securityContext:
-        runAsUser: 10000
-        fsGroup: 10000
+        runAsUser: 997
+        fsGroup: 994
         runAsNonRoot: true
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

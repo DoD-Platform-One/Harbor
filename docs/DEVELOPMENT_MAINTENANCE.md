@@ -146,6 +146,38 @@ This policy revokes access to the K8s API for Pods utilizing said ServiceAccount
 # Modifications made to upstream chart
 This is a high-level list of modifications that Big Bang has made to the upstream helm chart. You can use this as as cross-check to make sure that no modifications were lost during the upgrade process.
 
+## chart/templates/nginx/deployment.yaml
+- Updated user and group to nginx uid as 10000 does not exist and causes issues when compiling nginx conf at startup
+```diff
+@@ -40,8 +40,8 @@ spec:
+      serviceAccountName: {{ .Values.nginx.serviceAccountName }}
+{{- end }}
+      securityContext:
+-       runAsUser: 10000
+-       fsGroup: 10000
++       runAsUser: 997
++       fsGroup: 994
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+```
+
+## chart/templates/nginx/deployment.yaml 
+- Updated user and group to nginx uid as 10000 does not exist and causes issues when compiling nginx conf at startup
+```diff
+@@ -34,8 +34,8 @@ spec:
+{{- end }}
+    spec:
+      securityContext:
+-       runAsUser: 10000
+-       fsGroup: 10000
++       runAsUser: 997
++       fsGroup: 994
+        runAsNonRoot: true
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+```
+
 ## chart/templates/exporter/exporter-dpl.yaml
 - Added lines 59-61 to enable setting of container securityContext for exporter.  This was absent from the upstream chart, but appears as though it will be added in chart version 1.15.x.
 ```yaml

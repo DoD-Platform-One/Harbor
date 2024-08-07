@@ -40,8 +40,8 @@ spec:
       serviceAccountName: {{ .Values.nginx.serviceAccountName }}
 {{- end }}
       securityContext:
-        runAsUser: 10000
-        fsGroup: 10000
+        runAsUser: 997
+        fsGroup: 994
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}

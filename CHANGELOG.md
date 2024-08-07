@@ -4,6 +4,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.15.0-bb.1] - 2024-07-29
+
+### Changed
+
+- modified harbor cypress tests to be more fault tolerant
+- add `database.maxIdleConns` and `database.maxOpenConns` as definable upstream values for postgresql subchart
+- update user/group for nginx based components so that they would not fail to generate nginx conf on startup in pod
+
 ## [1.15.0-bb.0] - 2024-07-10
 
 ### Changed

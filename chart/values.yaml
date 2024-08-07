@@ -926,6 +926,8 @@ trivy:
 database:
   # if external database is used, set "type" to "external"
   # and fill the connection informations in "external" section
+  maxIdleConns: "100"
+  maxOpenConns: "1000"
   type: external
   internal:
     image:
