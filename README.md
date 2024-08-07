@@ -1,6 +1,7 @@
+<!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.15.0-bb.0](https://img.shields.io/badge/Version-1.15.0--bb.0-informational?style=flat-square) ![AppVersion: 2.11.0](https://img.shields.io/badge/AppVersion-2.11.0-informational?style=flat-square)
+![Version: 1.15.0-bb.1](https://img.shields.io/badge/Version-1.15.0--bb.1-informational?style=flat-square) ![AppVersion: 2.11.0](https://img.shields.io/badge/AppVersion-2.11.0-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -12,7 +13,14 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 
 ### Upstream Release Notes
 
-The [upstream harbor release notes](https://github.com/goharbor/harbor/blob/main/CHANGELOG.md) may help when reviewing this package.
+This package has no upstream release note links on file. Please add some to [chart/Chart.yaml](chart/Chart.yaml) under `annotations.bigbang.dev/upstreamReleaseNotesMarkdown`.
+Example:
+```yaml
+annotations:
+  bigbang.dev/upstreamReleaseNotesMarkdown: |
+    - [Find our upstream chart's CHANGELOG here](https://link-goes-here/CHANGELOG.md)
+    - [and our upstream application release notes here](https://another-link-here/RELEASE_NOTES.md)
+```
 
 ## Learn More
 * [Application Overview](docs/overview.md)
@@ -198,10 +206,7 @@ helm install harbor chart/
 | trace.otel.timeout | int | `10` |  |
 | cache.enabled | bool | `false` |  |
 | cache.expireHours | int | `24` |  |
-| containerSecurityContext.privileged | bool | `false` |  |
-| containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| containerSecurityContext.runAsNonRoot | bool | `true` |  |
+| containerSecurityContext.runAsGroup | int | `1000` |  |
 | containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | nginx.image.repository | string | `"registry1.dso.mil/ironbank/opensource/nginx/nginx"` |  |
 | nginx.image.tag | string | `"1.26.1"` |  |
@@ -222,9 +227,6 @@ helm install harbor chart/
 | nginx.podAnnotations | object | `{}` |  |
 | nginx.podLabels | object | `{}` |  |
 | nginx.priorityClassName | string | `nil` |  |
-| nginx.securityContext.runAsUser | int | `1000` |  |
-| nginx.securityContext.runAsGroup | int | `1000` |  |
-| nginx.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | portal.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal"` |  |
 | portal.image.tag | string | `"v2.11.0"` |  |
 | portal.image.pullSecrets[0] | string | `"private-registry"` |  |
@@ -246,9 +248,6 @@ helm install harbor chart/
 | portal.serviceAnnotations | object | `{}` |  |
 | portal.priorityClassName | string | `nil` |  |
 | portal.initContainers | list | `[]` |  |
-| portal.securityContext.runAsUser | int | `1000` |  |
-| portal.securityContext.runAsGroup | int | `1000` |  |
-| portal.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | core.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-core"` |  |
 | core.image.tag | string | `"v2.11.0"` |  |
 | core.image.pullSecrets[0] | string | `"private-registry"` |  |
@@ -256,9 +255,6 @@ helm install harbor chart/
 | core.automountServiceAccountToken | bool | `false` |  |
 | core.replicas | int | `1` |  |
 | core.revisionHistoryLimit | int | `10` |  |
-| core.securityContext.runAsUser | int | `1000` |  |
-| core.securityContext.runAsGroup | int | `1000` |  |
-| core.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | core.startupProbe.enabled | bool | `true` |  |
 | core.startupProbe.initialDelaySeconds | int | `30` |  |
 | core.resources.requests.memory | string | `"256Mi"` |  |
@@ -288,19 +284,13 @@ helm install harbor chart/
 | core.artifactPullAsyncFlushDuration | string | `nil` |  |
 | core.gdpr.deleteUser | bool | `false` |  |
 | core.gdpr.auditLogsCompliant | bool | `false` |  |
-| core.jobservice.containerSecurityContext.securityContext.runAsUser | int | `1000` |  |
-| core.jobservice.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
-| core.jobservice.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | jobservice.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice"` |  |
 | jobservice.image.tag | string | `"v2.11.0"` |  |
 | jobservice.image.pullSecrets[0] | string | `"private-registry"` |  |
-| jobservice.replicas | int | `1` |  |
-| jobservice.revisionHistoryLimit | int | `10` |  |
 | jobservice.serviceAccountName | string | `""` |  |
 | jobservice.automountServiceAccountToken | bool | `false` |  |
-| jobservice.securityContext.runAsUser | int | `1000` |  |
-| jobservice.securityContext.runAsGroup | int | `1000` |  |
-| jobservice.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| jobservice.replicas | int | `1` |  |
+| jobservice.revisionHistoryLimit | int | `10` |  |
 | jobservice.resources.requests.memory | string | `"256Mi"` |  |
 | jobservice.resources.requests.cpu | string | `"100m"` |  |
 | jobservice.resources.limits.cpu | string | `"100m"` |  |
@@ -331,8 +321,6 @@ helm install harbor chart/
 | registry.registry.resources.requests.cpu | string | `"100m"` |  |
 | registry.registry.resources.limits.cpu | string | `"100m"` |  |
 | registry.registry.resources.limits.memory | string | `"256Mi"` |  |
-| registry.registry.securityContext.runAsGroup | int | `1000` |  |
-| registry.registry.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | registry.registry.extraEnvVars | list | `[]` |  |
 | registry.controller.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl"` |  |
 | registry.controller.image.tag | string | `"v2.11.0"` |  |
@@ -341,8 +329,6 @@ helm install harbor chart/
 | registry.controller.resources.requests.cpu | string | `"100m"` |  |
 | registry.controller.resources.limits.cpu | string | `"100m"` |  |
 | registry.controller.resources.limits.memory | string | `"256Mi"` |  |
-| registry.controller.securityContext.runAsGroup | int | `1000` |  |
-| registry.controller.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | registry.controller.extraEnvVars | list | `[]` |  |
 | registry.serviceAccountName | string | `""` |  |
 | registry.automountServiceAccountToken | bool | `false` |  |
@@ -406,10 +392,8 @@ helm install harbor chart/
 | trivy.offlineScan | bool | `false` |  |
 | trivy.securityCheck | string | `"vuln"` |  |
 | trivy.timeout | string | `"5m0s"` |  |
-| trivy.securityContext.privileged | bool | `false` |  |
-| trivy.securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| trivy.securityContext.runAsGroup | int | `1000` |  |
-| trivy.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| database.maxIdleConns | string | `"100"` |  |
+| database.maxOpenConns | string | `"1000"` |  |
 | database.type | string | `"external"` |  |
 | database.internal.image.repository | string | `"goharbor/harbor-db"` |  |
 | database.internal.image.tag | string | `"v2.11.0"` |  |
@@ -502,7 +486,6 @@ helm install harbor chart/
 | redis.external.password | string | `""` |  |
 | redis.external.existingSecret | string | `""` |  |
 | redis.podAnnotations | object | `{}` |  |
-| redis.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | redis-bb.enabled | bool | `true` | Enable BigBang provided redis sub-chart. Disable if using external cloud elasticache or redis endpoint and fill in `redis.external.addr` in above section |
 | redis-bb.auth.enabled | bool | `false` |  |
 | redis-bb.istio.redis.enabled | bool | `false` |  |
@@ -544,9 +527,6 @@ helm install harbor chart/
 | exporter.priorityClassName | string | `nil` |  |
 | exporter.cacheDuration | int | `23` |  |
 | exporter.cacheCleanInterval | int | `14400` |  |
-| exporter.containerSecurityContext.securityContext.runAsUser | int | `1000` |  |
-| exporter.containerSecurityContext.securityContext.runAsGroup | int | `1000` |  |
-| exporter.containerSecurityContext.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | domain | string | `"dev.bigbang.mil"` |  |
 | istio.enabled | bool | `false` |  |
 | istio.hardened.enabled | bool | `false` |  |
@@ -588,3 +568,8 @@ helm install harbor chart/
 ## Contributing
 
 Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+
+---
+
+_This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
+
