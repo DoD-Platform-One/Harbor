@@ -761,6 +761,8 @@ registry:
         memory: 256Mi
     extraEnvVars: []
   # set the service account to be used, default if left empty
+  serviceAccount:
+    create: false
   serviceAccountName: ""
   # mount the service account token
   automountServiceAccountToken: false
@@ -1293,7 +1295,7 @@ networkPolicies:
 
 # Default to false, override in openshift-test-values.yaml 
 openshift: false
-  
+
 bbtests:
   enabled: false
   cypress:

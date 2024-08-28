@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.15.0-bb.1](https://img.shields.io/badge/Version-1.15.0--bb.1-informational?style=flat-square) ![AppVersion: 2.11.0](https://img.shields.io/badge/AppVersion-2.11.0-informational?style=flat-square)
+![Version: 1.15.0-bb.2](https://img.shields.io/badge/Version-1.15.0--bb.2-informational?style=flat-square) ![AppVersion: 2.11.0](https://img.shields.io/badge/AppVersion-2.11.0-informational?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -330,6 +330,7 @@ helm install harbor chart/
 | registry.controller.resources.limits.cpu | string | `"100m"` |  |
 | registry.controller.resources.limits.memory | string | `"256Mi"` |  |
 | registry.controller.extraEnvVars | list | `[]` |  |
+| registry.serviceAccount.create | bool | `false` |  |
 | registry.serviceAccountName | string | `""` |  |
 | registry.automountServiceAccountToken | bool | `false` |  |
 | registry.replicas | int | `1` |  |

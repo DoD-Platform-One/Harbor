@@ -3,6 +3,11 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
+## [1.15.0-bb.2] - 2024-08-08
+
+### Changed
+
+- add `serviceaccount-server.yaml` this allow users to create a Service Account with customizable annotations and labels
 
 ## [1.15.0-bb.1] - 2024-07-29
 
