@@ -8,6 +8,13 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define "harbor.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
@@ -185,6 +192,18 @@ app: "{{ template "harbor.name" . }}"
     {{- end }}
   {{- end }}
 {{- end -}}
+
+{{/*
+Create the name of the service account to use for creating or deleting the velero server
+*/}}
+{{- define "harbor.serviceAccount" -}}
+{{- if .Values.registry.serviceAccount.create -}}
+    {{ default (printf "%s-%s" (include "harbor.fullname" .) "serviceaccount") .Values.registry.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.registry.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+
 
 /*scheme://[:password@]host:port[/master_set]*/
 {{- define "harbor.redis.url" -}}
