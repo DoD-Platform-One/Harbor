@@ -4,13 +4,14 @@
     "dependencyDashboard": true,
     "dependencyDashboardTitle": "Renovate: Upgrade Harbor Package Dependencies",
     "draftPR": true,
-    "enabledManagers": ["helm-values", "regex", "helmv3"],
+    "enabledManagers": ["regex", "helmv3"],
     "ignorePaths": ["chart/charts/**"],
     "labels": ["harbor","renovate"],
     "packageRules": [
         {
             "matchDatasources": ["docker"],
-            "groupName": "Ironbank"
+            "groupName": "Ironbank",
+            "registryUrls": ["https://registry1.dso.mil"]
         }
     ],
     "regexManagers": [
@@ -20,24 +21,21 @@
                 "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)"
             ],
             "depNameTemplate": "registry1.dso.mil/ironbank/opensource/goharbor/harbor-core",
-            "datasourceTemplate": "docker",
-            "registryUrlTemplate": "https://registry1.dso.mil"
+            "datasourceTemplate": "docker"
         },
         {
             "fileMatch": ["^chart/Chart\\.yaml$"],
             "matchStrings": [
                 "image:[^\\S\\r\\n]+(?<depName>.+):(?<currentValue>.+)"
             ],
-            "datasourceTemplate": "docker",
-            "registryUrlTemplate": "https://registry1.dso.mil"
+            "datasourceTemplate": "docker"
         },
         {
             "fileMatch": ["^chart/values\\.yaml$"],
             "matchStrings": [
                 "image:[^\\S\\r\\n]+(?<depName>.+)\\s+tag:[^\\S\\r\\n]+(?<currentValue>[\\d\\.]+)"
             ],
-            "datasourceTemplate": "docker",
-            "registryUrlTemplate": "https://registry1.dso.mil"
+            "datasourceTemplate": "docker"
         }
     ],
     "separateMajorMinor": false,
