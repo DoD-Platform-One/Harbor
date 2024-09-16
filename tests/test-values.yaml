@@ -2,59 +2,18 @@ expose:
   type: clusterIP
   tls:
     enabled: false
-internalTLS:
-  enabled: false
 externalURL: http://harbor-core:80
 nginx:
-  resources:
-    requests:
-      memory: 200Mi
-      cpu: 80m
-    limits:
-      cpu: 80m
-      memory: 200Mi
+  replicas: 2
 portal:
-  resources:
-    requests:
-      memory: 200Mi
-      cpu: 80m
-    limits:
-      cpu: 80m
-      memory: 200Mi
+  replicas: 2
 core:
+  replicas: 2
   secretName: "ci-only"
-  resources:
-    requests:
-      memory: 200Mi
-      cpu: 80m
-    limits:
-      cpu: 80m
-      memory: 200Mi
-jobservice:
-  resources:
-    requests:
-      memory: 200Mi
-      cpu: 80m
-    limits:
-      cpu: 80m
-      memory: 200Mi
-registry:
-  registry:
-    resources:
-      requests:
-        memory: 200Mi
-        cpu: 80m
-      limits:
-        cpu: 80m
-        memory: 200Mi
-  controller:
-    resources:
-      requests:
-        memory: 200Mi
-        cpu: 80m
-      limits:
-        cpu: 80m
-        memory: 200Mi
+#jobservice:
+#registry:
+#  registry:
+#  controller:
 trivy:
   resources:
     requests:
@@ -63,55 +22,14 @@ trivy:
     limits:
       cpu: 80m
       memory: 200Mi
-database:
-  type: external
-  internal:
-    resources:
-      requests:
-        memory: 200Mi
-        cpu: 80m
-      limits:
-        cpu: 80m
-        memory: 200Mi
-    initContainer:
-      migrator: {}
-      resources:
-        requests:
-          memory: 100Mi
-          cpu: 80m
-        limits:
-          cpu: 80m
-          memory: 100Mi
-      permissions: {}
-postgresql:
-  resources:
-    requests:
-      cpu: "200m"
-      memory: "200Mi"
-    limits:
-      cpu: "200m"
-      memory: "200Mi"
-redis:
-  resources:
-    requests:
-      memory: 200Mi
-      cpu: 80m
-    limits:
-      memory: 200Mi
-      cpu: 80m
-exporter:
-    resources:
-    requests:
-      memory: 200Mi
-      cpu: 80m
-    limits:
-      cpu: 80m
-      memory: 200Mi
+#database:
+#  internal:
+#postgresql:
+#redis:
+#exporter:
 bbtests:
   enabled: true
   cypress:
-    envs:
-      cypress_url: "http://harbor:80"
     resources:
         requests:
           cpu: 2
@@ -128,7 +46,7 @@ bbtests:
         memory:
           requests: 512Mi
           limits: 2048Mi
-
 istio:
   hardened:
     enabled: true
+

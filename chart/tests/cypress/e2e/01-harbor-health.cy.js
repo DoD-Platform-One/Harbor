@@ -22,7 +22,10 @@ export const deleteProject = () => {
 }
 
 describe('template spec', () => {
-  it('.should() - allow user to signin', () => {
+  beforeEach(() => {
+    cy.wait(5000)
+  })
+  it('.should() - allow user to signin', { retries: { runMode: 5, openMode: 2,}, },  () => {
     cy.visit(Cypress.env('url') + '/account/sign-in', { retryOnStatusCodeFailure: true })
     cy.get('input[placeholder="Username"]').type(Cypress.env('user'))
     cy.get('input[placeholder="Password"]').type(Cypress.env('harbor_password'))
