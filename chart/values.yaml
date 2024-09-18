@@ -484,7 +484,7 @@ containerSecurityContext:
   #   type: RuntimeDefault
   # runAsNonRoot: true
   # runAsUser: 1000
-  runAsGroup: 1000  
+  runAsGroup: 1000
   capabilities:
     drop:
       - ALL
@@ -493,7 +493,7 @@ containerSecurityContext:
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: 1.26.1
+    tag: 1.26.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -529,7 +529,7 @@ nginx:
 portal:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-    tag: v2.11.0
+    tag: v2.11.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -574,7 +574,7 @@ portal:
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-    tag: v2.11.0
+    tag: v2.11.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -658,7 +658,6 @@ core:
   # The time duration for async update artifact pull_time and repository
   # pull_count, the unit is second. Will be 10 seconds if it isn't set.
   # eg. artifactPullAsyncFlushDuration: 10
-
   artifactPullAsyncFlushDuration:
   gdpr:
     deleteUser: false
@@ -667,7 +666,7 @@ core:
 jobservice:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-    tag: v2.11.0
+    tag: v2.11.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -735,7 +734,7 @@ registry:
   registry:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-      tag: v2.11.0
+      tag: v2.11.1
       pullSecrets:
       - private-registry
     resources:
@@ -749,7 +748,7 @@ registry:
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-      tag: v2.11.0
+      tag: v2.11.1
       pullSecrets:
       - private-registry
     resources:
@@ -837,7 +836,7 @@ trivy:
     # repository the repository for Trivy adapter image
     repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
-    tag: v2.11.0
+    tag: v2.11.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -934,7 +933,7 @@ database:
   internal:
     image:
       repository: goharbor/harbor-db
-      tag: v2.11.0
+      tag: v2.11.1
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
@@ -1031,7 +1030,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql12
-    tag: 12.19
+    tag: "12.20"
     debug: true
   # used in:
   # deps/postgresql/templates/statefulset-readreplicas.yaml
@@ -1103,7 +1102,7 @@ redis:
   internal:
     image:
       repository: goharbor/redis-photon
-      tag: v2.11.0
+      tag: v2.11.1
       pullSecrets:
       - private-registry
     # set the service account to be used, default if left empty
@@ -1206,7 +1205,7 @@ redis-bb:
 exporter:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-    tag: v2.11.0
+    tag: v2.11.1
     pullSecrets:
     - private-registry
   serviceAccountName: ""
@@ -1293,7 +1292,7 @@ networkPolicies:
   # ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
   additionalPolicies: []
 
-# Default to false, override in openshift-test-values.yaml 
+# Default to false, override in openshift-test-values.yaml
 openshift: false
 
 bbtests:

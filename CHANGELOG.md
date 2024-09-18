@@ -3,6 +3,17 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
+
+## [1.15.1-bb.0] - 2024-09-10
+
+### Changed
+
+- Updated chart version 1.15.0-bb.2 -> 1.15.1-bb.0
+- Updated appVersion 2.11.0 -> 2.11.1
+- Updated nginx 1.26.1 -> 1.26.2
+- Updated redis (source) minor 19.5.5-bb.0 -> 20.0.1-bb.0
+- Updated postgres to 12.19 -> 12.20
+
 ## [1.15.0-bb.2] - 2024-08-08
 
 ### Changed
