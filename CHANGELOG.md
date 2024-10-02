@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.15.1-bb.1] - 2024-10-02
+
+### Changed
+
+- Added https/443 as a default serviceentry for harbor core
+
 ## [1.15.1-bb.0] - 2024-09-10
 
 ### Changed
