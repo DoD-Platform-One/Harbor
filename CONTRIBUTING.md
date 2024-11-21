@@ -1,6 +1,6 @@
 # Contributing
 
-If you are coming from `repo1.dso.mil` and have an account at `login.dso.mil` please keep reading. If you are coming from or looking for the [project on Github](https://github.com/DoD-Platform-One) and wanting to make a Pull Request without a `dso.mil` account please see [External Github Contributions](#community-contributions-to-dod-platform-one-via-github).
+If you are coming from `repo1.dso.mil` and have an account at `login.dso.mil` please keep reading. If you are coming from or looking for the [project on Github](https://github.com/DoD-Platform-One) and wanting to make a Pull Request without a `dso.mil` account please see [External Github Contributions](https://repo1.dso.mil/big-bang/product/packages/harbor/-/blob/main/CONTRIBUTING.md?ref_type=heads#community-contributions-to-dod-platform-one-via-github).
 
 This repository uses the following conventions:
 

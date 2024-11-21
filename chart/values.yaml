@@ -180,14 +180,14 @@ persistence:
       annotations: {}
   # Define which storage backend is used for registry to store
   # images and charts. Refer to
-  # https://github.com/distribution/distribution/blob/main/docs/content/about/configuration.md#storage
+  # https://github.com/distribution/distribution/blob/release/2.8/docs/configuration.md#storage
   # for the detail.
   imageChartStorage:
     # Specify whether to disable `redirect` for images and chart storage, for
     # backends which not supported it (such as using minio for `s3` storage type), please disable
     # it. To disable redirects, simply set `disableredirect` to `true` instead.
     # Refer to
-    # https://github.com/distribution/distribution/blob/main/docs/configuration.md#redirect
+    # https://github.com/distribution/distribution/blob/release/2.8/docs/configuration.md#redirect
     # for the detail.
     disableredirect: false
     # Specify the "caBundleSecretName" if the storage service uses a self-signed certificate.
@@ -493,7 +493,7 @@ containerSecurityContext:
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: 1.26.2
+    tag: 1.27.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -529,7 +529,7 @@ nginx:
 portal:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-    tag: v2.11.1
+    tag: v2.12.0
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -574,7 +574,7 @@ portal:
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-    tag: v2.11.1
+    tag: v2.12.0
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -666,7 +666,7 @@ core:
 jobservice:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-    tag: v2.11.1
+    tag: v2.12.0
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -734,7 +734,7 @@ registry:
   registry:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-      tag: v2.11.1
+      tag: v2.12.0
       pullSecrets:
       - private-registry
     resources:
@@ -748,7 +748,7 @@ registry:
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-      tag: v2.11.1
+      tag: v2.12.0
       pullSecrets:
       - private-registry
     resources:
@@ -791,7 +791,7 @@ registry:
   #   command: [ 'sh', '-c', "sleep 20" ]
   # Secret is used to secure the upload state from client
   # and registry storage backend.
-  # See: https://github.com/distribution/distribution/blob/main/docs/configuration.md#http
+  # See: https://github.com/distribution/distribution/blob/release/2.8/docs/configuration.md#http
   # If a secret key is not specified, Helm will generate one.
   # Must be a string of 16 chars.
   secret: ""
@@ -836,7 +836,7 @@ trivy:
     # repository the repository for Trivy adapter image
     repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
-    tag: v2.11.1
+    tag: v2.12.0
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -919,7 +919,7 @@ trivy:
   # It would work if all the dependencies are in local.
   # This option doesn’t affect DB download. You need to specify skipUpdate as well as offlineScan in an air-gapped environment.
   offlineScan: false
-  # Comma-separated list of what security issues to detect. Possible values are `vuln`, `config` and `secret`. Defaults to `vuln`.
+  # Comma-separated list of what security issues to detect. Defaults to `vuln`.
   securityCheck: "vuln"
   # The duration to wait for scan completion
   timeout: 5m0s
@@ -933,7 +933,7 @@ database:
   internal:
     image:
       repository: goharbor/harbor-db
-      tag: v2.11.1
+      tag: v2.12.0
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
@@ -1030,7 +1030,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql12
-    tag: "12.20"
+    tag: "12.21"
     debug: true
   # used in:
   # deps/postgresql/templates/statefulset-readreplicas.yaml
@@ -1102,7 +1102,7 @@ redis:
   internal:
     image:
       repository: goharbor/redis-photon
-      tag: v2.11.1
+      tag: v2.12.0
       pullSecrets:
       - private-registry
     # set the service account to be used, default if left empty
@@ -1205,7 +1205,7 @@ redis-bb:
 exporter:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-    tag: v2.11.1
+    tag: v2.12.0
     pullSecrets:
     - private-registry
   serviceAccountName: ""
