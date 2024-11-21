@@ -4,6 +4,24 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.16.0-bb.0] - 2024-11-20
+
+### Changed
+
+- Updated goharbor/redis-photon minor v2.11.0 -> v2.12.0
+- Updated redis (source) minor 20.0.1-bb.0 -> 20.2.1-bb.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-core (source) minor v2.11.1 -> v2.12.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-core (source) minor 2.11.1 -> 2.12.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter (source) minor v2.11.1 -> v2.12.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice (source) minor v2.11.1 -> v2.12.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal (source) minor v2.11.1 -> v2.12.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl (source) minor v2.11.1 -> v2.12.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/registry (source) minor v2.11.1 -> v2.12.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter (source) minor v2.11.1 -> v2.12.0
+- Updated registry1.dso.mil/ironbank/opensource/nginx/nginx (source) patch 1.26.2 -> 1.27.2
+- Updated registry1.dso.mil/ironbank/opensource/postgres/postgresql12 (source) minor 12.20 -> 12.21
+
+
 ## [1.15.1-bb.1] - 2024-10-02
 
 ### Changed

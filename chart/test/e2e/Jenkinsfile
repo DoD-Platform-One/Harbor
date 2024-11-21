@@ -1,4 +1,4 @@
-@Library('harbor@2.11') _
+@Library('harbor@main') _
 import io.goharbor.*
 
 class HarborChartFreshInstallPipelineExecutor extends FreshInstallPipelineExecutor implements Serializable {
