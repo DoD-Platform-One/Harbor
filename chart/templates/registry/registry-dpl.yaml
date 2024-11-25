@@ -48,8 +48,8 @@ spec:
         runAsUser: 10000
         fsGroup: 10000
         fsGroupChangePolicy: OnRootMismatch
-{{- if .Values.registry.serviceAccountName }}
-      serviceAccountName: {{ .Values.registry.serviceAccountName }}
+{{- if .Values.registry.serviceAccount.create }}
+      serviceAccountName: {{ include "harbor.serviceAccount" . }}
 {{- end -}}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
