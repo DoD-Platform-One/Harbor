@@ -4,6 +4,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.16.0-bb.1] - 2024-11-22
+
+### Changed
+
+- Updated the values.yaml file to address annotations and imagepullsecrets options missing
+- Updated the registry-dpl.yaml file to define a default for serviceAccountName and also fix the wrong conditional statement.
+- Updated the _helpers.tpl file to address the serviceAccountName pointer in the values file.
+
+
 ## [1.16.0-bb.0] - 2024-11-20
 
 ### Changed

@@ -762,6 +762,8 @@ registry:
   # set the service account to be used, default if left empty
   serviceAccount:
     create: false
+    annotations: {}
+    imagePullSecrets: []
   serviceAccountName: ""
   # mount the service account token
   automountServiceAccountToken: false

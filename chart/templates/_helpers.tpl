@@ -198,9 +198,9 @@ Create the name of the service account to use for creating or deleting the veler
 */}}
 {{- define "harbor.serviceAccount" -}}
 {{- if .Values.registry.serviceAccount.create -}}
-    {{ default (printf "%s-%s" (include "harbor.fullname" .) "serviceaccount") .Values.registry.serviceAccount.name }}
+    {{ default (printf "%s-%s" (include "harbor.fullname" .) "serviceaccount") .Values.registry.serviceAccountName }}
 {{- else -}}
-    {{ default "default" .Values.registry.serviceAccount.name }}
+    {{ default "default" .Values.registry.serviceAccountName }}
 {{- end -}}
 {{- end -}}
 
