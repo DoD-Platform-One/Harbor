@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.16.0-bb.1](https://img.shields.io/badge/Version-1.16.0--bb.1-informational?style=flat-square) ![AppVersion: 2.12.0](https://img.shields.io/badge/AppVersion-2.12.0-informational?style=flat-square) [![Maintenance Track: unknown](https://img.shields.io/badge/Maintenance_Track-unknown-red?style=flat-square)](https://repo1.dso.mil/big-bang/product/bbtoc/-/blob/main/process/Package%20Maintenance%20Tracks.md)
+![Version: 1.16.0-bb.2](https://img.shields.io/badge/Version-1.16.0--bb.2-informational?style=flat-square) ![AppVersion: 2.12.0](https://img.shields.io/badge/AppVersion-2.12.0-informational?style=flat-square) ![Maintenance Track: unknown](https://img.shields.io/badge/Maintenance_Track-unknown-red?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
