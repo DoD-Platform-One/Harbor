@@ -4,7 +4,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
-## [1.16.0-bb.1] - 2024-11-22
+## [1.16.0-bb.2] - 2024-11-27
+
+### Changed
+
+- Updated gluon to 0.5.10 -> 0.5.12
+- Updated registry1.dso.mil/ironbank/opensource/nginx/nginx (source) patch 1.27.2 -> 1.27.3
+- Updated registry1.dso.mil/ironbank/opensource/postgres/postgresql12 (source) minor 12.21 -> 12.22
+
 
 ### Changed
 

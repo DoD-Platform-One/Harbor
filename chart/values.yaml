@@ -493,7 +493,7 @@ containerSecurityContext:
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: 1.27.2
+    tag: 1.27.3
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -1032,7 +1032,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql12
-    tag: "12.21"
+    tag: "12.22"
     debug: true
   # used in:
   # deps/postgresql/templates/statefulset-readreplicas.yaml
