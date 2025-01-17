@@ -529,7 +529,7 @@ nginx:
 portal:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-    tag: v2.12.0
+    tag: v2.12.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -574,7 +574,7 @@ portal:
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-    tag: v2.12.0
+    tag: v2.12.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -666,7 +666,7 @@ core:
 jobservice:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-    tag: v2.12.0
+    tag: v2.12.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -734,7 +734,7 @@ registry:
   registry:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-      tag: v2.12.0
+      tag: v2.12.1
       pullSecrets:
       - private-registry
     resources:
@@ -748,7 +748,7 @@ registry:
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-      tag: v2.12.0
+      tag: v2.12.1
       pullSecrets:
       - private-registry
     resources:
@@ -838,7 +838,7 @@ trivy:
     # repository the repository for Trivy adapter image
     repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
-    tag: v2.12.0
+    tag: v2.12.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -935,7 +935,7 @@ database:
   internal:
     image:
       repository: goharbor/harbor-db
-      tag: v2.12.0
+      tag: v2.12.1
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
@@ -1004,17 +1004,13 @@ database:
 postgresql:
   # If `true`, the Postgresql dependency is enabled
   enabled: true
-  # PostgreSQL User to create
-  postgresqlUsername: "harborUser"
-  # PostgreSQL Password for the new user
-  postgresqlPassword: "harborPW"
-  # Notary server settings
-  # notaryServerDatabase: "notary_server"
-  # notaryServerUsername: "serveruser"
-  # Notary Signer settings
-  # notarySignerDatabase: "notary_signer"
-  # notarySignerUsername: "signeruser"
-  coreDatabase: "harborUser"
+  auth:
+    # PostgreSQL User to create
+    username: "harborUser"
+    # PostgreSQL Password for the new user
+    password: "harborPW"
+    database: "harborUser"
+
   maxIdleConns: 100
   # The maximum number of open connections to the database per pod (core+exporter).
   # If it <= 0, then there is no limit on the number of open connections.
@@ -1031,22 +1027,31 @@ postgresql:
       - private-registry
   image:
     registry: registry1.dso.mil
-    repository: ironbank/opensource/postgres/postgresql12
-    tag: "12.22"
+    repository: ironbank/opensource/postgres/postgresql
+    tag: "16.2"
     debug: true
   # used in:
   # deps/postgresql/templates/statefulset-readreplicas.yaml
   securityContext:
     enabled: true
-    fsGroup: 26
-    runAsUser: 26
-    runAsGroup: 26
-  containerSecurityContext:
-    enabled: true
-    runAsUser: 26
-    capabilities:
-      drop:
-        - ALL
+    fsGroup: 1001
+    runAsUser: 1001
+    runAsGroup: 1001
+
+  primary:
+    extraVolumeMounts:
+      - name: runtime
+        mountPath: /var/run/postgresql
+    extraVolumes:
+      - name: runtime
+        emptyDir: { }
+    containerSecurityContext:
+      enabled: true
+      runAsUser: 1001
+      runAsGroup: 1001
+      capabilities:
+        drop:
+          - ALL
   existingSecret: ""
   resources:
     requests:
@@ -1104,7 +1109,7 @@ redis:
   internal:
     image:
       repository: goharbor/redis-photon
-      tag: v2.12.0
+      tag: v2.12.1
       pullSecrets:
       - private-registry
     # set the service account to be used, default if left empty
@@ -1207,7 +1212,7 @@ redis-bb:
 exporter:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-    tag: v2.12.0
+    tag: v2.12.1
     pullSecrets:
     - private-registry
   serviceAccountName: ""
@@ -1307,7 +1312,7 @@ bbtests:
       cypress_harbor_password: "Harbor12345"
       cypress_project: "bbcypress-test"
   scripts:
-    image: "registry1.dso.mil/bigbang-ci/devops-tester:1.1.1"
+    image: "registry1.dso.mil/bigbang-ci/devops-tester:1.1.2"
     additionalVolumes:
       - name: docker-config
         secret:

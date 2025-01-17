@@ -1,7 +1,7 @@
 apiVersion: v2
 name: harbor
-version: 1.16.0-bb.2
-appVersion: 2.12.0
+version: 1.16.1-bb.0
+appVersion: 2.12.1
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:
 - docker
@@ -22,11 +22,11 @@ maintainers:
 engine: gotpl
 dependencies:
   - name: postgresql
-    version: 10.3.13
-    repository: file://./deps/postgresql
+    version: 15.2.10
+    repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: redis
-    version: "20.2.1-bb.0"
+    version: "20.6.0-bb.0"
     repository: oci://registry1.dso.mil/bigbang
     condition: redis-bb.enabled
     alias: redis-bb
@@ -41,23 +41,23 @@ annotations:
     - name: nginx
       image: registry1.dso.mil/ironbank/opensource/nginx/nginx:1.27.3
     - name: harbor-portal
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.12.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.12.1
     - name: harbor-core
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.12.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.12.1
     - name: harbor-jobservice
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.12.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.12.1
     - name: registry
-      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.12.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.12.1
     - name: harbor-registryctl
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.12.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.12.1
     - name: harbor-exporter
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.12.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.12.1
     - name: trivy
       condition: trivy.enabled
-      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.12.0
-    - name: postgresql12
+      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.12.1
+    - name: postgresql
       condition: postgresql.enabled
-      image: registry1.dso.mil/ironbank/opensource/postgres/postgresql12:12.22
+      image: registry1.dso.mil/ironbank/opensource/postgres/postgresql:16.2
     - name: redis
       condition: redis-bb.enabled
       image: registry1.dso.mil/ironbank/bitnami/redis:7.0.0-debian-10-r3

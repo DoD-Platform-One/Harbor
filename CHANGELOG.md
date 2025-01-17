@@ -4,6 +4,21 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.16.1-bb.0] - 2025-01-16
+
+### Changed
+
+- redis 20.2.1-bb.0 -> 20.6.0-bb.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-core v2.12.0 -> v2.12.1
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-core 2.12.0 -> 2.12.1
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter 2.12.0 -> v2.12.1
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice 2.12.0 -> v2.12.1
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal v2.12.0 -> v2.12.1
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl 2.12.0 -> v2.12.1
+- registry1.dso.mil/ironbank/opensource/goharbor/registry v2.12.0 -> v2.12.1
+- registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter v2.12.0 -> v2.12.1
+- postgres 12.22 -> 16.2
+
 ## [1.16.0-bb.2] - 2024-11-27
 
 ### Changed
@@ -21,7 +36,6 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Updated the _helpers.tpl file to address the serviceAccountName pointer in the values file.
   bigbang.dev/maintenanceTrack: bb_integrated
 
-
 ## [1.16.0-bb.0] - 2024-11-20
 
 ### Changed
@@ -38,7 +52,6 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Updated registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter (source) minor v2.11.1 -> v2.12.0
 - Updated registry1.dso.mil/ironbank/opensource/nginx/nginx (source) patch 1.26.2 -> 1.27.2
 - Updated registry1.dso.mil/ironbank/opensource/postgres/postgresql12 (source) minor 12.20 -> 12.21
-
 
 ## [1.15.1-bb.1] - 2024-10-02
 
