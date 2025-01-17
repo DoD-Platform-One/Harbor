@@ -26,7 +26,7 @@ Run a KPT update against the main chart folder:
 # - Starting with the most recent Helm chart version tag, open the Chart.yaml for the tag. If the appVersion value corresponds to the version of Loki that Renovate detected for an upgrade, this is the correct version. So, for example, if you will be updating to chart
 # version v1.13.0, your kpt command would be:
 
-kpt pkg update chart@v1.13.0 --strategy alpha-git-patch
+kpt pkg update chart@1.13.0 --strategy alpha-git-patch
 
 kpt pkg update chart@${chart.version} --strategy alpha-git-patch
 ```

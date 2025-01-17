@@ -4,6 +4,10 @@ chart/test/integration/**
 chart/test/unittest/**
 chart/test/go.*
 chart/test/test.go
+chart/tests/cypress.config.js
+chart/tests/cypress.env.json
+chart/tests/cypress/fixtures/
+chart/tests/cypress/support/
 .helmdocsignore
 README.md.gotmpl
 node_modules
