@@ -529,7 +529,7 @@ nginx:
 portal:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-    tag: v2.12.1
+    tag: v2.12.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -574,7 +574,7 @@ portal:
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-    tag: v2.12.1
+    tag: v2.12.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -666,7 +666,7 @@ core:
 jobservice:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-    tag: v2.12.1
+    tag: v2.12.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -734,7 +734,7 @@ registry:
   registry:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-      tag: v2.12.1
+      tag: v2.12.2
       pullSecrets:
       - private-registry
     resources:
@@ -748,7 +748,7 @@ registry:
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-      tag: v2.12.1
+      tag: v2.12.2
       pullSecrets:
       - private-registry
     resources:
@@ -838,7 +838,7 @@ trivy:
     # repository the repository for Trivy adapter image
     repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
-    tag: v2.12.1
+    tag: v2.12.2
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -935,7 +935,7 @@ database:
   internal:
     image:
       repository: goharbor/harbor-db
-      tag: v2.12.1
+      tag: v2.12.2
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
@@ -1028,7 +1028,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql
-    tag: "16.2"
+    tag: "17.4"
     debug: true
   # used in:
   # deps/postgresql/templates/statefulset-readreplicas.yaml
@@ -1109,7 +1109,7 @@ redis:
   internal:
     image:
       repository: goharbor/redis-photon
-      tag: v2.12.1
+      tag: v2.12.2
       pullSecrets:
       - private-registry
     # set the service account to be used, default if left empty
@@ -1149,7 +1149,7 @@ redis:
     # support redis, redis+sentinel
     # addr for redis: <host_redis>:<port_redis>
     # addr for redis+sentinel: <host_sentinel1>:<port_sentinel1>,<host_sentinel2>:<port_sentinel2>,<host_sentinel3>:<port_sentinel3>
-    addr: "harbor-redis-bb-master:6379"
+    addr: "harbor-redis-master:6379"
     # The name of the set of Redis instances to monitor, it must be set to support redis+sentinel
     sentinelMasterSet: ""
     # The "coreDatabaseIndex" must be "0" as the library Harbor
@@ -1181,7 +1181,7 @@ redis-bb:
   image:
     registry: registry1.dso.mil
     repository: ironbank/bitnami/redis
-    tag: 7.0.0-debian-10-r3
+    tag: 7.4.2
     pullSecrets:
       - private-registry
   networkPolicies:
@@ -1212,7 +1212,7 @@ redis-bb:
 exporter:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-    tag: v2.12.1
+    tag: v2.12.2
     pullSecrets:
     - private-registry
   serviceAccountName: ""

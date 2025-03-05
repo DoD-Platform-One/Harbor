@@ -1,14 +1,13 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.16.1-bb.0](https://img.shields.io/badge/Version-1.16.1--bb.0-informational?style=flat-square) ![AppVersion: 2.12.1](https://img.shields.io/badge/AppVersion-2.12.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 1.16.2-bb.2](https://img.shields.io/badge/Version-1.16.2--bb.2-informational?style=flat-square) ![AppVersion: 2.12.2](https://img.shields.io/badge/AppVersion-2.12.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
 ## Upstream References
 
 - <https://goharbor.io>
-
 - <https://github.com/goharbor/harbor>
 - <https://github.com/goharbor/harbor-helm>
 
@@ -16,7 +15,6 @@ An open source trusted cloud native registry that stores, signs, and scans conte
 
 This package has no upstream release note links on file. Please add some to [chart/Chart.yaml](chart/Chart.yaml) under `annotations.bigbang.dev/upstreamReleaseNotesMarkdown`.
 Example:
-
 ```yaml
 annotations:
   bigbang.dev/upstreamReleaseNotesMarkdown: |
@@ -37,7 +35,7 @@ annotations:
 
 Install Helm
 
-<https://helm.sh/docs/intro/install/>
+https://helm.sh/docs/intro/install/
 
 ## Deployment
 
@@ -232,7 +230,7 @@ helm install harbor chart/
 | nginx.podLabels | object | `{}` |  |
 | nginx.priorityClassName | string | `nil` |  |
 | portal.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal"` |  |
-| portal.image.tag | string | `"v.2.12.1"` |  |
+| portal.image.tag | string | `"v2.12.2"` |  |
 | portal.image.pullSecrets[0] | string | `"private-registry"` |  |
 | portal.serviceAccountName | string | `""` |  |
 | portal.automountServiceAccountToken | bool | `false` |  |
@@ -253,7 +251,7 @@ helm install harbor chart/
 | portal.priorityClassName | string | `nil` |  |
 | portal.initContainers | list | `[]` |  |
 | core.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-core"` |  |
-| core.image.tag | string | `"v.2.12.1"` |  |
+| core.image.tag | string | `"v2.12.2"` |  |
 | core.image.pullSecrets[0] | string | `"private-registry"` |  |
 | core.serviceAccountName | string | `""` |  |
 | core.automountServiceAccountToken | bool | `false` |  |
@@ -289,7 +287,7 @@ helm install harbor chart/
 | core.gdpr.deleteUser | bool | `false` |  |
 | core.gdpr.auditLogsCompliant | bool | `false` |  |
 | jobservice.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice"` |  |
-| jobservice.image.tag | string | `"v.2.12.1"` |  |
+| jobservice.image.tag | string | `"v2.12.2"` |  |
 | jobservice.image.pullSecrets[0] | string | `"private-registry"` |  |
 | jobservice.serviceAccountName | string | `""` |  |
 | jobservice.automountServiceAccountToken | bool | `false` |  |
@@ -319,7 +317,7 @@ helm install harbor chart/
 | jobservice.existingSecret | string | `""` |  |
 | jobservice.existingSecretKey | string | `"JOBSERVICE_SECRET"` |  |
 | registry.registry.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/registry"` |  |
-| registry.registry.image.tag | string | `"v.2.12.1"` |  |
+| registry.registry.image.tag | string | `"v2.12.2"` |  |
 | registry.registry.image.pullSecrets[0] | string | `"private-registry"` |  |
 | registry.registry.resources.requests.memory | string | `"256Mi"` |  |
 | registry.registry.resources.requests.cpu | string | `"100m"` |  |
@@ -327,7 +325,7 @@ helm install harbor chart/
 | registry.registry.resources.limits.memory | string | `"256Mi"` |  |
 | registry.registry.extraEnvVars | list | `[]` |  |
 | registry.controller.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl"` |  |
-| registry.controller.image.tag | string | `"v.2.12.1"` |  |
+| registry.controller.image.tag | string | `"v2.12.2"` |  |
 | registry.controller.image.pullSecrets[0] | string | `"private-registry"` |  |
 | registry.controller.resources.requests.memory | string | `"256Mi"` |  |
 | registry.controller.resources.requests.cpu | string | `"100m"` |  |
@@ -370,7 +368,7 @@ helm install harbor chart/
 | registry.upload_purging.dryrun | bool | `false` |  |
 | trivy.enabled | bool | `true` |  |
 | trivy.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter"` |  |
-| trivy.image.tag | string | `"v.2.12.1"` |  |
+| trivy.image.tag | string | `"v2.12.2"` |  |
 | trivy.image.pullSecrets[0] | string | `"private-registry"` |  |
 | trivy.serviceAccountName | string | `""` |  |
 | trivy.automountServiceAccountToken | bool | `false` |  |
@@ -403,7 +401,7 @@ helm install harbor chart/
 | database.maxOpenConns | string | `"1000"` |  |
 | database.type | string | `"external"` |  |
 | database.internal.image.repository | string | `"goharbor/harbor-db"` |  |
-| database.internal.image.tag | string | `"v2.12.1"` |  |
+| database.internal.image.tag | string | `"v2.12.2"` |  |
 | database.internal.serviceAccountName | string | `""` |  |
 | database.internal.automountServiceAccountToken | bool | `false` |  |
 | database.internal.password | string | `"changeit"` |  |
@@ -435,16 +433,13 @@ helm install harbor chart/
 | postgresql.auth.username | string | `"harborUser"` |  |
 | postgresql.auth.password | string | `"harborPW"` |  |
 | postgresql.auth.database | string | `"harborUser"` |  |
-| postgresql.postgresqlUsername | string | `"harborUser"` |  |
-| postgresql.postgresqlPassword | string | `"harborPW"` |  |
-| postgresql.coreDatabase | string | `"harborUser"` |  |
 | postgresql.maxIdleConns | int | `100` |  |
 | postgresql.maxOpenConns | int | `900` |  |
 | postgresql.networkPolicy.enabled | bool | `false` |  |
 | postgresql.global.imagePullSecrets[0] | string | `"private-registry"` |  |
 | postgresql.image.registry | string | `"registry1.dso.mil"` |  |
 | postgresql.image.repository | string | `"ironbank/opensource/postgres/postgresql"` |  |
-| postgresql.image.tag | string | `"16.2"` |  |
+| postgresql.image.tag | string | `"17.4"` |  |
 | postgresql.image.debug | bool | `true` |  |
 | postgresql.securityContext.enabled | bool | `true` |  |
 | postgresql.securityContext.fsGroup | int | `1001` |  |
@@ -475,7 +470,7 @@ helm install harbor chart/
 | postgresql.podLabels | object | `{}` |  |
 | redis.type | string | `"external"` |  |
 | redis.internal.image.repository | string | `"goharbor/redis-photon"` |  |
-| redis.internal.image.tag | string | `"v.2.12.1"` |  |
+| redis.internal.image.tag | string | `"v2.12.2"` |  |
 | redis.internal.image.pullSecrets[0] | string | `"private-registry"` |  |
 | redis.internal.serviceAccountName | string | `""` |  |
 | redis.internal.automountServiceAccountToken | bool | `false` |  |
@@ -491,7 +486,7 @@ helm install harbor chart/
 | redis.internal.jobserviceDatabaseIndex | string | `"1"` |  |
 | redis.internal.registryDatabaseIndex | string | `"2"` |  |
 | redis.internal.trivyAdapterIndex | string | `"5"` |  |
-| redis.external.addr | string | `"harbor-redis-bb-master:6379"` |  |
+| redis.external.addr | string | `"harbor-redis-master:6379"` |  |
 | redis.external.sentinelMasterSet | string | `""` |  |
 | redis.external.coreDatabaseIndex | string | `"0"` |  |
 | redis.external.jobserviceDatabaseIndex | string | `"1"` |  |
@@ -506,7 +501,7 @@ helm install harbor chart/
 | redis-bb.istio.redis.enabled | bool | `false` |  |
 | redis-bb.image.registry | string | `"registry1.dso.mil"` |  |
 | redis-bb.image.repository | string | `"ironbank/bitnami/redis"` |  |
-| redis-bb.image.tag | string | `"7.0.0-debian-10-r3"` |  |
+| redis-bb.image.tag | string | `"7.4.2"` |  |
 | redis-bb.image.pullSecrets[0] | string | `"private-registry"` |  |
 | redis-bb.networkPolicies.enabled | bool | `true` |  |
 | redis-bb.networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
@@ -522,7 +517,7 @@ helm install harbor chart/
 | redis-bb.commonConfiguration | string | `"# Enable AOF https://redis.io/topics/persistence#append-only-file\nappendonly no\nmaxmemory 200mb\nmaxmemory-policy allkeys-lru\nsave \"\""` |  |
 | redis-bb.podLabels | object | `{}` |  |
 | exporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter"` |  |
-| exporter.image.tag | string | `"v.2.12.1"` |  |
+| exporter.image.tag | string | `"v2.12.2"` |  |
 | exporter.image.pullSecrets[0] | string | `"private-registry"` |  |
 | exporter.serviceAccountName | string | `""` |  |
 | exporter.automountServiceAccountToken | bool | `false` |  |
@@ -587,3 +582,4 @@ Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in 
 ---
 
 _This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
+

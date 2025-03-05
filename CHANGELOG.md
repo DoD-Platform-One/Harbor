@@ -4,6 +4,25 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.16.2-bb.2] - 2025-01-27
+
+### Changed
+- Updated version 1.16.1-bb.0 -> 1.16.2-bb.0
+- Updated appVersion 2.12.1 -> 2.12.2
+- Updated Gluon 0.5.12 -> 0.5.14
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.12.1 -> v2.12.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.12.1 -> v2.12.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.12.1 -> v2.12.2
+- registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.12.1 -> v2.12.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.12.1 -> v2.12.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.12.1 -> v2.12.2
+- registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.12.1 -> v2.12.2
+- registry1.dso.mil/ironbank/opensource/postgres/postgresql:16.2 -> 17.4
+- registry1.dso.mil/ironbank/bitnami/redis:7.0.0-debian-10-r3 -> 7.4.2
+- goharbor/redis-photon:v2.12.1 -> v2.12.2
+
+- Manual upgrade needed. See Redis [credential reuse here](https://github.com/bitnami/charts/issues/4468#issuecomment-732922166). Also, see Postgresql upgrade [instructions here](https://github.com/bitnami/charts/issues/4468#issuecomment-732922166).
+
 ## [1.16.1-bb.0] - 2025-01-16
 
 ### Changed

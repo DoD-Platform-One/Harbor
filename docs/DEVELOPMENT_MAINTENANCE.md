@@ -93,8 +93,21 @@ registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.9.0
 harbor-values-overrides.yaml
 
 ```
+istio:
+  enabled: true
+  ingressGateways:
+    passthrough-ingressgateway:
+      enabled: false
+  gateways:
+    passthrough:
+      enabled: false
+
+istioOperator:
+  enabled: true
+
 monitoring:
   enabled: true
+
 addons:
   monitoring:
     enabled: true
@@ -102,7 +115,7 @@ addons:
     enabled: true
     git:
       tag: null
-      branch: "your-development-branch-name"
+      branch: "renovate/ironbank"
     values:
       istio:
         enabled: true
@@ -110,6 +123,10 @@ addons:
           enabled: true
           monitoring:
             enabled: true
+      #        mtls:
+      #          # -- STRICT = Allow only mutual TLS traffic,
+      #          # PERMISSIVE = Allow both plain text and mutual TLS traffic
+      #          mode: STRICT
       monitoring:
         enabled: true
       metrics:
