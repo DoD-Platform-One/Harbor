@@ -1,8 +1,24 @@
+global:
+  security:
+    allowInsecureImages: true
+  redis:
+    password: "Harbor1234"
+postgresql: 
+  enabled: true
+  global: 
+    security: 
+      allowInsecureImages: true
+
+redis:
+  type: external
+  external:
+    addr: "harbor-redis-master:6379"
+    password: "Harbor1234"
 expose:
   type: clusterIP
   tls:
     enabled: false
-externalURL: http://harbor-core:80
+externalURL: http://harbor:80
 nginx:
   replicas: 2
 portal:
@@ -24,8 +40,6 @@ trivy:
       memory: 200Mi
 #database:
 #  internal:
-#postgresql:
-#redis:
 #exporter:
 bbtests:
   enabled: true
@@ -49,4 +63,3 @@ bbtests:
 istio:
   hardened:
     enabled: true
-
