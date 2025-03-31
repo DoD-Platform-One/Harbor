@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.16.2-bb.3] - 2025-03-26
+
+### Changed
+
+- Enabled dynamic network policy for istio
+
 ## [1.16.2-bb.2] - 2025-01-27
 
 ### Changed
