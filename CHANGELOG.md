@@ -3,6 +3,13 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
+## [1.16.2-bb.4] - 2025-04-02
+
+### Changed
+
+- redis 20.6.0-bb.2 -> 20.6.2-bb.2
+- Updated registry1.dso.mil/ironbank/opensource/nginx/nginx (source) patch 1.27.3 -> 1.27.4
+- Using latest OCI chart version of registry-1.docker.io/bitnamicharts/postgresql:16.6.0
 
 ## [1.16.2-bb.3] - 2025-03-26
 
