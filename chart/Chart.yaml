@@ -57,7 +57,7 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.12.2
     - name: postgresql
       condition: postgresql.enabled
-      image: registry1.dso.mil/ironbank/opensource/postgres/postgresql:17.4
+      image: registry1.dso.mil/ironbank/opensource/postgres/postgresql:16.6
     - name: redis
       condition: redis-bb.enabled
       image: registry1.dso.mil/ironbank/bitnami/redis:7.4.2
