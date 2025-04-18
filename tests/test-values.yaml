@@ -1,51 +1,35 @@
-expose:
-  type: clusterIP
-  tls:
+#########################
+# Disable Core Packages #
+#########################
+monitoring:
+  enabled: false
+grafana:
+  enabled: false
+neuvector:
+  enabled: false
+loki:
+  enabled: false
+promtail:
+  enabled: false
+tempo:
+  enabled: false
+kyvernoReporter:
+  enabled: false
+kiali:
+  enabled: false
+addons:
+  minioOperator:
     enabled: false
-externalURL: http://harbor:80
-nginx:
-  replicas: 2
-portal:
-  replicas: 2
-core:
-  replicas: 2
-  secretName: "ci-only"
-#jobservice:
-#registry:
-#  registry:
-#  controller:
-trivy:
-  resources:
-    requests:
-      cpu: 80m
-      memory: 200Mi
-    limits:
-      cpu: 80m
-      memory: 200Mi
-#database:
-#  internal:
-#postgresql:
-#redis:
-#exporter:
-bbtests:
-  enabled: true
-  cypress:
-    resources:
-        requests:
-          cpu: 2
-          memory: 2Gi
-        limits:
-          cpu: 4
-          memory: 4Gi
-  istio:
-    sidecar:
-      resources:
-        cpu:
-          requests: 100m
-          limits: 2000m
-        memory:
-          requests: 512Mi
-          limits: 2048Mi
-istio:
-  hardened:
+########################
+# Required for package #
+########################
+  harbor:
     enabled: true
+kyvernoPolicies:
+  values:
+    bbtests:
+      enabled: false
+kyverno:
+  values:
+    bbtests:
+      enabled: false
