@@ -5,7 +5,7 @@ metadata:
 upstream:
   type: git
   git:
-    commit: ebbf6bb5171dc45ce528b9baba8fec86ae9e79b5
+    commit: 544be23008c49fb72a3a9ad667d9285bfcddbe4e
     repo: https://github.com/goharbor/harbor-helm
     directory: /
-    ref: v1.16.2
+    ref: 1.17.0
