@@ -3,6 +3,20 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
+## [1.17.0-bb.0] (2025-05-02)
+### Changed
+- gluon 0.5.14 -> 0.5.17
+- postgresql 16.6.0 -> 16.6.6
+- registry1.dso.mil/ironbank/bitnami/redis 7.4.2 -> 7.4.3
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-core v2.12.2 -> v2.13.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter v2.12.2 -> v2.13.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice v2.12.2 -> v2.13.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal v2.12.2 -> v2.13.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl v2.12.2 -> v2.13.0
+- registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter v2.12.2 -> v2.13.0
+- registry1.dso.mil/ironbank/opensource/nginx/nginx 1.27.4 -> 1.27.5
+- registry1.dso.mil/ironbank/opensource/postgres/postgresql 16.6 -> 17.4
+
 ## [1.16.2-bb.4] - 2025-04-02
 
 ### Changed

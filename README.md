@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.16.2-bb.4](https://img.shields.io/badge/Version-1.16.2--bb.4-informational?style=flat-square) ![AppVersion: 2.12.2](https://img.shields.io/badge/AppVersion-2.12.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 1.17.0-bb.0](https://img.shields.io/badge/Version-1.17.0--bb.0-informational?style=flat-square) ![AppVersion: 2.13.0](https://img.shields.io/badge/AppVersion-2.13.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -401,7 +401,7 @@ helm install harbor chart/
 | database.maxOpenConns | string | `"1000"` |  |
 | database.type | string | `"external"` |  |
 | database.internal.image.repository | string | `"goharbor/harbor-db"` |  |
-| database.internal.image.tag | string | `"v2.12.2"` |  |
+| database.internal.image.tag | string | `"v2.13.0"` |  |
 | database.internal.serviceAccountName | string | `""` |  |
 | database.internal.automountServiceAccountToken | bool | `false` |  |
 | database.internal.password | string | `"changeit"` |  |
@@ -440,7 +440,7 @@ helm install harbor chart/
 | postgresql.global.security.allowInsecureImages | bool | `true` |  |
 | postgresql.image.registry | string | `"registry1.dso.mil"` |  |
 | postgresql.image.repository | string | `"ironbank/opensource/postgres/postgresql"` |  |
-| postgresql.image.tag | string | `"17.4"` |  |
+| postgresql.image.tag | string | `"16.6"` |  |
 | postgresql.image.debug | bool | `true` |  |
 | postgresql.securityContext.enabled | bool | `true` |  |
 | postgresql.securityContext.fsGroup | int | `1001` |  |
@@ -489,6 +489,7 @@ helm install harbor chart/
 | redis.internal.trivyAdapterIndex | string | `"5"` |  |
 | redis.external.addr | string | `"harbor-redis-bb-master:6379"` |  |
 | redis.external.sentinelMasterSet | string | `""` |  |
+| redis.external.tlsOptions.enable | bool | `false` |  |
 | redis.external.coreDatabaseIndex | string | `"0"` |  |
 | redis.external.jobserviceDatabaseIndex | string | `"1"` |  |
 | redis.external.registryDatabaseIndex | string | `"2"` |  |
