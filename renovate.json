@@ -7,7 +7,7 @@
     "dependencyDashboardTitle": "Renovate: Upgrade Harbor Package Dependencies",
     "draftPR": true,
     "enabledManagers": [
-        "custom.regex",
+        "regex",
         "helmv3"
     ],
     "ignorePaths": [
@@ -28,20 +28,19 @@
             ]
         }
     ],
-    "customManagers": [
+    "regexManagers": [
         {
-            "customType": "regex",
             "fileMatch": [
                 "^chart/Chart\\.yaml$"
             ],
             "matchStrings": [
-                "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)"
+                "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)",
+                "- Harbor Core:\\s+(?<currentValue>.+)"
             ],
             "depNameTemplate": "registry1.dso.mil/ironbank/opensource/goharbor/harbor-core",
             "datasourceTemplate": "docker"
         },
         {
-            "customType": "regex",
             "fileMatch": [
                 "^chart/Chart\\.yaml$"
             ],
@@ -51,12 +50,22 @@
             "datasourceTemplate": "docker"
         },
         {
-            "customType": "regex",
             "fileMatch": [
                 "^chart/values\\.yaml$"
             ],
             "matchStrings": [
-                "image:[^\\S\\r\\n]+(?<depName>.+)\\s+tag:[^\\S\\r\\n]+(?<currentValue>[\\d\\.]+)"
+              "repository:.(?<depName>.+)\\s+tag:\\s+(?<currentValue>.+)",
+              "repository:.(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
+            ],
+            "datasourceTemplate": "docker"
+        },
+        {
+            "customType": "regex",
+            "fileMatch": [
+                "^tests/images\\.txt$"
+            ],
+            "matchStrings": [
+                "s*(?<depName>.+):(?<currentValue>.+)"
             ],
             "datasourceTemplate": "docker"
         }
