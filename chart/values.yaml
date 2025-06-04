@@ -493,7 +493,7 @@ containerSecurityContext:
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: 1.27.4
+    tag: 1.27.5
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -529,7 +529,7 @@ nginx:
 portal:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-    tag: v2.12.2
+    tag: v2.13.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -574,7 +574,7 @@ portal:
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-    tag: v2.12.2
+    tag: v2.13.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -668,7 +668,7 @@ core:
 jobservice:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-    tag: v2.12.2
+    tag: v2.13.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -736,7 +736,7 @@ registry:
   registry:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-      tag: v2.12.2
+      tag: v2.13.1
       pullSecrets:
       - private-registry
     resources:
@@ -750,7 +750,7 @@ registry:
   controller:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-      tag: v2.12.2
+      tag: v2.13.1
       pullSecrets:
       - private-registry
     resources:
@@ -840,7 +840,7 @@ trivy:
     # repository the repository for Trivy adapter image
     repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
     # tag the tag for Trivy adapter image
-    tag: v2.12.2
+    tag: v2.13.1
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -900,7 +900,7 @@ trivy:
   # Anonymous downloads from GitHub are subject to the limit of 60 requests per hour. Normally such rate limit is enough
   # for production operations. If, for any reason, it's not enough, you could increase the rate limit to 5000
   # requests per hour by specifying the GitHub access token. For more details on GitHub rate limiting please consult
-  # https://v2.13.0eloper.github.com/v3/#rate-limiting
+  # https://developer.github.com/v3/#rate-limiting
   #
   # You can create a GitHub token by following the instructions in
   # https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line
@@ -937,7 +937,7 @@ database:
   internal:
     image:
       repository: goharbor/harbor-db
-      tag: v2.13.0
+      tag: v2.13.1
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
@@ -1033,7 +1033,7 @@ postgresql:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/postgres/postgresql
-    tag: "16.6"
+    tag: "17.5"
     debug: true
   # used in:
   # deps/postgresql/templates/statefulset-readreplicas.yaml
@@ -1114,7 +1114,7 @@ redis:
   internal:
     image:
       repository: goharbor/redis-photon
-      tag: v2.12.2
+      tag: v2.13.1
       pullSecrets:
       - private-registry
     # set the service account to be used, default if left empty
@@ -1194,7 +1194,7 @@ redis-bb:
   image:
     registry: registry1.dso.mil
     repository: ironbank/bitnami/redis
-    tag: 7.4.2
+    tag: 8.0.2
     pullSecrets:
       - private-registry
   networkPolicies:
@@ -1225,7 +1225,7 @@ redis-bb:
 exporter:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-    tag: v2.12.2
+    tag: v2.13.1
     pullSecrets:
     - private-registry
   serviceAccountName: ""
