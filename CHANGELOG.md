@@ -3,6 +3,13 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
+## [1.17.1-bb.1] (2025-06-20)
+### Changed
+
+- postgresql 16.7.8 -> 16.7.13
+- registry1.dso.mil/ironbank/opensource/nginx/nginx 1.27.5 -> 1.28.0
+
+
 ## [1.17.1-bb.0] (2025-05-31)
 ### Changed
 

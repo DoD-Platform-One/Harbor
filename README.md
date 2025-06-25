@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.17.1-bb.0](https://img.shields.io/badge/Version-1.17.1--bb.0-informational?style=flat-square) ![AppVersion: 2.13.1](https://img.shields.io/badge/AppVersion-2.13.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 1.17.1-bb.1](https://img.shields.io/badge/Version-1.17.1--bb.1-informational?style=flat-square) ![AppVersion: 2.13.1](https://img.shields.io/badge/AppVersion-2.13.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -211,7 +211,7 @@ helm install harbor chart/
 | containerSecurityContext.runAsGroup | int | `1000` |  |
 | containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | nginx.image.repository | string | `"registry1.dso.mil/ironbank/opensource/nginx/nginx"` |  |
-| nginx.image.tag | string | `"1.27.5"` |  |
+| nginx.image.tag | string | `"1.28.0"` |  |
 | nginx.image.pullSecrets[0] | string | `"private-registry"` |  |
 | nginx.serviceAccountName | string | `""` |  |
 | nginx.automountServiceAccountToken | bool | `false` |  |

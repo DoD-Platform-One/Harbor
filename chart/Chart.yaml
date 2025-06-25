@@ -1,6 +1,6 @@
 apiVersion: v2
 name: harbor
-version: 1.17.1-bb.0
+version: 1.17.1-bb.1
 appVersion: 2.13.1
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:
@@ -24,7 +24,7 @@ maintainers:
 engine: gotpl
 dependencies:
   - name: postgresql
-    version: 16.7.8
+    version: 16.7.13
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: redis
@@ -41,7 +41,7 @@ annotations:
     - Harbor Core: 2.13.1
   helm.sh/images: |
     - name: nginx
-      image: registry1.dso.mil/ironbank/opensource/nginx/nginx:1.27.5
+      image: registry1.dso.mil/ironbank/opensource/nginx/nginx:1.28.0
     - name: harbor-portal
       image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.13.1
     - name: harbor-core
