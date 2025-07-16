@@ -493,7 +493,7 @@ containerSecurityContext:
 nginx:
   image:
     repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-    tag: 1.28.0
+    tag: 1.29.0
     pullSecrets:
     - private-registry
   # set the service account to be used, default if left empty
@@ -1194,7 +1194,7 @@ redis-bb:
   image:
     registry: registry1.dso.mil
     repository: ironbank/bitnami/redis
-    tag: 8.0.2
+    tag: 8.0.3
     pullSecrets:
       - private-registry
   networkPolicies:

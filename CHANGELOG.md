@@ -3,6 +3,14 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
+## [1.17.1-bb.2] (2025-07-16)
+### Changed
+
+- gluon 0.6.2 -> 0.6.3
+- registry1.dso.mil/ironbank/bitnami/redis 8.0.2 -> 8.0.3
+- postgresql 16.7.13 -> 16.7.15
+- registry1.dso.mil/ironbank/opensource/nginx/nginx 1.28.0 -> 1.29.0
+
 ## [1.17.1-bb.1] (2025-06-20)
 ### Changed
 
