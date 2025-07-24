@@ -3,6 +3,12 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
+## [1.17.1-bb.3] (2025-07-24)
+### Changed
+
+- gluon 0.6.3 -> 0.7.0
+- postgresql 16.7.19 -> 16.7.21
+
 ## [1.17.1-bb.2] (2025-07-16)
 ### Changed
 
