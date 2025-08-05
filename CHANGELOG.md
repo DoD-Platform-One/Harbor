@@ -3,6 +3,11 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
+## [1.17.1-bb.4] (2025-07-24)
+### Changed
+
+- Harbor chart conversion to passthrough
+
 ## [1.17.1-bb.3] (2025-07-24)
 ### Changed
 

@@ -12,8 +12,8 @@ spec:
   {{- end }}
   location: MESH_INTERNAL
   ports:
-  - name: {{ ternary "https-registry" "http-registry" .Values.internalTLS.enabled }}
-    number: {{ template "harbor.registry.containerPort" . }}
+  - name: {{ ternary "https-registry" "http-registry" .Values.upstream.internalTLS.enabled }}
+    number: {{ template "harbor.BBregistry.containerPort" . }}
   - name: https-harbor
     number: 443
   resolution: NONE
