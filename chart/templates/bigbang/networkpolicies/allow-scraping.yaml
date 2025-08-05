@@ -14,7 +14,7 @@ spec:
           matchLabels:
             app: prometheus
       ports:
-      - port: {{ template "harbor.core.servicePort" . }}
+      - port: {{ template "harbor.BBcore.servicePort" . }}
   podSelector:
     matchLabels:
       app: harbor

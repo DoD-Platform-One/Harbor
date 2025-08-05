@@ -16,19 +16,17 @@ Check the [upstream changelog](https://github.com/goharbor/harbor/releases) and 
 
 Find the latest version of the `harbor` image that matches the latest version in IronBank that Renovate has identified from here: <https://github.com/goharbor/harbor-helm>
 
-Run a KPT update against the main chart folder:
+The below details the steps required to update to a new version of the Harbor package.
 
-```shell
-# To find the chart version for the command below:
-# - Browse to the [upstream](https://github.com/goharbor/harbor-helm).
-# - Click on the drop-down menu on the upper left, then on Tags.
-# - Scroll through the tags until you get to the Helm chart version tags (e.g. v1.13.0, v1.12.4, etc.).
-# - Starting with the most recent Helm chart version tag, open the Chart.yaml for the tag. If the appVersion value corresponds to the version of Loki that Renovate detected for an upgrade, this is the correct version. So, for example, if you will be updating to chart
-# version v1.13.0, your kpt command would be:
+1. Renovate may have already made changes in the development branch. If that is the case then just verify that the changes are correct as you go through these steps.
+1. Discover the chart version tag that matches with the application version from the [upstream chart](https://github.com/goharbor/harbor-helm) by looking at the Chart.yaml. Do diff between old and new release tags to become aware of any significant chart changes. A graphical diff tool such as [Meld](https://meldmerge.org/) is useful. You can see where the current chart version and available versions are at under the `sources` section in Chart.yaml.`
+1. Read the /CHANGELOG.md from the release tag from upstream [upstream chart](https://github.com/goharbor/harbor-helm). Also, be aware of changes in the Gitlab chart that could affect the Harbor chart. Take note of any special upgrade instructions, if any.
+1. If Renovate has not created a development branch and merge request then manually create them.
+1. Merge/Sync the new helm chart with the existing Harbor package code. A graphical diff tool like [Meld](https://meldmerge.org/) is useful. Reference the "Modifications made to upstream chart" section below. Be careful not to overwrite Big Bang Package changes that need to be kept. Note that some files will have combinations of changes that you will overwrite and changes that you keep. Stay alert. The hardest file to update is the ```/chart/values.yaml``` because many defaults are changed.
+1. In `chart/Chart.yaml` update harbor, postgresql, redis and gluon to the latest version and run `helm dependency update chart` from the top level of the repo to package it up.
+1. In ```/chart/values.yaml``` update all the harbor components (nginx, portal, core, jobservice, registry, controller, trivy, database, redis and exporter), redis-bb and postgresql image tags to the new version.
+1. Update `chart/Chart.yaml` to the appropriate versions. The annotation version should match the ```appVersion```.
 
-kpt pkg update chart@1.13.0 --strategy alpha-git-patch
-
-kpt pkg update chart@${chart.version} --strategy alpha-git-patch
 ```
 
 ### Update dependencies in chart.yml
@@ -43,14 +41,18 @@ helm dependency update ./chart
 
 - update harbor `version` and `appVersion`
 - Ensure Big Bang version suffix is appended to chart version
-- Ensure dependencies gluon, postgresql, and redis are present and up to date
+- Ensure dependencies harbor, gluon, postgresql, and redis are present and up to date
 
 ```yaml
 version: $VERSION-bb.0
 dependencies:
+  - name: harbor
+    version: $HARBOR_VERSION
+    repository: https://helm.goharbor.io
+    alias: upstream
   - name: postgresql
     version: $POSTGRESQL_VERSION
-    repository: file://./deps/postgresql
+    repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: redis
     version: $REDIS_VERSION
@@ -67,8 +69,8 @@ annotations:
 
 ```chart/values.yaml```
 
-- Verify that Renovate updated the image tags in `chart/values.yaml`
-- For example, if Renovate wants to update harbor-core to version v2.9.0, you should see:
+- In ```/chart/values.yaml``` verify all the harbor components (nginx, portal, core, jobservice, registry, controller, trivy, database, redis and exporter), redis-bb and postgresql image tags to the new version.
+- For example, if harbor-core is updated to version v2.9.0, you should update:
 
 ```
 core:
@@ -117,6 +119,11 @@ addons:
       tag: null
       branch: "renovate/ironbank"
     values:
+      upstream:
+        metrics:
+          enabled: true
+          serviceMonitor:
+            enabled: true
       istio:
         enabled: true
         hardened:
@@ -129,10 +136,6 @@ addons:
       #          mode: STRICT
       monitoring:
         enabled: true
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
       networkPolicies:
         enabled: true
 ```
