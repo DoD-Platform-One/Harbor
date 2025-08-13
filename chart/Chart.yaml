@@ -1,7 +1,7 @@
 apiVersion: v2
 name: harbor
-version: 1.17.1-bb.4
-appVersion: 2.13.1
+version: 1.17.1-bb.5
+appVersion: 2.13.2
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:
 - docker
@@ -42,25 +42,25 @@ dependencies:
 annotations:
   bigbang.dev/maintenanceTrack: bb_integrated
   bigbang.dev/applicationVersions: |
-    - Harbor Core: 2.13.1
+    - Harbor Core: 2.13.2
   helm.sh/images: |
     - name: nginx
       image: registry1.dso.mil/ironbank/opensource/nginx/nginx:1.29.0
     - name: harbor-portal
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.13.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.13.2
     - name: harbor-core
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.13.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.13.2
     - name: harbor-jobservice
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.13.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.13.2
     - name: registry
-      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.13.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.13.2
     - name: harbor-registryctl
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.13.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.13.2
     - name: harbor-exporter
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.13.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.13.2
     - name: trivy
       condition: trivy.enabled
-      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.13.1
+      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.13.2
     - name: postgresql
       condition: postgresql.enabled
       image: registry1.dso.mil/ironbank/opensource/postgres/postgresql:17.5

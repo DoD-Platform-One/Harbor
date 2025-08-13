@@ -3,6 +3,17 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
+## [1.17.1-bb.5] (2025-08-06)
+### Changed
+
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-core v2.13.1 -> v2.13.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter v2.13.1 -> v2.13.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice v2.13.1 -> v2.13.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal v2.13.1 -> v2.13.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl v2.13.1 -> v2.13.2
+- registry1.dso.mil/ironbank/opensource/goharbor/registry v2.13.1 -> v2.13.2
+- registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter v2.13.1 -> v2.13.2
+
 ## [1.17.1-bb.4] (2025-07-24)
 ### Changed
 
