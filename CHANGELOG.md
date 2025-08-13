@@ -3,6 +3,12 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
+
+## [1.17.2-bb.0] (2025-08-13)
+### Changed
+
+- Updated Harbor chart version 1.17.1 -> 1.17.2
+
 ## [1.17.1-bb.5] (2025-08-06)
 ### Changed
 

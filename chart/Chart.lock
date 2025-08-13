@@ -1,7 +1,7 @@
 dependencies:
 - name: harbor
   repository: https://helm.goharbor.io
-  version: 1.17.1
+  version: 1.17.2
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 16.7.21
@@ -11,5 +11,5 @@ dependencies:
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
   version: 0.7.0
-digest: sha256:238c863edc5c48eeb433e26df4b80a9864d89a9c9e1b03ff40090b60e7e9aa7f
-generated: "2025-07-25T10:48:32.308442-05:00"
+digest: sha256:429d928aea0171bc4e4cd017c1a8326ea65d1a42b6f8d2ede0d19b14df3cef4a
+generated: "2025-08-06T18:26:05.749417499Z"
