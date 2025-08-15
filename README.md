@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.17.2-bb.0](https://img.shields.io/badge/Version-1.17.2--bb.0-informational?style=flat-square) ![AppVersion: 2.13.2](https://img.shields.io/badge/AppVersion-2.13.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 1.17.2-bb.1](https://img.shields.io/badge/Version-1.17.2--bb.1-informational?style=flat-square) ![AppVersion: 2.13.2](https://img.shields.io/badge/AppVersion-2.13.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -132,7 +132,7 @@ helm install harbor chart/
 | redis-bb.istio.redis.enabled | bool | `false` |  |
 | redis-bb.image.registry | string | `"registry1.dso.mil"` |  |
 | redis-bb.image.repository | string | `"ironbank/bitnami/redis"` |  |
-| redis-bb.image.tag | string | `"8.0.3"` |  |
+| redis-bb.image.tag | string | `"8.2.0"` |  |
 | redis-bb.image.pullSecrets[0] | string | `"private-registry"` |  |
 | redis-bb.networkPolicies.enabled | bool | `true` |  |
 | redis-bb.networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
@@ -151,7 +151,7 @@ helm install harbor chart/
 | upstream.containerSecurityContext.runAsGroup | int | `1000` |  |
 | upstream.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | upstream.nginx.image.repository | string | `"registry1.dso.mil/ironbank/opensource/nginx/nginx"` |  |
-| upstream.nginx.image.tag | string | `"1.29.0"` |  |
+| upstream.nginx.image.tag | string | `"1.29.1"` |  |
 | upstream.nginx.image.pullSecrets[0] | string | `"private-registry"` |  |
 | upstream.nginx.serviceAccountName | string | `""` |  |
 | upstream.nginx.automountServiceAccountToken | bool | `false` |  |
