@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.17.2-bb.2] (2025-08-21)
+### Changed
+
+- gluon 0.7.0 -> 0.8.2
+- registry1.dso.mil/ironbank/opensource/postgres/postgresql 17.5 -> 17.6
+
+
 ## [1.17.2-bb.1] (2025-08-15)
 ### Changed
 
