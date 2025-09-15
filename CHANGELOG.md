@@ -4,6 +4,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.17.2-bb.3] (2025-09-11)
+### Changed
+
+- gluon 0.8.2 -> 0.9.0
+- registry1.dso.mil/ironbank/bitnami/redis 8.2.0 -> 8.2.1
+- ironbank/bitnami/redis 8.2.0 -> 8.2.1
+- postgresql 16.7.26 -> 16.7.27
+
+
 ## [1.17.2-bb.2] (2025-08-21)
 ### Changed
 
