@@ -27,6 +27,13 @@ kyvernoPolicies:
   values:
     bbtests:
       enabled: false
+    policies:
+      update-automountserviceaccounttokens:
+        namespaces:
+          - namespace: harbor
+            pods:
+              allow:
+              - harbor-script-test
 kyverno:
   values:
     bbtests:
