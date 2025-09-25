@@ -19,13 +19,17 @@
     ],
     "packageRules": [
         {
-            "matchDatasources": [
-                "docker"
+            "matchManagers": [
+                "custom.regex",
+                "helmv3"
             ],
-            "groupName": "Ironbank",
-            "registryUrls": [
-                "https://registry1.dso.mil"
-            ]
+            "matchDatasources": [
+                "docker",
+                "helm"
+            ],
+            "groupName": "charts & images",
+            "separateMajorMinor": false,
+            "separateMinorPatch": false
         }
     ],
     "customManagers": [
