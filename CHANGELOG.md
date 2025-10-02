@@ -4,6 +4,22 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.0-bb.0] (2025-09-29)
+### Changed
+
+- Updated Harbor chart version 1.17.2 -> 1.18.0
+- gluon 0.9.0 -> 0.9.2
+- goharbor/redis-photon v2.13.2 -> v2.14.0
+- goharbor/harbor-db v2.13.2 -> v2.14.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-core v2.13.2 -> v2.14.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter v2.13.2 -> v2.14.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice v2.13.2 -> v2.14.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal v2.13.2 -> v2.14.0
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl v2.13.2-> v2.14.0
+- registry1.dso.mil/ironbank/opensource/goharbor/registry v2.13.2 -> v2.14.0
+- registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter v2.13.2 -> v2.14.0
+
+
 ## [1.17.2-bb.3] (2025-09-11)
 ### Changed
 
