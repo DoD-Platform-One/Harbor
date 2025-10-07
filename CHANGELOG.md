@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.0-bb.1] (2025-10-07)
+### Changed
+
+- gluon 0.9.2 -> 0.9.3
+- postgresql 16.7.27 -> 18.0.7
+
 ## [1.18.0-bb.0] (2025-09-29)
 ### Changed
 
