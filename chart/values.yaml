@@ -187,47 +187,71 @@ postgresql:
   ## Additional deployment labels
   podLabels: {}
 
-## redis-bb dependency values
+# -- BigBang HA Redis Passthrough
 redis-bb:
-  # -- Enable BigBang provided redis sub-chart. Disable if using external cloud elasticache or redis endpoint and fill in `redis.external.addr` in above section
   enabled: true
-  auth:
-    enabled: false
-  istio:
-    redis:
-      enabled: false
-  image:
-    registry: registry1.dso.mil
-    repository: ironbank/bitnami/redis
-    tag: 8.2.1
-    pullSecrets:
-      - private-registry
   networkPolicies:
     enabled: true
-    controlPlaneCidr: 0.0.0.0/0
-  master:
-    containerSecurityContext:
-      enabled: true
-      runAsUser: 1000
-      runAsGroup: 1000
-      runAsNonRoot: true
-  replica:
-    replicaCount: 0
-    containerSecurityContext:
-      enabled: true
-      runAsUser: 1000
-      runAsGroup: 1000
-      runAsNonRoot: true
-  commonConfiguration: |-
-    # Enable AOF https://redis.io/topics/persistence#append-only-file
-    appendonly no
-    maxmemory 200mb
-    maxmemory-policy allkeys-lru
-    save ""
-  ## Additional deployment labels
-  podLabels: {}
 
-
+  # pass throughs to BigBang's redis
+  # https://repo1.dso.mil/platform-one/big-bang/apps/sandbox/redis/-/blob/main/chart/values.yaml
+  upstream:
+    auth:
+      enabled: false
+    istio:
+      redis:
+        enabled: false
+    image:
+      tag: 8.2.2
+      pullSecrets:
+      - private-registry
+    master:
+      resources:
+        requests:
+          memory: 256Mi
+          cpu: 100m
+        limits:
+          memory: 256Mi
+          cpu: 100m
+      containerSecurityContext:
+        enabled: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        runAsNonRoot: true
+        capabilities:
+          drop:
+          - ALL
+    replica:
+      resources:
+        requests:
+          memory: 256Mi
+          cpu: 100m
+        limits:
+          memory: 256Mi
+          cpu: 100m
+      containerSecurityContext:
+        enabled: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        runAsNonRoot: true
+        capabilities:
+          drop:
+          - ALL
+      readinessProbe:
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        timeoutSeconds: 30
+        successThreshold: 1
+        failureThreshold: 3
+        tcpSocket:
+          port: 6379
+    commonConfiguration: |-
+      # Enable AOF https://redis.io/topics/persistence#append-only-file
+      appendonly no
+      maxmemory 200mb
+      maxmemory-policy allkeys-lru
+      save ""
+     
 ## Harbor upstream values 
 upstream:
   # Use this set to assign a list of default pullSecrets
@@ -459,7 +483,7 @@ upstream:
       # support redis, redis+sentinel
       # addr for redis: <host_redis>:<port_redis>
       # addr for redis+sentinel: <host_sentinel1>:<port_sentinel1>,<host_sentinel2>:<port_sentinel2>,<host_sentinel3>:<port_sentinel3>
-      addr: "harbor-redis-bb-master:6379"
+      addr: "redis-bb-master:6379"
 
   exporter:
     image:

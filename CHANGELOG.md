@@ -4,6 +4,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.0-bb.2] (2025-10-09)
+### Changed
+
+- redis 8.2.1 -> 8.2.2
+
 ## [1.18.0-bb.1] (2025-10-07)
 ### Changed
 
