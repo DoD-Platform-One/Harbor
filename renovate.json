@@ -6,6 +6,7 @@
     "dependencyDashboard": true,
     "dependencyDashboardTitle": "Renovate: Upgrade Harbor Package Dependencies",
     "draftPR": true,
+    "branchName": "renovate/ironbank",
     "enabledManagers": [
         "custom.regex",
         "helmv3"
@@ -27,7 +28,7 @@
                 "docker",
                 "helm"
             ],
-            "groupName": "charts & images",
+            "groupName": "Ironbank",
             "separateMajorMinor": false,
             "separateMinorPatch": false
         }
