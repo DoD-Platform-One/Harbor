@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.18.0-bb.2](https://img.shields.io/badge/Version-1.18.0--bb.2-informational?style=flat-square) ![AppVersion: 2.14.0](https://img.shields.io/badge/AppVersion-2.14.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 1.18.0-bb.3](https://img.shields.io/badge/Version-1.18.0--bb.3-informational?style=flat-square) ![AppVersion: 2.14.0](https://img.shields.io/badge/AppVersion-2.14.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -127,31 +127,12 @@ helm install harbor chart/
 | postgresql.externalDatabase.sslmode | string | `"disable"` |  |
 | postgresql.externalDatabase.coreDatabase | string | `""` |  |
 | postgresql.podLabels | object | `{}` |  |
-| redis-bb.enabled | bool | `true` | Enable BigBang provided redis sub-chart. Disable if using external cloud elasticache or redis endpoint and fill in `redis.external.addr` in above section |
-| redis-bb.auth.enabled | bool | `false` |  |
-| redis-bb.istio.redis.enabled | bool | `false` |  |
-| redis-bb.image.registry | string | `"registry1.dso.mil"` |  |
-| redis-bb.image.repository | string | `"ironbank/bitnami/redis"` |  |
-| redis-bb.image.tag | string | `"8.2.2"` |  |
-| redis-bb.image.pullSecrets[0] | string | `"private-registry"` |  |
-| redis-bb.networkPolicies.enabled | bool | `true` |  |
-| redis-bb.networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
-| redis-bb.master.containerSecurityContext.enabled | bool | `true` |  |
-| redis-bb.master.containerSecurityContext.runAsUser | int | `1000` |  |
-| redis-bb.master.containerSecurityContext.runAsGroup | int | `1000` |  |
-| redis-bb.master.containerSecurityContext.runAsNonRoot | bool | `true` |  |
-| redis-bb.replica.replicaCount | int | `0` |  |
-| redis-bb.replica.containerSecurityContext.enabled | bool | `true` |  |
-| redis-bb.replica.containerSecurityContext.runAsUser | int | `1000` |  |
-| redis-bb.replica.containerSecurityContext.runAsGroup | int | `1000` |  |
-| redis-bb.replica.containerSecurityContext.runAsNonRoot | bool | `true` |  |
-| redis-bb.commonConfiguration | string | `"# Enable AOF https://redis.io/topics/persistence#append-only-file\nappendonly no\nmaxmemory 200mb\nmaxmemory-policy allkeys-lru\nsave \"\""` |  |
-| redis-bb.podLabels | object | `{}` |  |
+| redis-bb | object | `{"enabled":true,"networkPolicies":{"enabled":true},"upstream":{"auth":{"enabled":false},"commonConfiguration":"# Enable AOF https://redis.io/topics/persistence#append-only-file\nappendonly no\nmaxmemory 200mb\nmaxmemory-policy allkeys-lru\nsave \"\"","image":{"pullSecrets":["private-registry"],"tag":"8.2.2"},"istio":{"redis":{"enabled":false}},"master":{"containerSecurityContext":{"capabilities":{"drop":["ALL"]},"enabled":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001},"resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}},"replica":{"containerSecurityContext":{"capabilities":{"drop":["ALL"]},"enabled":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001},"readinessProbe":{"failureThreshold":3,"initialDelaySeconds":5,"periodSeconds":10,"successThreshold":1,"tcpSocket":{"port":6379},"timeoutSeconds":30},"resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}}}}` | BigBang HA Redis Passthrough |
 | upstream.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | upstream.containerSecurityContext.runAsGroup | int | `1000` |  |
 | upstream.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | upstream.nginx.image.repository | string | `"registry1.dso.mil/ironbank/opensource/nginx/nginx"` |  |
-| upstream.nginx.image.tag | string | `"1.29.1"` |  |
+| upstream.nginx.image.tag | string | `"1.29.2"` |  |
 | upstream.nginx.image.pullSecrets[0] | string | `"private-registry"` |  |
 | upstream.nginx.serviceAccountName | string | `""` |  |
 | upstream.nginx.automountServiceAccountToken | bool | `false` |  |
@@ -256,7 +237,7 @@ helm install harbor chart/
 | upstream.redis.internal.resources.requests.cpu | string | `"100m"` |  |
 | upstream.redis.internal.resources.limits.memory | string | `"256Mi"` |  |
 | upstream.redis.internal.resources.limits.cpu | string | `"100m"` |  |
-| upstream.redis.external.addr | string | `"harbor-redis-bb-master:6379"` |  |
+| upstream.redis.external.addr | string | `"redis-bb-master:6379"` |  |
 | upstream.exporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter"` |  |
 | upstream.exporter.image.tag | string | `"v2.14.0"` |  |
 | upstream.exporter.image.pullSecrets[0] | string | `"private-registry"` |  |

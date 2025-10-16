@@ -4,12 +4,12 @@ dependencies:
   version: 1.18.0
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 18.0.7
+  version: 18.0.15
 - name: redis
   repository: oci://registry1.dso.mil/bigbang
   version: 22.0.7-bb.1
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
-  version: 0.9.3
-digest: sha256:fc417ed87078f6c3d3b3e768919ff2b9371ba1ab92518e27a9b5591f829a9c96
-generated: "2025-10-09T13:30:27.646091-05:00"
+  version: 0.9.5
+digest: sha256:90915a5f70c34f801b177a2f295d61d0e472f421d2e8b51f99d2d3d1ae5c3dfd
+generated: "2025-10-16T06:16:54.830021802Z"

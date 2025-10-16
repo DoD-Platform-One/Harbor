@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.0-bb.3] (2025-10-16)
+### Changed
+
+- gluon 0.9.3 -> 0.9.5
+- postgresql 18.0.7 -> 18.0.15
+- registry1.dso.mil/ironbank/opensource/nginx/nginx 1.29.1 -> 1.29.2
+
 ## [1.18.0-bb.2] (2025-10-09)
 ### Changed
 
