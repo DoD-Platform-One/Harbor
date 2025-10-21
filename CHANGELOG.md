@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.0-bb.4] (2025-10-21)
+### Changed
+
+- postgresql 18.0.15 -> 18.0.17
+
+
 ## [1.18.0-bb.3] (2025-10-16)
 ### Changed
 
