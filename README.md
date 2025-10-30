@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.18.0-bb.4](https://img.shields.io/badge/Version-1.18.0--bb.4-informational?style=flat-square) ![AppVersion: 2.14.0](https://img.shields.io/badge/AppVersion-2.14.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 1.18.0-bb.5](https://img.shields.io/badge/Version-1.18.0--bb.5-informational?style=flat-square) ![AppVersion: 2.14.0](https://img.shields.io/badge/AppVersion-2.14.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -24,7 +24,6 @@ annotations:
 
 ## Learn More
 
-- [Application Overview](docs/overview.md)
 - [Other Documentation](docs/)
 
 ## Pre-Requisites
@@ -98,7 +97,7 @@ helm install harbor chart/
 | postgresql.global.security.allowInsecureImages | bool | `true` |  |
 | postgresql.image.registry | string | `"registry1.dso.mil"` |  |
 | postgresql.image.repository | string | `"ironbank/opensource/postgres/postgresql"` |  |
-| postgresql.image.tag | string | `"17.6"` |  |
+| postgresql.image.tag | string | `"18.0"` |  |
 | postgresql.image.debug | bool | `true` |  |
 | postgresql.securityContext.enabled | bool | `true` |  |
 | postgresql.securityContext.fsGroup | int | `1001` |  |
