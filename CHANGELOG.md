@@ -7,6 +7,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [1.18.0-bb.4] (2025-10-21)
 ### Changed
 
+- postgresql 18.0.17 -> 18.1.1
+- registry1.dso.mil/ironbank/opensource/postgres/postgresql 17.6 -> 18.0
+- redis 22.0.7-bb.1 -> 23.1.1-bb.0
+
+## [1.18.0-bb.4] (2025-10-21)
+### Changed
+
 - postgresql 18.0.15 -> 18.0.17
 
 
