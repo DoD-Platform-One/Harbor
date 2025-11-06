@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.18.0-bb.5](https://img.shields.io/badge/Version-1.18.0--bb.5-informational?style=flat-square) ![AppVersion: 2.14.0](https://img.shields.io/badge/AppVersion-2.14.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 1.18.0-bb.6](https://img.shields.io/badge/Version-1.18.0--bb.6-informational?style=flat-square) ![AppVersion: 2.14.0](https://img.shields.io/badge/AppVersion-2.14.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -24,6 +24,7 @@ annotations:
 
 ## Learn More
 
+- [Application Overview](docs/overview.md)
 - [Other Documentation](docs/)
 
 ## Pre-Requisites
@@ -131,7 +132,7 @@ helm install harbor chart/
 | upstream.containerSecurityContext.runAsGroup | int | `1000` |  |
 | upstream.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | upstream.nginx.image.repository | string | `"registry1.dso.mil/ironbank/opensource/nginx/nginx"` |  |
-| upstream.nginx.image.tag | string | `"1.29.2"` |  |
+| upstream.nginx.image.tag | string | `"1.29.3"` |  |
 | upstream.nginx.image.pullSecrets[0] | string | `"private-registry"` |  |
 | upstream.nginx.serviceAccountName | string | `""` |  |
 | upstream.nginx.automountServiceAccountToken | bool | `false` |  |
