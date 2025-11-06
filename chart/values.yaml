@@ -277,7 +277,7 @@ upstream:
   nginx:
     image:
       repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-      tag: 1.29.2
+      tag: 1.29.3
       pullSecrets:
       - private-registry
     # set the service account to be used, default if left empty
