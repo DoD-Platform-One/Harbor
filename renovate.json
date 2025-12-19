@@ -62,9 +62,32 @@
                 "/^chart/values\\.yaml$/"
             ],
             "matchStrings": [
-                "repository:.(?<depName>.+)\\s+tag:\\s+(?<currentValue>.+)",
-                "repository:.(?<depName>.+)\\s+tag:\\s+\"(?<currentValue>.+)\""
+                "repository:\\s*(?<depName>registry1\\.dso\\.mil[^\\s]+)\\s+tag:\\s*(?<currentValue>[^\\s\"]+)",
+                "repository:\\s*(?<depName>registry1\\.dso\\.mil[^\\s]+)\\s+tag:\\s*\"(?<currentValue>[^\"]+)\"",
+                "repository:\\s*(?<depName>registry1\\.dso\\.mil[^\\s]+)\\s+#[^\\n]*\\n\\s+tag:\\s*(?<currentValue>[^\\s\"]+)"
             ],
+            "datasourceTemplate": "docker"
+        },
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^chart/values\\.yaml$/"
+            ],
+            "matchStrings": [
+                "registry:\\s*(?<registry>registry1\\.dso\\.mil)\\s+repository:\\s*(?<depName>[^\\s]+)\\s+tag:\\s*\"(?<currentValue>[^\"]+)\""
+            ],
+            "datasourceTemplate": "docker",
+            "depNameTemplate": "{{{registry}}}/{{{depName}}}"
+        },
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^chart/values\\.yaml$/"
+            ],
+            "matchStrings": [
+                "redis-bb:[\\s\\S]*?upstream:[\\s\\S]*?image:\\s+tag:\\s*(?<currentValue>[^\\s]+)"
+            ],
+            "depNameTemplate": "registry1.dso.mil/ironbank/opensource/redis/redis",
             "datasourceTemplate": "docker"
         },
         {

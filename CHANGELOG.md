@@ -4,6 +4,26 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.1-bb.0] (2025-12-08)
+### Changed
+
+- update harbor chart 1.18.0 -> 1.18.1
+- gluon 0.9.6 -> 0.9.7
+- goharbor/harbor-db v2.14.0 -> v2.14.1
+- goharbor/redis-photon v2.14.0 -> v2.14.1
+- postgresql 18.1.4 -> 18.1.13
+- redis 23.1.1-bb.0 -> 23.2.12-bb.0
+- registry1.dso.mil/ironbank/bitnami/redis 8.2.2 -> 8.2.3
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-core v2.14.0 -> v2.14.1
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter v2.14.0 -> v2.14.1
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice v2.14.0 -> v2.14.1
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal v2.14.0 -> v2.14.1
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl v2.14.0 -> v2.14.1
+- registry1.dso.mil/ironbank/opensource/goharbor/registry v2.14.0 -> v2.14.1
+- registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter v2.14.0 -> v2.14.1
+- registry1.dso.mil/ironbank/opensource/postgres/postgresql 18.0 -> 18.1
+- registry1.dso.mil/bigbang-ci/devops-tester:1.1.2 -> registry1.dso.mil/ironbank/big-bang/devops-tester:1.0
+
 ## [1.18.0-bb.6] (2025-11-06)
 ### Changed
 
