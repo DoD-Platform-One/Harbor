@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.18.0-bb.6](https://img.shields.io/badge/Version-1.18.0--bb.6-informational?style=flat-square) ![AppVersion: 2.14.0](https://img.shields.io/badge/AppVersion-2.14.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 1.18.1-bb.0](https://img.shields.io/badge/Version-1.18.1--bb.0-informational?style=flat-square) ![AppVersion: 2.14.1](https://img.shields.io/badge/AppVersion-2.14.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -76,7 +76,7 @@ helm install harbor chart/
 | bbtests.cypress.envs.cypress_user | string | `"admin"` |  |
 | bbtests.cypress.envs.cypress_harbor_password | string | `"Harbor12345"` |  |
 | bbtests.cypress.envs.cypress_project | string | `"bbcypress-test"` |  |
-| bbtests.scripts.image | string | `"registry1.dso.mil/bigbang-ci/devops-tester:1.1.2"` |  |
+| bbtests.scripts.image | string | `"registry1.dso.mil/ironbank/big-bang/devops-tester:1.0"` |  |
 | bbtests.scripts.additionalVolumes[0].name | string | `"docker-config"` |  |
 | bbtests.scripts.additionalVolumes[0].secret.secretName | string | `"private-registry"` |  |
 | bbtests.scripts.additionalVolumes[0].secret.items[0].key | string | `".dockerconfigjson"` |  |
@@ -98,7 +98,7 @@ helm install harbor chart/
 | postgresql.global.security.allowInsecureImages | bool | `true` |  |
 | postgresql.image.registry | string | `"registry1.dso.mil"` |  |
 | postgresql.image.repository | string | `"ironbank/opensource/postgres/postgresql"` |  |
-| postgresql.image.tag | string | `"18.0"` |  |
+| postgresql.image.tag | string | `"18.1"` |  |
 | postgresql.image.debug | bool | `true` |  |
 | postgresql.securityContext.enabled | bool | `true` |  |
 | postgresql.securityContext.fsGroup | int | `1001` |  |
@@ -127,7 +127,7 @@ helm install harbor chart/
 | postgresql.externalDatabase.sslmode | string | `"disable"` |  |
 | postgresql.externalDatabase.coreDatabase | string | `""` |  |
 | postgresql.podLabels | object | `{}` |  |
-| redis-bb | object | `{"enabled":true,"networkPolicies":{"enabled":true},"upstream":{"auth":{"enabled":false},"commonConfiguration":"# Enable AOF https://redis.io/topics/persistence#append-only-file\nappendonly no\nmaxmemory 200mb\nmaxmemory-policy allkeys-lru\nsave \"\"","image":{"pullSecrets":["private-registry"],"tag":"8.2.2"},"istio":{"redis":{"enabled":false}},"master":{"containerSecurityContext":{"capabilities":{"drop":["ALL"]},"enabled":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001},"resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}},"replica":{"containerSecurityContext":{"capabilities":{"drop":["ALL"]},"enabled":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001},"readinessProbe":{"failureThreshold":3,"initialDelaySeconds":5,"periodSeconds":10,"successThreshold":1,"tcpSocket":{"port":6379},"timeoutSeconds":30},"resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}}}}` | BigBang HA Redis Passthrough |
+| redis-bb | object | `{"enabled":true,"networkPolicies":{"enabled":true},"upstream":{"auth":{"enabled":false},"commonConfiguration":"# Enable AOF https://redis.io/topics/persistence#append-only-file\nappendonly no\nmaxmemory 200mb\nmaxmemory-policy allkeys-lru\nsave \"\"","image":{"pullSecrets":["private-registry"],"tag":"8.2.3"},"istio":{"redis":{"enabled":false}},"master":{"containerSecurityContext":{"capabilities":{"drop":["ALL"]},"enabled":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001},"resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}},"replica":{"containerSecurityContext":{"capabilities":{"drop":["ALL"]},"enabled":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001},"readinessProbe":{"failureThreshold":3,"initialDelaySeconds":5,"periodSeconds":10,"successThreshold":1,"tcpSocket":{"port":6379},"timeoutSeconds":30},"resources":{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}}}}` | BigBang HA Redis Passthrough |
 | upstream.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | upstream.containerSecurityContext.runAsGroup | int | `1000` |  |
 | upstream.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
@@ -143,7 +143,7 @@ helm install harbor chart/
 | upstream.nginx.resources.limits.cpu | string | `"100m"` |  |
 | upstream.nginx.resources.limits.memory | string | `"256Mi"` |  |
 | upstream.portal.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal"` |  |
-| upstream.portal.image.tag | string | `"v2.14.0"` |  |
+| upstream.portal.image.tag | string | `"v2.14.1"` |  |
 | upstream.portal.image.pullSecrets[0] | string | `"private-registry"` |  |
 | upstream.portal.serviceAccountName | string | `""` |  |
 | upstream.portal.automountServiceAccountToken | bool | `false` |  |
@@ -154,7 +154,7 @@ helm install harbor chart/
 | upstream.portal.resources.limits.cpu | string | `"100m"` |  |
 | upstream.portal.resources.limits.memory | string | `"256Mi"` |  |
 | upstream.core.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-core"` |  |
-| upstream.core.image.tag | string | `"v2.14.0"` |  |
+| upstream.core.image.tag | string | `"v2.14.1"` |  |
 | upstream.core.image.pullSecrets[0] | string | `"private-registry"` |  |
 | upstream.core.serviceAccountName | string | `""` |  |
 | upstream.core.automountServiceAccountToken | bool | `false` |  |
@@ -167,7 +167,7 @@ helm install harbor chart/
 | upstream.core.resources.limits.cpu | string | `"100m"` |  |
 | upstream.core.resources.limits.memory | string | `"256Mi"` |  |
 | upstream.jobservice.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice"` |  |
-| upstream.jobservice.image.tag | string | `"v2.14.0"` |  |
+| upstream.jobservice.image.tag | string | `"v2.14.1"` |  |
 | upstream.jobservice.image.pullSecrets[0] | string | `"private-registry"` |  |
 | upstream.jobservice.serviceAccountName | string | `""` |  |
 | upstream.jobservice.automountServiceAccountToken | bool | `false` |  |
@@ -178,7 +178,7 @@ helm install harbor chart/
 | upstream.jobservice.resources.limits.cpu | string | `"100m"` |  |
 | upstream.jobservice.resources.limits.memory | string | `"256Mi"` |  |
 | upstream.registry.registry.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/registry"` |  |
-| upstream.registry.registry.image.tag | string | `"v2.14.0"` |  |
+| upstream.registry.registry.image.tag | string | `"v2.14.1"` |  |
 | upstream.registry.registry.image.pullSecrets[0] | string | `"private-registry"` |  |
 | upstream.registry.registry.resources.requests.memory | string | `"256Mi"` |  |
 | upstream.registry.registry.resources.requests.cpu | string | `"100m"` |  |
@@ -186,7 +186,7 @@ helm install harbor chart/
 | upstream.registry.registry.resources.limits.memory | string | `"256Mi"` |  |
 | upstream.registry.registry.extraEnvVars | list | `[]` |  |
 | upstream.registry.controller.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl"` |  |
-| upstream.registry.controller.image.tag | string | `"v2.14.0"` |  |
+| upstream.registry.controller.image.tag | string | `"v2.14.1"` |  |
 | upstream.registry.controller.image.pullSecrets[0] | string | `"private-registry"` |  |
 | upstream.registry.controller.resources.requests.memory | string | `"256Mi"` |  |
 | upstream.registry.controller.resources.requests.cpu | string | `"100m"` |  |
@@ -194,7 +194,7 @@ helm install harbor chart/
 | upstream.registry.controller.resources.limits.memory | string | `"256Mi"` |  |
 | upstream.trivy.enabled | bool | `true` |  |
 | upstream.trivy.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter"` |  |
-| upstream.trivy.image.tag | string | `"v2.14.0"` |  |
+| upstream.trivy.image.tag | string | `"v2.14.1"` |  |
 | upstream.trivy.image.pullSecrets[0] | string | `"private-registry"` |  |
 | upstream.trivy.serviceAccountName | string | `""` |  |
 | upstream.trivy.automountServiceAccountToken | bool | `false` |  |
@@ -207,7 +207,7 @@ helm install harbor chart/
 | upstream.database.maxOpenConns | string | `"1000"` |  |
 | upstream.database.type | string | `"external"` |  |
 | upstream.database.internal.image.repository | string | `"goharbor/harbor-db"` |  |
-| upstream.database.internal.image.tag | string | `"v2.14.0"` |  |
+| upstream.database.internal.image.tag | string | `"v2.14.1"` |  |
 | upstream.database.internal.serviceAccountName | string | `""` |  |
 | upstream.database.internal.automountServiceAccountToken | bool | `false` |  |
 | upstream.database.internal.password | string | `"changeit"` |  |
@@ -229,7 +229,7 @@ helm install harbor chart/
 | upstream.database.external.coreDatabase | string | `"harborUser"` |  |
 | upstream.redis.type | string | `"external"` |  |
 | upstream.redis.internal.image.repository | string | `"goharbor/redis-photon"` |  |
-| upstream.redis.internal.image.tag | string | `"v2.14.0"` |  |
+| upstream.redis.internal.image.tag | string | `"v2.14.1"` |  |
 | upstream.redis.internal.image.pullSecrets[0] | string | `"private-registry"` |  |
 | upstream.redis.internal.serviceAccountName | string | `""` |  |
 | upstream.redis.internal.automountServiceAccountToken | bool | `false` |  |
@@ -239,7 +239,7 @@ helm install harbor chart/
 | upstream.redis.internal.resources.limits.cpu | string | `"100m"` |  |
 | upstream.redis.external.addr | string | `"redis-bb-master:6379"` |  |
 | upstream.exporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter"` |  |
-| upstream.exporter.image.tag | string | `"v2.14.0"` |  |
+| upstream.exporter.image.tag | string | `"v2.14.1"` |  |
 | upstream.exporter.image.pullSecrets[0] | string | `"private-registry"` |  |
 | upstream.exporter.serviceAccountName | string | `""` |  |
 | upstream.exporter.automountServiceAccountToken | bool | `false` |  |

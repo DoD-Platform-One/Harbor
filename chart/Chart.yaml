@@ -1,7 +1,7 @@
 apiVersion: v2
 name: harbor
-version: 1.18.0-bb.6
-appVersion: 2.14.0
+version: 1.18.1-bb.0
+appVersion: 2.14.1
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:
 - docker
@@ -24,46 +24,46 @@ maintainers:
 engine: gotpl
 dependencies:
   - name: harbor
-    version: '1.18.0'
+    version: '1.18.1'
     repository: 'https://helm.goharbor.io'
     alias: upstream
   - name: postgresql
-    version: 18.1.4
+    version: 18.1.13
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: redis
-    version: 23.1.1-bb.0
+    version: 23.2.12-bb.0
     repository: "oci://registry1.dso.mil/bigbang/maintained"
     condition: redis-bb.enabled
     alias: redis-bb
   - name: gluon
-    version: 0.9.6
+    version: 0.9.7
     repository: oci://registry1.dso.mil/bigbang
 annotations:
   bigbang.dev/maintenanceTrack: bb_integrated
   bigbang.dev/applicationVersions: |
-    - Harbor Core: 2.14.0
+    - Harbor Core: 2.14.1
   helm.sh/images: |
     - name: nginx
       image: registry1.dso.mil/ironbank/opensource/nginx/nginx:1.29.3
     - name: harbor-portal
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.14.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal:v2.14.1
     - name: harbor-core
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.14.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core:v2.14.1
     - name: harbor-jobservice
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.14.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice:v2.14.1
     - name: registry
-      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.14.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/registry:v2.14.1
     - name: harbor-registryctl
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.14.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl:v2.14.1
     - name: harbor-exporter
-      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.14.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.14.1
     - name: trivy
       condition: trivy.enabled
-      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.14.0
+      image: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter:v2.14.1
     - name: postgresql
       condition: postgresql.enabled
-      image: registry1.dso.mil/ironbank/opensource/postgres/postgresql:18.0
+      image: registry1.dso.mil/ironbank/opensource/postgres/postgresql:18.1
     - name: redis
       condition: redis-bb.enabled
-      image: registry1.dso.mil/ironbank/bitnami/redis:8.2.2
+      image: registry1.dso.mil/ironbank/bitnami/redis:8.2.3
