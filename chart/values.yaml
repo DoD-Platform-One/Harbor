@@ -202,7 +202,7 @@ redis-bb:
       redis:
         enabled: false
     image:
-      tag: 8.2.3
+      tag: 8.4.0
       pullSecrets:
       - private-registry
     master:
@@ -277,7 +277,7 @@ upstream:
   nginx:
     image:
       repository: registry1.dso.mil/ironbank/opensource/nginx/nginx
-      tag: 1.29.3
+      tag: 1.29.4
       pullSecrets:
       - private-registry
     # set the service account to be used, default if left empty
