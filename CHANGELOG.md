@@ -4,6 +4,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.1-bb.1] - (2026-01-13)
+
+### Changed
+
+- Updated postgresql 18.1.13 -> 18.2.0
+- Updated redis 23.2.12-bb.0 -> 24.1.0-bb.0
+- Updated registry1.dso.mil/ironbank/opensource/nginx/nginx 1.29.3 -> 1.29.4
+- Updated registry1.dso.mil/ironbank/bitnami/redis 8.2.3 -> 8.4.0
+
 ## [1.18.1-bb.0] (2025-12-08)
 ### Changed
 
