@@ -87,7 +87,7 @@
             "matchStrings": [
                 "redis-bb:[\\s\\S]*?upstream:[\\s\\S]*?image:\\s+tag:\\s*(?<currentValue>[^\\s]+)"
             ],
-            "depNameTemplate": "registry1.dso.mil/ironbank/opensource/redis/redis",
+            "depNameTemplate": "registry1.dso.mil/ironbank/opensource/redis/redis8-slim",
             "datasourceTemplate": "docker"
         },
         {
