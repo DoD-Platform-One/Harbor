@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.1-bb.2] - (2026-01-20)
+
+### Changed
+
+- Updated Redis image reference from registry1.dso.mil/ironbank/bitnami/redis 8.2.4 => registry1.dso.mil/ironbank/opensource/redis/redis8-slim:8.4.0 in the Chart
+
 ## [1.18.1-bb.1] - (2026-01-13)
 
 ### Changed
