@@ -297,7 +297,7 @@ upstream:
   portal:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal
-      tag: v2.14.1
+      tag: v2.14.2
       pullSecrets:
       - private-registry
     # set the service account to be used, default if left empty
@@ -317,7 +317,7 @@ upstream:
   core:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
-      tag: v2.14.1
+      tag: v2.14.2
       pullSecrets:
       - private-registry
     # set the service account to be used, default if left empty
@@ -341,7 +341,7 @@ upstream:
   jobservice:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice
-      tag: v2.14.1
+      tag: v2.14.2
       pullSecrets:
       - private-registry
     # set the service account to be used, default if left empty
@@ -362,7 +362,7 @@ upstream:
     registry:
       image:
         repository: registry1.dso.mil/ironbank/opensource/goharbor/registry
-        tag: v2.14.1
+        tag: v2.14.2
         pullSecrets:
         - private-registry
       resources:
@@ -376,7 +376,7 @@ upstream:
     controller:
       image:
         repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl
-        tag: v2.14.1
+        tag: v2.14.2
         pullSecrets:
         - private-registry
       resources:
@@ -394,7 +394,7 @@ upstream:
       # repository the repository for Trivy adapter image
       repository: registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter
       # tag the tag for Trivy adapter image
-      tag: v2.14.1
+      tag: v2.14.2
       pullSecrets:
       - private-registry
     # set the service account to be used, default if left empty
@@ -488,7 +488,7 @@ upstream:
   exporter:
     image:
       repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter
-      tag: v2.14.1
+      tag: v2.14.2
       pullSecrets:
       - private-registry
     serviceAccountName: ""
