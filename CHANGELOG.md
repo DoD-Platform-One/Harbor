@@ -4,6 +4,20 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.1-bb.3] - (2026-01-21)
+
+### Changed
+
+- Updated postgresql 18.2.0 -> 18.2.3
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-core v2.14.1 -> v2.14.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter v2.14.1 -> v2.14.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice v2.14.1 -> v2.14.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal v2.14.1 -> v2.14.2
+- registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl v2.14.1 -> v2.14.2
+- registry1.dso.mil/ironbank/opensource/goharbor/registry v2.14.1 -> v2.14.2
+- registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter v2.14.1 -> v2.14.2
+
+
 ## [1.18.1-bb.2] - (2026-01-20)
 
 ### Changed
