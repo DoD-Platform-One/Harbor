@@ -2,22 +2,19 @@
 domain: dev.bigbang.mil
 istio:
   enabled: false
-  hardened:
+  # Mutual TLS mode for PeerAuthentication
+  mtls:
+    # STRICT = Allow only mutual TLS traffic,
+    # PERMISSIVE = Allow both plain text and mutual TLS traffic
+    mode: STRICT
+  # Sidecar configuration for outbound traffic
+  sidecar:
     enabled: false
-    customAuthorizationPolicies: []
-    # - name: "allow-nothing"
-    #   enabled: true
-    #   spec: {}
-    monitoring:
-      enabled: false
-      namespaces:
-        - monitoring
-      principals:
-        - cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-prometheus
     outboundTrafficPolicyMode: "REGISTRY_ONLY"
-    customServiceEntries: []
+  # Custom ServiceEntries for external service access
+  serviceEntries:
+    custom: []
       # - name: "allow-google"
-      #   enabled: true
       #   spec:
       #     hosts:
       #       - "www.google.com"
@@ -28,28 +25,73 @@ istio:
       #         protocol: TLS
       #         name: https
       #     resolution: DNS
-  mtls:
-    # -- STRICT = Allow only mutual TLS traffic,
-    # PERMISSIVE = Allow both plain text and mutual TLS traffic
-    mode: STRICT
-  harbor:
-    gateways:
-    - "istio-system/public"
-    hosts:
-    - "harbor.{{ .Values.domain }}"
-  injection: disabled
+  # Custom AuthorizationPolicies for fine-grained access control
+  authorizationPolicies:
+    enabled: false
+    generateFromNetpol: false
+    custom: []
+      # - name: "allow-nothing"
+      #   spec: {}
 
 monitoring:
   enabled: false
   namespace: monitoring
 
+# Routes configuration for Istio VirtualService and related resources
+# HTTP routing is auto-generated in templates/bigbang/routes.yaml
+routes:
+  inbound:
+    harbor:
+      enabled: true
+      gateways:
+        - istio-gateway/public-ingressgateway
+      hosts:
+        - "harbor.{{ .Values.domain }}"
+      service: harbor-core.harbor.svc.cluster.local
+      port: 80
+      containerPort: 8080
+      selector:
+        app: harbor
+      http:
+        - name: core
+          match:
+          - uri:
+              prefix: '/api/'
+          - uri:
+              prefix: '/c/'
+          - uri:
+              prefix: '/chartrepo/'
+          - uri:
+              prefix: '/service/'
+          - uri:
+              prefix: '/v2/'
+          route:
+          - destination:
+              host: harbor-core.harbor.svc.cluster.local
+              port:
+                number: 80
+        - route:
+          - destination:
+              host: harbor-portal.harbor.svc.cluster.local
+              port:
+                number: 80
+
 networkPolicies:
-  enabled: false
-  ingressLabels:
-    app: istio-ingressgateway
-    istio: ingressgateway
-  # Additional network policies
-  # ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
+  enabled: true
+  ingress:
+    to:
+      harbor:8001:
+        from:
+          k8s:
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: false
+  egress:
+    from:
+      harbor:
+        to:
+          k8s:
+            tempo/tempo:9411: false
+
+  # Additional network policies for advanced use cases
   additionalPolicies: []
 
 # Default to false, override in openshift-test-values.yaml

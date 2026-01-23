@@ -1,6 +1,6 @@
 apiVersion: v2
 name: harbor
-version: 1.18.1-bb.3
+version: 1.18.1-bb.4
 appVersion: 2.14.2
 description: An open source trusted cloud native registry that stores, signs, and scans content
 keywords:
@@ -39,6 +39,9 @@ dependencies:
   - name: gluon
     version: 0.9.7
     repository: oci://registry1.dso.mil/bigbang
+  - name: bb-common
+    version: "0.12.3"
+    repository: "oci://registry1.dso.mil/bigbang"
 annotations:
   bigbang.dev/maintenanceTrack: bb_integrated
   bigbang.dev/applicationVersions: |

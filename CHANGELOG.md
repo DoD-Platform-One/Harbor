@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.1-bb.4] (2025-1-16)
+### Changed
+
+- Generate Istio resources with bb-common
+- Generate Network Policies resources with bb-common
+
 ## [1.18.1-bb.3] - (2026-01-21)
 
 ### Changed
