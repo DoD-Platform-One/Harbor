@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # harbor
 
-![Version: 1.18.1-bb.3](https://img.shields.io/badge/Version-1.18.1--bb.3-informational?style=flat-square) ![AppVersion: 2.14.2](https://img.shields.io/badge/AppVersion-2.14.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 1.18.1-bb.4](https://img.shields.io/badge/Version-1.18.1--bb.4-informational?style=flat-square) ![AppVersion: 2.14.2](https://img.shields.io/badge/AppVersion-2.14.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 An open source trusted cloud native registry that stores, signs, and scans content
 
@@ -52,22 +52,35 @@ helm install harbor chart/
 |-----|------|---------|-------------|
 | domain | string | `"dev.bigbang.mil"` |  |
 | istio.enabled | bool | `false` |  |
-| istio.hardened.enabled | bool | `false` |  |
-| istio.hardened.customAuthorizationPolicies | list | `[]` |  |
-| istio.hardened.monitoring.enabled | bool | `false` |  |
-| istio.hardened.monitoring.namespaces[0] | string | `"monitoring"` |  |
-| istio.hardened.monitoring.principals[0] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-prometheus"` |  |
-| istio.hardened.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
-| istio.hardened.customServiceEntries | list | `[]` |  |
-| istio.mtls.mode | string | `"STRICT"` | STRICT = Allow only mutual TLS traffic, PERMISSIVE = Allow both plain text and mutual TLS traffic |
-| istio.harbor.gateways[0] | string | `"istio-system/public"` |  |
-| istio.harbor.hosts[0] | string | `"harbor.{{ .Values.domain }}"` |  |
-| istio.injection | string | `"disabled"` |  |
+| istio.mtls.mode | string | `"STRICT"` |  |
+| istio.sidecar.enabled | bool | `false` |  |
+| istio.sidecar.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
+| istio.serviceEntries.custom | list | `[]` |  |
+| istio.authorizationPolicies.enabled | bool | `false` |  |
+| istio.authorizationPolicies.generateFromNetpol | bool | `false` |  |
+| istio.authorizationPolicies.custom | list | `[]` |  |
 | monitoring.enabled | bool | `false` |  |
 | monitoring.namespace | string | `"monitoring"` |  |
-| networkPolicies.enabled | bool | `false` |  |
-| networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
-| networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
+| routes.inbound.harbor.enabled | bool | `true` |  |
+| routes.inbound.harbor.gateways[0] | string | `"istio-gateway/public-ingressgateway"` |  |
+| routes.inbound.harbor.hosts[0] | string | `"harbor.{{ .Values.domain }}"` |  |
+| routes.inbound.harbor.service | string | `"harbor-core.harbor.svc.cluster.local"` |  |
+| routes.inbound.harbor.port | int | `80` |  |
+| routes.inbound.harbor.containerPort | int | `8080` |  |
+| routes.inbound.harbor.selector.app | string | `"harbor"` |  |
+| routes.inbound.harbor.http[0].name | string | `"core"` |  |
+| routes.inbound.harbor.http[0].match[0].uri.prefix | string | `"/api/"` |  |
+| routes.inbound.harbor.http[0].match[1].uri.prefix | string | `"/c/"` |  |
+| routes.inbound.harbor.http[0].match[2].uri.prefix | string | `"/chartrepo/"` |  |
+| routes.inbound.harbor.http[0].match[3].uri.prefix | string | `"/service/"` |  |
+| routes.inbound.harbor.http[0].match[4].uri.prefix | string | `"/v2/"` |  |
+| routes.inbound.harbor.http[0].route[0].destination.host | string | `"harbor-core.harbor.svc.cluster.local"` |  |
+| routes.inbound.harbor.http[0].route[0].destination.port.number | int | `80` |  |
+| routes.inbound.harbor.http[1].route[0].destination.host | string | `"harbor-portal.harbor.svc.cluster.local"` |  |
+| routes.inbound.harbor.http[1].route[0].destination.port.number | int | `80` |  |
+| networkPolicies.enabled | bool | `true` |  |
+| networkPolicies.ingress.to.harbor:8001.from.k8s.monitoring-monitoring-kube-prometheus@monitoring/prometheus | bool | `false` |  |
+| networkPolicies.egress.from.harbor.to.k8s.tempo/tempo:9411 | bool | `false` |  |
 | networkPolicies.additionalPolicies | list | `[]` |  |
 | openshift | bool | `false` |  |
 | bbtests.enabled | bool | `false` |  |
