@@ -4,7 +4,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
-## [1.18.1-bb.4] (2025-1-16)
+## [1.18.1-bb.5] (2026-1-26)
+
+### Changed
+
+- Updated bb-common 0.12.3 -> 0.13.0
+
+## [1.18.1-bb.4] (2026-1-16)
+
 ### Changed
 
 - Generate Istio resources with bb-common
