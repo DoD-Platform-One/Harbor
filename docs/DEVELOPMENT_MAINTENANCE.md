@@ -2,7 +2,7 @@
 
 ### See [bb MR testing](./test-package-against-bb.md) for details regarding testing changes against bigbang umbrella chart
 
-There are certain integrations within the bigbang ecosystem and this package that require additional testing outside of the specific package tests ran during CI.  This is a requirement when files within those integrations are changed, as to avoid causing breaks up through the bigbang umbrella.  Currently, these include changes to the istio implementation within harbor (see: [istio templates](../chart/templates/bigbang/istio/), [network policy templates](../chart/templates/bigbang/networkpolicies/), [service entry templates](../chart/templates/bigbang/serviceentries/)).
+There are certain integrations within the bigbang ecosystem and this package that require additional testing outside of the specific package tests ran during CI.  This is a requirement when files within those integrations are changed, as to avoid causing breaks up through the bigbang umbrella.  Currently, these include changes to the istio implementation within harbor (see: [istio templates](../chart/templates/bigbang/istio/). Additional networking configurations use bb-common, which can be found in[values.yaml](../chart/values.yaml). See [networkPolicies](../chart/values.yaml#L79), [routes](../chart/values.yaml#L42)).
 
 Be aware that any changes to files listed in the [**Modifications made to upstream chart**] section below which will also require a codeowner to validate the changes using above method, to ensure that they do not affect the package or its integrations adversely.
 
@@ -95,24 +95,14 @@ registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.9.0
 harbor-values-overrides.yaml
 
 ```
-istio:
+istiod:
   enabled: true
-  ingressGateways:
-    passthrough-ingressgateway:
-      enabled: false
-  gateways:
-    passthrough:
-      enabled: false
-
-istioOperator:
+istioCRDs:
   enabled: true
-
 monitoring:
   enabled: true
 
 addons:
-  monitoring:
-    enabled: true
   harbor:
     enabled: true
     git:
@@ -126,18 +116,25 @@ addons:
             enabled: true
       istio:
         enabled: true
-        hardened:
+        authorizationPolicies:
           enabled: true
-          monitoring:
-            enabled: true
-      #        mtls:
-      #          # -- STRICT = Allow only mutual TLS traffic,
-      #          # PERMISSIVE = Allow both plain text and mutual TLS traffic
-      #          mode: STRICT
+          generateFromNetpol: true
       monitoring:
         enabled: true
       networkPolicies:
         enabled: true
+        ingress:
+          to:
+            harbor:8001:
+              from:
+                k8s:
+                  monitoring-monitoring-kube-prometheus@monitoring/prometheus: true
+        egress:
+          from:
+            harbor:
+              to:
+                k8s:
+                  tempo/tempo:9411: true
 ```
 
 Visit `https://harbor.dev.bigbang.mil` and login
@@ -157,11 +154,11 @@ docker login harbor.dev.bigbang.mil
 
 # Enter default credentials
 
-docker pull alpine:latest 
+docker pull alpine:latest --platform linux/amd64
 
-docker tag alpine:latest harbor.dev.bigbang.mil/library/alpine:latest
+docker tag alpine:latest harbor.dev.bigbang.mil/library/alpine:latest --platform linux/amd64
 
-docker push harbor.dev.bigbang.mil/library/alpine:latest
+docker push --platform linux/amd64 harbor.dev.bigbang.mil/library/alpine:latest
 
 ```
 
