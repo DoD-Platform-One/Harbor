@@ -8,36 +8,32 @@ Be aware that any changes to files listed in the [**Modifications made to upstre
 
 Be sure to also test against monitoring locally as it is integrated by default with these high-impact service control packages, and needs to be validated using the necessary chart values beneath `istio.hardened` block with `monitoring.enabled` set to true as part of your dev-overrides.yaml
 
-# To upgrade the Harbor Package
+## To upgrade the Harbor Package
 
 Check the [upstream changelog](https://github.com/goharbor/harbor/releases) and the [upgrade notes](https://goharbor.io/docs/2.9.0/administration/upgrade/).
 
-# Upgrading
+## Upgrading
 
 Find the latest version of the `harbor` image that matches the latest version in IronBank that Renovate has identified from here: <https://github.com/goharbor/harbor-helm>
 
 The below details the steps required to update to a new version of the Harbor package.
 
 1. Renovate may have already made changes in the development branch. If that is the case then just verify that the changes are correct as you go through these steps.
-1. Discover the chart version tag that matches with the application version from the [upstream chart](https://github.com/goharbor/harbor-helm) by looking at the Chart.yaml. Do diff between old and new release tags to become aware of any significant chart changes. A graphical diff tool such as [Meld](https://meldmerge.org/) is useful. You can see where the current chart version and available versions are at under the `sources` section in Chart.yaml.`
+1. Discover the chart version tag that matches with the application version from the [upstream chart](https://github.com/goharbor/harbor-helm) by looking at the Chart.yaml. 
 1. Read the /CHANGELOG.md from the release tag from upstream [upstream chart](https://github.com/goharbor/harbor-helm). Also, be aware of changes in the Gitlab chart that could affect the Harbor chart. Take note of any special upgrade instructions, if any.
-1. If Renovate has not created a development branch and merge request then manually create them.
-1. Merge/Sync the new helm chart with the existing Harbor package code. A graphical diff tool like [Meld](https://meldmerge.org/) is useful. Reference the "Modifications made to upstream chart" section below. Be careful not to overwrite Big Bang Package changes that need to be kept. Note that some files will have combinations of changes that you will overwrite and changes that you keep. Stay alert. The hardest file to update is the ```/chart/values.yaml``` because many defaults are changed.
-1. In `chart/Chart.yaml` update harbor, postgresql, redis and gluon to the latest version and run `helm dependency update chart` from the top level of the repo to package it up.
-1. In ```/chart/values.yaml``` update all the harbor components (nginx, portal, core, jobservice, registry, controller, trivy, database, redis and exporter), redis-bb and postgresql image tags to the new version.
-1. Update `chart/Chart.yaml` to the appropriate versions. The annotation version should match the ```appVersion```.
-
-```
+1. In [chart/Chart.yaml](../chart/Chart.yaml) update harbor, postgresql, redis and gluon to the latest version and run `helm dependency update chart` from the top level of the repo to package it up. Renovate should have already done this for you.
+1. In [/chart/values.yaml](../chart/values.yaml) update all the harbor components (nginx, portal, core, jobservice, registry, controller, trivy, database, redis and exporter), redis-bb and postgresql image tags to the new version. Renovate should have already done this for you.
+1. Update [chart/Chart.yaml](../chart/Chart.yaml) to the appropriate versions. The annotation version should match the `appVersion`. Renovate should have already done this for you.
 
 ### Update dependencies in chart.yml
 
-```
+```shell
 helm dependency update ./chart
 ```
 
 ## Update main chart
 
-```chart/Chart.yaml```
+[`chart/Chart.yaml`](../chart/Chart.yaml)
 
 - update harbor `version` and `appVersion`
 - Ensure Big Bang version suffix is appended to chart version
@@ -67,12 +63,12 @@ annotations:
     - Harbor Core: $HARBOR_APP_VERSION
 ```
 
-```chart/values.yaml```
+[values.yaml](../chart/values.yaml)
 
-- In ```/chart/values.yaml``` verify all the harbor components (nginx, portal, core, jobservice, registry, controller, trivy, database, redis and exporter), redis-bb and postgresql image tags to the new version.
+- In `/chart/values.yaml` verify all the harbor components (nginx, portal, core, jobservice, registry, controller, trivy, database, redis and exporter), redis-bb and postgresql image tags to the new version.
 - For example, if harbor-core is updated to version v2.9.0, you should update:
 
-```
+```yaml
 core:
   image:
     repository: registry1.dso.mil/ironbank/opensource/goharbor/harbor-core
@@ -80,21 +76,21 @@ core:
     tag: v2.9.0
 ```
 
-```tests\images.txt```
+[images.txt](../tests/images.txt)
 
 - verify that image tag in is updated to match current version
 
-```
+```shell
 registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter:v2.9.0
 ```
 
 # Testing new harbor Version
 
-### Deploy harbor as part of BigBang in the local dev cluster
+## Deploy harbor as part of BigBang in the local dev cluster
 
 harbor-values-overrides.yaml
 
-```
+```yaml
 istiod:
   enabled: true
 istioCRDs:
@@ -141,7 +137,7 @@ Visit `https://harbor.dev.bigbang.mil` and login
 
 default credentials
 
-```
+```yaml
   username: admin
 
   password: Harbor12345
@@ -149,14 +145,14 @@ default credentials
 
 From the CLI, run the following to test pushing/pulling from registry is working as expected
 
-```
+```shell
 docker login harbor.dev.bigbang.mil
 
 # Enter default credentials
 
 docker pull alpine:latest --platform linux/amd64
 
-docker tag alpine:latest harbor.dev.bigbang.mil/library/alpine:latest --platform linux/amd64
+docker tag alpine:latest harbor.dev.bigbang.mil/library/alpine:latest 
 
 docker push --platform linux/amd64 harbor.dev.bigbang.mil/library/alpine:latest
 

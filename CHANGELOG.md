@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.2-bb.0] (2026-2-2)
+
+### Changed
+
+- Updated bb-common 0.13.0 -> 0.14.0
+- Updated harbor 1.18.1 -> 1.18.2
+
 ## [1.18.1-bb.5] (2026-1-26)
 
 ### Changed

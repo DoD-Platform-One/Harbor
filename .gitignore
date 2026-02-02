@@ -10,4 +10,5 @@ chart/tests/cypress/fixtures/
 chart/tests/cypress/support/
 .helmdocsignore
 README.md.gotmpl
+_templates.gotmpl
 node_modules
