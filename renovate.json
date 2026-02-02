@@ -16,7 +16,9 @@
     ],
     "labels": [
         "harbor",
-        "renovate"
+        "renovate",
+        "kind::maintenance",
+        "priority::2"
     ],
     "packageRules": [
         {
