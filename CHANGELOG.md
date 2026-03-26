@@ -4,6 +4,26 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 =======
 
+## [1.18.3-bb.0] (2026-3-25)
+
+### Changed
+
+- Updated harbor upstream chart 1.18.2 -> 1.18.3
+- Updated bb-common 0.14.0 -> 0.14.1
+- Updated gluon 0.9.7 -> 0.9.8
+- Updated postgresql subchart 18.2.3 -> 18.5.14
+- Updated redis subchart 24.1.0-bb.0 -> 25.3.2-bb.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-core v2.14.2 -> v2.15.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-exporter v2.14.2 -> v2.15.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-jobservice v2.14.2 -> v2.15.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-portal v2.14.2 -> v2.15.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/harbor-registryctl v2.14.2 -> v2.15.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/registry v2.14.2 -> v2.15.0
+- Updated registry1.dso.mil/ironbank/opensource/goharbor/trivy-adapter v2.14.2 -> v2.15.0
+- Updated registry1.dso.mil/ironbank/opensource/nginx/nginx 1.29.4 -> 1.29.6
+- Updated registry1.dso.mil/ironbank/opensource/postgres/postgresql 18.1 -> 18.3
+- Updated registry1.dso.mil/ironbank/opensource/redis/redis8-slim 8.4.0 -> 8.6.1
+
 ## [1.18.2-bb.0] (2026-2-2)
 
 ### Changed
