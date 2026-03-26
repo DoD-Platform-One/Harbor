@@ -13,7 +13,7 @@ Development requires the following tools
 
 * [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
 * [helm](https://helm.sh/docs/intro/install/)
-* [fluxcd](https://fluxcd.io/docs/installation/)
+* [fluxcd](https://fluxcd.io/flux/installation/)
 
 To contribute a change:
 
